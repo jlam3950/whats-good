@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -32,12 +33,12 @@ const Login = () => {
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
 
-              <a
-                href="#"
+              <NavLink 
+                to="/"
                 class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block hover:text-indigo-600"
               >
                 Forget Password
-              </a>
+              </NavLink>
             </div>
             <butt class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">
               Login
