@@ -1,9 +1,9 @@
 import './App.css';
-import Home from "./components/Homepage";
-import About from "./components/Homepage";
-import Login from "./components/Homepage";
-import Navbar from "./components/Homepage";
-import Footer from "./components/Homepage";
+import Home from "./components/Home";
+import About from "./components/About";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
