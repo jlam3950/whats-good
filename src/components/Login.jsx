@@ -3,10 +3,9 @@ import { NavLink } from 'react-router-dom';
 
 const Login = () => {
   return (
-    <div className="">
-      <div class="bg-gray-100 flex justify-center">
-        {/* h-screen */}
-        <div class="py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
+    <div className="bg-gray-100 h-screen">
+      <div class="flex justify-center">
+        <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
           <form action="">
             <div class="mb-6">
               <label for="name" class="block text-gray-800 font-bold">
@@ -42,6 +41,9 @@ const Login = () => {
             </div>
             <butt class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">
               Login
+            </butt>
+            <butt class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded">
+              Register
             </butt>
           </form>
         </div>
