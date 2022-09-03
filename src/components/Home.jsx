@@ -7,56 +7,50 @@ const Home = () => {
     <>
     <div class = 'container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0'>
     <div class = 'flex flex-col mx-auto md:flex-row'>
-      <form class="flex items-center">   
-      <label for="search" class="sr-only">Search</label>
-      <div> 
-        <div class="relative w-full m-2">
-            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+    <div className="flex items-center">
+            <div className="flex space-x-1">
+                <input
+                    type="text"
+                    className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    placeholder="Search..."
+                />
+                  <button className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg">
+                    <NavLink to = '/search'>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
+                    </NavLink>
+                  </button>
             </div>
-            <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required></input>
         </div>
-      </div>
-      <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          <span class="sr-only">Search</span>
-      </button>
-      </form>
-      <form class="flex items-center">   
-      <label for="search" class="sr-only">Search</label>
-      <div> 
-        <div class="relative w-full m-2">
-            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-            </div>
-            <input type="text" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required></input>
-        </div>
-      </div>
-      <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          <span class="sr-only">Search</span>
-      </button>
-      </form> 
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded">
         What's good around me?
       </button>
-    </div> 
-    <div class= 'container flex flex-col-reverse md:flex-row items-center px-4 mx-auto mt-10 md:space-y-0'>
-      <div class = 'flex flex-col mb-32 space-y-12 md:w-1/2'>
-        <h1 class ='max-w-md text-3xl font-bold text-center md:text-4xl md:text-left'>
-          Find the best items at every restaurant.
-        </h1>
-        <p className="max-w-sm text-center text-darkGrey md:text-left">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias, alias ducimus. Quos, eligendi molestias voluptatum, itaque modi esse accusantium eum facilis laudantium quaerat cupiditate cumque.
+    </div>
+    <div class = 'mx-auto'>
+      <img src = {hero} class ='rounded-lg' alt= ''></img>
+    </div>
+    <div class = 'mx-auto'>
+      <h1 class = 'text-2xl font-bold py-2 md:text-3xl md:text-center'>
+        Find the best items at every restaurant.
+      </h1>
+      <p className="text-center text-darkGrey md:text-center md:mb-5">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, quidem repudiandae et dignissimos, similique voluptatem, maiores dolorem eveniet aperiam deserunt qui illum veniam tempora dolorum eos reiciendis odit quos quisquam quas corrupti fuga laudantium. Quas.
         </p>
-      </div>
-        <div class = 'md:w-1/2 mx-2'>
-          <img src = {hero} class ='rounded-lg' alt= ''></img>
-        </div>
     </div>
 
     <div class = 'mx-auto  md:flex'>
-    {/* <div class = 'flex-col space-y-2 align-items:center space-around md:flex-row space-x-4'> */}
       <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
         <NavLink to="#">
             <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />

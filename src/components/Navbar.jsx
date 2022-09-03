@@ -9,7 +9,7 @@ const Navbar = () => {
         <div class="flex items-center space-x-8">
           <h1 class="text-xl lg:text-2xl font-bold cursor-pointer">What's Good?</h1>
           <div class="hidden md:flex justify-around space-x-4">
-            <NavLink class="hover:text-indigo-600 text-gray-700"to ='/'>Home</NavLink>
+            <NavLink class="hover:text-indigo-600 text-gray-700" to ='/'>Home</NavLink>
             <NavLink class="hover:text-indigo-600 text-gray-700" to ='/about'>About</NavLink>
             <NavLink class="hover:text-indigo-600 text-gray-700" to ='/contact'>Contact</NavLink>
           </div>
