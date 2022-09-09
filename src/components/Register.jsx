@@ -2,42 +2,51 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Axios from "axios";
 
-const Login = () => {
-  const [userLogin, setUserLogin] = useState("");
-  const [pwLogin, setPwLogin] = useState("");
+const Register = () => {
+  const [userReg, setUserReg] = useState("");
+  const [pwReg, setPwReg] = useState("");
   const [data, setData] = useState("");
 
-  const loginUser = (e) => {
+  const registerUser = (e) => {
     e.preventDefault();
+    console.log(userReg, pwReg);
     Axios({
       method: "post",
       data: {
-        username: userLogin,
-        password: pwLogin,
+        username: userReg,
+        password: pwReg,
       },
       withCredentials: true,
-      url: "http://localhost:5500/login",
+      url: "http://localhost:5500/register",
     }).then((res) => setData(res.data));
   };
 
-  const displayUserLogin = () => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:5500/user",
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
+  let saveReg = (e) => {
+    return setUserReg(e.target.value);
+  };
+
+  let savePw = (e) => {
+    return setPwReg(e.target.value);
   };
 
   return (
-
     <div className="bg-gray-100 h-screen">
       <div class="flex justify-center">
         <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
-          <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign In</h1>
+          <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
           <form action="">
+            {/* <div class = 'mb-5'>
+            <label for="email" class="block text-gray-800 font-bold">
+                E-mail:
+              </label>
+              <input
+                type="text"
+                name="email"
+                id="email"
+                placeholder="email address"
+                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+              />
+            </div> */}
             <div class="mb-6">
               <label for="name" class="block text-gray-800 font-bold">
                 Username:
@@ -47,7 +56,7 @@ const Login = () => {
                 name="name"
                 id="name"
                 placeholder="username"
-                onChange={(e) => setUserLogin(e.target.value)}
+                onChange={saveReg}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
             </div>
@@ -61,7 +70,7 @@ const Login = () => {
                 name="email"
                 id="email"
                 placeholder="password"
-                onChange={(e) => setPwLogin(e.target.value)}
+                onChange={savePw}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
               <NavLink
@@ -72,16 +81,11 @@ const Login = () => {
               </NavLink>
             </div>
             <button
-              onClick={loginUser}
-              class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded"
+              onClick={registerUser}
+              class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded"
             >
-              Login
+              Register
             </button>
-            <NavLink to="/register">
-              <button class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded">
-                New User?
-              </button>
-            </NavLink>
             <div class="text-center pt-3"> {data} </div>
           </form>
         </div>
@@ -90,4 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
