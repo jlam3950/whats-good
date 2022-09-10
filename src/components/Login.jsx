@@ -1,12 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Axios from "axios";
+import { updateUser, SelectUsername } from "../redux/loginSlice";
 
 const Login = () => {
   const [userLogin, setUserLogin] = useState("");
   const [pwLogin, setPwLogin] = useState("");
   const [data, setData] = useState("");
+  const dispatch = useDispatch();
 
+  const saveUser = (login) =>{
+    console.log(login);
+    dispatch(updateUser(login));
+  }
+  
   const loginUser = (e) => {
     e.preventDefault();
     Axios({
@@ -17,19 +25,25 @@ const Login = () => {
       },
       withCredentials: true,
       url: "http://localhost:5500/login",
-    }).then((res) => setData(res.data));
+    }).then((res) => setData(res.data), setTimeout(() =>{
+      saveUser(userLogin);
+      // window.location.replace('http://localhost:3000')
+    }, 2000));
+    
   };
+  
+  console.log(useSelector(SelectUsername));
 
-  const displayUserLogin = () => {
-    Axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:5500/user",
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
-  };
+  // const displayUserLogin = () => {
+  //   Axios({
+  //     method: "GET",
+  //     withCredentials: true,
+  //     url: "http://localhost:5500/user",
+  //   }).then((res) => {
+  //     setData(res.data);
+  //     console.log(res.data);
+  //   });
+  // };
 
   return (
 

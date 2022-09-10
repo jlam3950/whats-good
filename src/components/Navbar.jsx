@@ -8,7 +8,10 @@ const Navbar = () => {
       <div class="flex justify-between h-16 px-10 shadow items-center">
         <div class="flex items-center space-x-8">
           {/* <div class="p-3 -mb-10 -mt-5 bg-red-600 text-white text-xl lg:text-2xl font-extrabold cursor-pointer border border-black">What's Good?</div> */}
-          <h1 class="text-2xl lg:text-3xl font-bold cursor-pointer">What's Good?</h1>
+          
+          <NavLink to = '/'>
+            <h1 class="text-2xl lg:text-3xl font-bold cursor-pointer">What's Good?</h1>
+          </NavLink>
           <div class="hidden md:flex justify-around space-x-4">
             <NavLink class="hover:text-indigo-600 text-gray-700" to ='/'>Home</NavLink>
             <NavLink class="hover:text-indigo-600 text-gray-700" to ='/about'>About</NavLink>

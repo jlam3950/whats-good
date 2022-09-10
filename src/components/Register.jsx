@@ -18,7 +18,12 @@ const Register = () => {
       },
       withCredentials: true,
       url: "http://localhost:5500/register",
-    }).then((res) => setData(res.data));
+    }).then(
+      (res) => setData(res.data),
+      setTimeout(() => {
+        window.location.replace("http://localhost:3000");
+      }, 2000)
+    );
   };
 
   let saveReg = (e) => {
