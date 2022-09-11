@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.hero_img{
+  width: 100vw;
+  height: 50vh;
+}
 
+@media screen and (max-width: 500px){
+  .hero_img{
+    height: 40vh;
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -18,3 +27,4 @@
     transform: rotate(360deg);
   }
 }
+
