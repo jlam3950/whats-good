@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../redux/loginSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { updateUser, SelectUsername } from "../redux/loginSlice";
 
 const Login = () => {
   const [userLogin, setUserLogin] = useState("");
   const [pwLogin, setPwLogin] = useState("");
   const [data, setData] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const saveUser = (login) =>{
     console.log(login);
@@ -27,12 +28,12 @@ const Login = () => {
       url: "http://localhost:5500/login",
     }).then((res) => setData(res.data), setTimeout(() =>{
       saveUser(userLogin);
-      // window.location.replace('http://localhost:3000')
+      navigate('/');
     }, 2000));
     
   };
   
-  console.log(useSelector(SelectUsername));
+  // console.log(useSelector(SelectUsername));
 
   // const displayUserLogin = () => {
   //   Axios({
