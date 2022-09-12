@@ -50,9 +50,12 @@ app.post("/login", (req, res, next) => {
     if (err) throw err;
     if (!user) res.send("No User Exists");
     else {
-      // if (err) throw err;
+      req.logIn(user, (err) => {
+      if (err) throw err;
       res.send("Successfully Authenticated");
-    }
+      console.log(req.user);
+    });
+  }
   })(req, res, next);
 });
 
@@ -73,9 +76,15 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.get("/user", (req, res) => {
+app.get("/user", (req,res) => {
   res.send(req.user);
 });
+
+app.post("/user", (req,res) => {
+  req.logout(function(err) {
+    if (err) throw (err);
+})
+})
 
 app.listen(PORT, () => {
   console.log(`app is running on ${PORT}`);
