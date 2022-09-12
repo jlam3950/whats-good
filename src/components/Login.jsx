@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const saveUser = (login) =>{
-    console.log(login);
     dispatch(updateUser(login));
   }
   
@@ -32,19 +31,6 @@ const Login = () => {
     }, 2000));
     
   };
-  
-  // console.log(useSelector(SelectUsername));
-
-  // const displayUserLogin = () => {
-  //   Axios({
-  //     method: "GET",
-  //     withCredentials: true,
-  //     url: "http://localhost:5500/user",
-  //   }).then((res) => {
-  //     setData(res.data);
-  //     console.log(res.data);
-  //   });
-  // };
 
   return (
 

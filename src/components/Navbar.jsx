@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const username = useSelector(SelectUsername);
+  const userLoginCheck = username != null;
 
   return (
     <nav>
@@ -22,9 +23,9 @@ const Navbar = () => {
               <NavLink class="hover:text-indigo-600 text-gray-700" to="/">
                 Home
               </NavLink>
-              <NavLink class="hover:text-indigo-600 text-gray-700" to="/about">
+              {/* <NavLink class="hover:text-indigo-600 text-gray-700" to="/about">
                 About
-              </NavLink>
+              </NavLink> */}
               <NavLink
                 class="hover:text-indigo-600 text-gray-700"
                 to="/contact"
@@ -34,14 +35,14 @@ const Navbar = () => {
             </div>
           </div>
           <div class="flex space-x-2 -m-4  md:space-x-6 items-center">
-            <NavLink className="text-gray-800 text-md" to="/login">
-              {username != null ? `hi, ${username}` : "LOGIN"}
+            <NavLink className="text-gray-800 text-md" to= {userLoginCheck ? '/profile' : '/login'}>
+              {userLoginCheck ? `hi, ${username}` : "LOGIN"}
             </NavLink>
             <NavLink
               className="bg-red-500 p-2 sm:px-4 sm:py-2 rounded text-white hover:bg-red-400 text-sm"
-              to="/register"
+              to= {userLoginCheck ? '/logout' : '/register'}
             >
-              {username != null ? `SIGN OUT` : "SIGN UP"}
+              {userLoginCheck ? `SIGN OUT` : "SIGN UP"}
             </NavLink>
           </div>
         </div>
