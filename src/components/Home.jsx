@@ -5,7 +5,8 @@ import hero from '../images/hero_splash.jpg';
 const Home = () => {
   return (
     <>
-    <div class = 'container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0'>
+    <div class = 'flex flex-col md:items-center mx-auto mt-5 md:space-y-0'>
+    {/* removed container, px-5 ^^ */}
     <div class = 'flex flex-col mx-auto md:flex-row'>
     <div className="flex items-center">
             <div className="flex space-x-1">
@@ -39,13 +40,13 @@ const Home = () => {
       </button>
     </div>
     <div class = 'mx-auto'>
-      <img src = {hero} class ='rounded-lg' alt= ''></img>
+      <img src = {hero} class = 'hero_img object-cover' alt= ''></img>
     </div>
     <div class = 'mx-auto'>
-      <h1 class = 'text-2xl font-bold py-2 md:text-3xl md:text-center'>
+      <h1 class = 'text-2xl text-center px-5 font-bold py-2 md:text-3xl md:text-center'>
         Find the best items at every restaurant.
       </h1>
-      <p className="text-center text-darkGrey md:text-center md:mb-5">
+      <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, quidem repudiandae et dignissimos, similique voluptatem, maiores dolorem eveniet aperiam deserunt qui illum veniam tempora dolorum eos reiciendis odit quos quisquam quas corrupti fuga laudantium. Quas.
         </p>
     </div>

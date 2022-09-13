@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../redux/loginSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const Register = () => {
   const [userReg, setUserReg] = useState("");
   const [pwReg, setPwReg] = useState("");
   const [data, setData] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const saveUser = (login) =>{
+    console.log(login);
+    dispatch(updateUser(login));
+  }
 
   const registerUser = (e) => {
     e.preventDefault();
@@ -18,7 +27,14 @@ const Register = () => {
       },
       withCredentials: true,
       url: "http://localhost:5500/register",
-    }).then((res) => setData(res.data));
+    }).then(
+      (res) => setData(res.data),
+      setTimeout(() => {
+        saveUser(userReg);
+        navigate('/');
+        // window.location.replace("http://localhost:3000");
+      }, 2000)
+    );
   };
 
   let saveReg = (e) => {
