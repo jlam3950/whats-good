@@ -11,10 +11,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const saveUser = (login) =>{
+  const saveUser = (login) => {
     dispatch(updateUser(login));
-  }
-  
+  };
+
   const loginUser = (e) => {
     e.preventDefault();
     Axios({
@@ -25,15 +25,24 @@ const Login = () => {
       },
       withCredentials: true,
       url: "http://localhost:5500/login",
-    }).then((res) => setData(res.data), setTimeout(() =>{
-      saveUser(userLogin);
-      navigate('/');
-    }, 2000));
-    
+    }).then((res) => {
+      console.log(res.data)
+      switch (res.data) {
+        case "No matching credentials":
+          setData(res.data)
+          break;
+        case "Successfully Authenticated":
+          setData(res.data);
+          setTimeout(() => {
+            saveUser(userLogin);
+            navigate("/");
+          }, 2000);
+          break;
+      }      
+    });
   };
 
   return (
-
     <div className="bg-gray-100 h-screen">
       <div class="flex justify-center">
         <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
