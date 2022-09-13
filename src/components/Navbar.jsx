@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { SelectUsername } from "../redux/loginSlice";
 import { NavLink } from "react-router-dom";
+// import { FaUserCircle } from "react-icons/fa";
+
 
 const Navbar = () => {
   const username = useSelector(SelectUsername);
@@ -16,7 +18,7 @@ const Navbar = () => {
 
             <NavLink to="/">
               <h1 class="text-xl -m-4 md:mr-2 lg:text-3xl font-bold cursor-pointer">
-                What's Good?
+                What's Good? 
               </h1>
             </NavLink>
             <div class="hidden md:flex justify-around space-x-4">
@@ -36,7 +38,7 @@ const Navbar = () => {
           </div>
           <div class="flex space-x-2 -m-4  md:space-x-6 items-center">
             <NavLink className="text-gray-800 text-md" to= {userLoginCheck ? '/profile' : '/login'}>
-              {userLoginCheck ? `hi, ${username}` : "LOGIN"}
+              {userLoginCheck ? `hi, ${username}` : "LOGIN"} 
             </NavLink>
             <NavLink
               className="bg-red-500 p-2 sm:px-4 sm:py-2 rounded text-white hover:bg-red-400 text-sm"
