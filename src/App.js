@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Profile from "./components/Profile"; 
 import Logout from "./components/Logout"; 
+import Restaurant from './components/Restaurant';
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
               <Route path = "/search" element={<Search />}></Route>
               <Route path = "/profile" element={<Profile />}></Route>
               <Route path = "/logout" element={<Logout />}></Route>
+              <Route path = "/restaurant" element={<Restaurant />}></Route>
         </Routes>
       <Footer />
       </header>

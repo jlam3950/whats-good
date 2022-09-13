@@ -21,6 +21,7 @@ node_modules
 config.env
 login.env
 .env
+apikey.js
 
 npm-debug.log*
 yarn-debug.log*
