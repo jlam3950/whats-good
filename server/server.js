@@ -11,7 +11,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5500;
 require('dotenv').config();
-const connection_string = process.env.MONGO_KEY
+const connection_string = process.env.MONGO_KEY;
 
 mongoose.connect(
   connection_string,
@@ -23,10 +23,10 @@ mongoose.connect(
     console.log("mongoose connected");
   }
 );
-
-app.use(express.json());
-app.use(bodyParser.json());
+// app.use(express.urlencoded())
+// app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -73,6 +73,22 @@ app.post("/register", (req, res) => {
     }
   });
 });
+
+
+const key = process.env.API_KEY;
+
+const axios = require('axios');
+
+app.post("/getLocation",(req,res)=>{   
+  const lat = req.body.lat;
+  const long = req.body.long;
+  // console.log(req.body)
+    const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${lat}&longitude=${long}`
+    const config = {headers: { "Authorization":`Bearer ${key}` }};
+  console.log("Server Side lat: "+ lat + "long: " +long);
+  axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
+    // res.send({"something":"anything"})
+})
 
 app.get("/user", (req, res) => {
   res.send(req.user);
