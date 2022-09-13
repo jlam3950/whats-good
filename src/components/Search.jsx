@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-//import axios from "axios";
-//import { json } from "express";
+import { useDispatch } from "react-redux";
+import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
+import RestaurantCard from "./RestaurantCard"
+
 // import { NavLink } from 'react-router-dom';
 
 const Search = () => {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
+  const [restList, setRestList] = useState([]);
+  const dispatch = useDispatch();
+
+  const saveRestaurantList = (list) => {
+    dispatch(updateRestaurantList(list));
+  };
 
   const getLocation = (e) => {
     try {
@@ -20,7 +28,10 @@ const Search = () => {
         },
       })
         .then((res) => res.json())
-        .then((response) => console.log(response));
+        .then((response) => {
+          setRestList(response);
+          saveRestaurantList(response);
+        });
     } catch (err) {
       console.log(err);
     }
@@ -32,18 +43,6 @@ const Search = () => {
       setLong(position.coords.longitude);
     });
   });
-  //
-  // navigator.geolocation.getCurrentPosition(async (position) => {
-  //     setLat(position.coords.latitude);
-  //     setLong(position.coords.longitude);
-  //     Axios({
-  //         method: "get",
-  //         data: { lat, long },
-  //         url: "http://localhost:5500/getLocation",
-  //       }).then((res) => console.log(res))
-  //       .catch((err)=> {
-  //     console.log(err)})
-  // })
 
   return (
     <>
@@ -85,48 +84,11 @@ const Search = () => {
       <div class="container mx-auto md:mt-2">
         <div class="flex flex-col md:flex-row space-x-2">
           <div class="bg-blue-200 container h-1/12 rounded md:w-1/2 ml-2 md:h-screen">
-            <div class="card bg-white shadow-xl m-3 md:card-side">
-              <figure>
-                <img src="" alt="restaurant" />
-              </figure>
-              <div class="card-body">
-                <h2 class="card-title">Restaurant Name</h2>
-                <p>Review: 5/5</p>
-                <div class="card-actions flex justify-center">
-                  <button class="bg-blue-500 text-white m-2 py-1 px-2 border border-blue-700 rounded">
-                    What's Good?
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-white shadow-xl m-3 md:card-side">
-              <figure>
-                <img src="" alt="restaurant" />
-              </figure>
-              <div class="card-body">
-                <h2 class="card-title">Restaurant Name</h2>
-                <p>Review: 5/5</p>
-                <div class="card-actions flex justify-center">
-                  <button class="bg-blue-500 text-white m-2 py-1 px-2 border border-blue-700 rounded">
-                    What's Good?
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="card bg-white shadow-xl m-3 md:card-side">
-              <figure>
-                <img src="" alt="restaurant" />
-              </figure>
-              <div class="card-body">
-                <h2 class="card-title">Restaurant Name</h2>
-                <p>Review: 5/5</p>
-                <div class="card-actions flex justify-center">
-                  <button class="bg-blue-500 text-white m-2 py-1 px-2 border border-blue-700 rounded">
-                    What's Good?
-                  </button>
-                </div>
-              </div>
-            </div>
+            {restList.map((restData)=>{
+              return (
+                <RestaurantCard props={restData} />
+              )
+            })}
           </div>
           <div class="bg-red-200 container h-1/2 rounded md:w-1/2 mr-2 md:h-screen">
             Live map/modal here

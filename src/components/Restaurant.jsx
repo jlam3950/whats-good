@@ -4,7 +4,7 @@ import MenuItem from './MenuItem'
 const Restaurant = () => {
 
 
-
+//will probably use Restaurant/{restaurant.id} as the route to make them unique.
 
   return (
     <div class = 'container mx-auto md:mt-2'>
