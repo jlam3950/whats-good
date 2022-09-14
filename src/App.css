@@ -5,7 +5,18 @@
 .hero_img{
   width: 100vw;
   height: 50vh;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; */
+  
 }
+
+.findthe{
+  font-family: sans-serif;
+}
+
+/* */
 
 /* .avatar{
   width: 25vw;
@@ -14,6 +25,16 @@
   z-index: 2;
   left: 20;
 } */
+
+.restaurant_icon{
+  border-radius: 10px;
+  max-height: 15vh;
+}
+
+.p_food{
+  height: 380px;
+  width: 100%;
+}
 
 @media screen and (max-width: 500px){
   .hero_img{

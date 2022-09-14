@@ -89,12 +89,11 @@ const Register = () => {
                 onChange={savePw}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
-              <NavLink
-                to="/"
-                class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block hover:text-indigo-600"
+             <div
+                class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
               >
                 Forget Password
-              </NavLink>
+              </div>
             </div>
             <button
               onClick={registerUser}
