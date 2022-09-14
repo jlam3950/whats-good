@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
-import RestaurantCard from "./RestaurantCard"
-
+import RestaurantCard from "./RestaurantCard";
+// import fakeRestaurant from "../images/food.jpg";
 // import { NavLink } from 'react-router-dom';
 
 const Search = () => {
@@ -83,11 +83,37 @@ const Search = () => {
       </div>
       <div class="container mx-auto md:mt-2">
         <div class="flex flex-col md:flex-row space-x-2">
-          <div class="bg-blue-200 container h-1/12 rounded md:w-1/2 ml-2 md:h-screen">
-            {restList.map((restData)=>{
-              return (
-                <RestaurantCard props={restData} />
-              )
+          <div class="container h-1/12 rounded md:ml-0 md:w-2/4 md:h-screen">
+            {/* <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+             <div class="flex flex-row">
+                <div class="flex justify-center py-1 w-2/5">
+                <img
+                  src={fakeRestaurant}
+                    class="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"
+                    alt="restaurant"
+                  />
+                </div>
+                <div class="card-body w-3/5 text-xs text-left sm:text-sm lg:text-lg">
+                  <h2 class="card-title pt-2 font-bold">Trappe Door</h2>
+                  <hr></hr>
+                  <p>Yelp Review: 4/5</p>
+                  <p>Price: ****</p>
+                  <p class="text-xs">
+                    "Lorem ipsum color dolor it. Lorem ipsum color dolor it.
+                    Lorem ipsum color dolor it."{" "}
+                  </p>
+                  <div class ='flex justify-end'> <button
+                      onClick=""
+                      class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
+                    >
+                      Reviews
+                    </button></div>
+                </div>
+              </div>
+              
+            </div> */}
+            {restList.map((restData) => {
+              return <RestaurantCard props={restData} />;
             })}
           </div>
           <div class="bg-red-200 container h-1/2 rounded md:w-1/2 mr-2 md:h-screen">
