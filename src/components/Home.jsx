@@ -59,7 +59,7 @@ const Home = () => {
         </div>
         </div>
 
-        <div class="mx-auto md:flex md:justify-center md:space-x-10">
+        <div class="md:mt-8 mx-auto md:flex md:justify-center md:space-x-10">
           <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
             <NavLink to="#">
               <img class="rounded-t-lg p_food" src={food} alt="" />
@@ -166,6 +166,24 @@ const Home = () => {
             </div>
           </div>
         </div>
+{/* 
+        <div class=" max-w-6xl mx-auto mt-16  md:px-5 md:py-2 md:mb-32 sm:px-6 lg:px-8 bg-teal-500">
+            <div class="mt-8 overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-6 mr-2 dark:bg-gray-800 mt-5 sm:rounded-lg">
+                        <h1 class="text-right text-3xl sm:text-5xl text-gray-800 dark:text-white tracking-tight">
+                            What's good for breakfast?
+                        </h1>
+                        <div class = 'text-right'>
+                          <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                              Fill in the form to start a conversation
+                          </p>
+                        </div>
+                    </div>
+                      <img src = {food2} class= 'food_sub' alt = ''></img>
+                </div>
+            </div>
+        </div> */}
     </>
   );
 };

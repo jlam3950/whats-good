@@ -7,7 +7,7 @@ import React from 'react'
 
 const RestaurantCard = (props) => {
   return (
-    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-5/6 md:card-side">
     <div class="flex flex-row">
        <div class="flex justify-center py-1 w-2/5">
        <img

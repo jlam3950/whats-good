@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = {restList : []};
 
 const nearbyRestaurantsSlice = createSlice({
   name: "restaurantList",
