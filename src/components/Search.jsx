@@ -3,10 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
 import RestaurantCard from "./RestaurantCard";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
-// require('dotenv').config();
-// import fakeRestaurant from "../images/food.jpg";
-// import { NavLink } from 'react-router-dom';
+import { GoogleMap, useLoadScript, InfoWindow, Marker } from "@react-google-maps/api"
+// import { FaPhone }from 'react-icons/fa'
+
 
 const Search = () => {
 
@@ -15,8 +14,6 @@ const Search = () => {
   const [restList, setRestList] = useState([]);
   const dispatch = useDispatch();
 
-  // console.log(restList[0].coordinates.latitude);
-
   const saveRestaurantList = (list) => {
     dispatch(updateRestaurantList(list));
   };
@@ -24,19 +21,15 @@ const Search = () => {
   const getLocation = (e) => {
     try {
       console.log("clicked")
-
       e.preventDefault();
-      //   console.log("Frontend lat: " + lat + "long: " + long);
       fetchAPI();
-    
     } catch (err) {
       console.log(err);
     }
   };
 
   const fetchAPI = () =>{
-    console.log("lat: " + lat + "long: " + long);
-    if(lat==""&&long==""){
+    if(lat===""&&long===""){
       window.setTimeout(fetchAPI,500)
     } else {
     console.log("fetching")
@@ -61,7 +54,7 @@ const Search = () => {
     });
   });
 
-  //googleMapApi
+  //googleMapAPI
 
   let googleKey = process.env.REACT_APP_GOOGLE_KEY; 
 
@@ -75,21 +68,41 @@ const Search = () => {
   }
 
   function Map(){
+    const [activeMarker, setActiveMarker] = useState('');
+    const handleActiveMarker = (marker) => {
+      if (marker === activeMarker){
+        return; 
+      }
+      setActiveMarker(marker);
+    }
+
     return (
       <GoogleMap
-        zoom={10}
+        zoom={14}
         center={{lat: lat, lng: long}}
+        onClick={() => setActiveMarker(null)}
         mapContainerClassName = "map-container"
         >
-          {/* <Marker position ={{lat: 44, lng:-80}} />
-          <Marker position ={{lat: 44, lng:-79}} /> */}
-          {restLocationData()}
-          
+          {restList.map((restaurants, index) => {
+          return <Marker 
+          key={index}
+          onClick={() => handleActiveMarker(index)}
+          position= {{lat:restaurants.coordinates.latitude, lng:restaurants.coordinates.longitude}}>
+          {activeMarker === index ? (
+            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <div>
+              {restaurants.name}<br></br>
+              {restaurants.phone}<br></br>
+              {`Rating: ${restaurants.rating}`}
+              </div>
+            </InfoWindow>
+          ) : null}
+        </Marker>
+    })}   
         </GoogleMap>
     )
   }
 
-  
   return (
     <>
       <div class="container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0">
