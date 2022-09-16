@@ -23,25 +23,36 @@ const Search = () => {
 
   const getLocation = (e) => {
     try {
+      console.log("clicked")
+
       e.preventDefault();
       //   console.log("Frontend lat: " + lat + "long: " + long);
-
-      fetch("/getLocation", {
-        method: "POST",
-        body: JSON.stringify({ lat: lat, long: long }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          setRestList(response);
-          saveRestaurantList(response);
-        });
+      fetchAPI();
+    
     } catch (err) {
       console.log(err);
     }
   };
+
+  const fetchAPI = () =>{
+    console.log("lat: " + lat + "long: " + long);
+    if(lat==""&&long==""){
+      window.setTimeout(fetchAPI,500)
+    } else {
+    console.log("fetching")
+    fetch("/getLocation", {
+      method: "POST",
+      body: JSON.stringify({ lat: lat, long: long }),
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setRestList(response);
+        saveRestaurantList(response);
+      });
+  }}
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
