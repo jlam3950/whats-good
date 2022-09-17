@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
 import RestaurantCard from "./RestaurantCard";
@@ -10,7 +10,29 @@ const Search = () => {
   const [long, setLong] = useState("");
   const [restList, setRestList] = useState([]);
   const dispatch = useDispatch();
+  const inputAddress = useRef()
 
+  const handleAddress = () =>{
+    console.log("address Clicked")
+    const typedAddress = inputAddress.current.value;
+    //console.log(typedAddress)
+    if (typedAddress === "") return;
+    const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
+    console.log("Called ", calledAddress)
+    fetch("/getLocationWithAddress", {
+      method: "POST",
+      body: JSON.stringify({ address: calledAddress }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setRestList(response);
+        saveRestaurantList(response);
+      });
+  } 
+  
   const saveRestaurantList = (list) => {
     dispatch(updateRestaurantList(list));
   };
@@ -36,6 +58,18 @@ const Search = () => {
       console.log(err);
     }
   };
+  useEffect(()=>{
+    const keyDownHandler = event => {
+      if (event.key==="Enter"){
+        event.preventDefault()
+        handleAddress();
+      }
+    }
+    document.addEventListener('keydown',keyDownHandler);
+    return () => {
+      document.removeEventListener('keydown',keyDownHandler);
+    };
+  },[])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -52,10 +86,12 @@ const Search = () => {
             <div className="flex space-x-1">
               <input
                 type="text"
+                ref={inputAddress}
                 className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                placeholder="Search..."
+                placeholder="Enter Zip Code or Address, City, and State"
+               
               />
-              <button className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg">
+              <button onClick={handleAddress} className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5"

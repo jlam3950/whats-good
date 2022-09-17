@@ -93,6 +93,16 @@ app.post("/getLocation",(req,res)=>{
     // res.send({"something":"anything"})
 })
 
+app.post("/getLocationWithAddress",(req,res)=>{   
+  const address = req.body.address
+  console.log(address)
+    const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${address}`
+    const config = {headers: { "Authorization":`Bearer ${key}` }};
+  console.log("Address:" , address);
+  axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
+    // res.send({"something":"anything"})
+})
+
 app.get("/user", (req, res) => {
   res.send(req.user);
 });
