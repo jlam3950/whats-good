@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 //On click of 'What's Good?', information should be set to middleware.
 // needs {ID, Restaurant Name, Address, Coordinates, price}
@@ -25,12 +26,14 @@ const RestaurantCard = (props) => {
            "Lorem ipsum color dolor it. Lorem ipsum color dolor it.
            Lorem ipsum color dolor it."{" "}
          </p>
-         <div class ='flex justify-end'> <button
+         <div class ='flex justify-end'> 
+         <NavLink to = { `/restaurant/${props.props.id}`}>
+            <button
              onClick=""
              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
            >
              Reviews
-           </button></div>
+           </button></NavLink></div>
        </div>
       </div>
     </div>
