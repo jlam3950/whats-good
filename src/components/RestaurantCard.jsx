@@ -29,15 +29,14 @@ const RestaurantCard = (props) => {
            Lorem ipsum color dolor it."{" "}
          </p>
          <div class ='flex justify-end'> 
-         <button
+
+         <NavLink to = { `/restaurant/${props.props.id}`}>
+            <button
              onClick=""
              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
-             name={props.props.name}
            >
-          <NavLink class="hover:text-indigo-600 text-gray-700" to="/restauant/">
-           Reviews
-         </NavLink>
-           </button></div>
+             Reviews
+           </button></NavLink></div>  
        </div>
       </div>
     </div>
