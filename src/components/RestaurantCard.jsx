@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 //On click of 'What's Good?', information should be set to middleware.
 // needs {ID, Restaurant Name, Address, Coordinates, price}
@@ -6,8 +7,10 @@ import React from 'react'
 // Needs to redirect to /Restaurant/{props.props.id}
 
 const RestaurantCard = (props) => {
+  console.log(props.props)
   return (
-    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-5/6 md:card-side">
+    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+
     <div class="flex flex-row">
        <div class="flex justify-center py-1 w-2/5">
        <img
@@ -25,11 +28,15 @@ const RestaurantCard = (props) => {
            "Lorem ipsum color dolor it. Lorem ipsum color dolor it.
            Lorem ipsum color dolor it."{" "}
          </p>
-         <div class ='flex justify-end'> <button
+         <div class ='flex justify-end'> 
+         <button
              onClick=""
              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
+             name={props.props.name}
            >
-             Reviews
+          <NavLink class="hover:text-indigo-600 text-gray-700" to="/restauant/">
+           Reviews
+         </NavLink>
            </button></div>
        </div>
       </div>
