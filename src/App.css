@@ -32,16 +32,20 @@
   max-height: 15vh;
 }
 
-.p_food{
+/* .bluebar{
+  height:35rem;
+} */
+
+/* .p_food{
   height: 380px;
   width: 100%;
-}
+} */
 
-.food_sub{
+/* .food_sub{
   height: 50vh;
   width:60vh;
-  margin-top: 1.75rem;
-}
+  margin-top: 1.75rem
+} */
 
 .map-container{
   width: 100%;
