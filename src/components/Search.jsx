@@ -18,10 +18,10 @@ const Search = () => {
     dispatch(updateRestaurantList(list));
   };
 
-  const getLocation = (e) => {
+  const getLocation = async (e) => {
     try {
-      console.log("clicked")
       e.preventDefault();
+      console.log("clicked")
       fetchAPI();
     } catch (err) {
       console.log(err);
@@ -29,9 +29,12 @@ const Search = () => {
   };
 
   const fetchAPI = () =>{
-    if(lat===""&&long===""){
-      window.setTimeout(fetchAPI,500)
-    } else {
+    
+    if(lat==="" && long===""){
+      alert('geolocation data loading, click search once map has loaded');
+    }
+
+    if(lat !== ""){
     console.log("fetching")
     fetch("/getLocation", {
       method: "POST",
@@ -64,7 +67,9 @@ const Search = () => {
   
   const MapLoad = () => {
     if (!isLoaded) return <div>Loading...</div>;
-    return <Map />;
+    else if (isLoaded){
+      return <Map />
+    };
   }
 
   function Map(){
@@ -86,6 +91,7 @@ const Search = () => {
           {restList.map((restaurants, index) => {
           return <Marker 
           key={index}
+          animation={2}
           onClick={() => handleActiveMarker(index)}
           position= {{lat:restaurants.coordinates.latitude, lng:restaurants.coordinates.longitude}}>
           {activeMarker === index ? (
@@ -147,8 +153,8 @@ const Search = () => {
               return <RestaurantCard props={restData} />;
             })}
           </div>
-          <div class="bg-red-200 container h-1/2 rounded md:w-1/2 mr-2 md:h-screen">
-            <MapLoad />
+          <div class="container h-1/2 rounded md:w-1/2 mr-2 md:h-screen">
+            {lat !== '' ? <MapLoad /> : 'Geolocation data is loading...' }
           </div>
         </div>
       </div>
