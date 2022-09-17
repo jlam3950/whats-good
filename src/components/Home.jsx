@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import hero from "../images/hero_splash.jpg";
-import food from "../images/p_food.jpg";
+// import food from "../images/p_food.jpg";
 import food1 from "../images/p_food_1.jpg";
 import food2 from "../images/p_food_3.jpg";
+import altHero from "../images/alt_hero.jpg"
 
 const Home = () => {
   return (
@@ -38,31 +39,43 @@ const Home = () => {
               </button>
             </div>
           </div>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border-blue-700 rounded">
             What's good around me?
           </button>
         </div>
-        <div class="mx-auto">
-          <img src={hero} class="hero_img object-cover" alt=""></img>
-        </div>
-        <div class="mx-auto">
-          <h1 class="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
+        <div class="flex flex-col-reverse justify-center items-center md:py-10 md:flex-row md:justify-evenly">
+          {/* <img src={hero} class="hero_img object-cover" alt=""></img> */}
+          {/* Splash Image ^ */}
+          <div class = 'flex items-center mt-10 md:mt-0 md:mb-0 lg:mb-20 text-center tracking-tight font-extrabold text-5xl md:p-20 md:ml-8 md:text-5xl md:w-1/2'> 
             Find the best items at every restaurant.
-          </h1>
-          <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
+          </div>
+          <div class = 'mt-5 md:w-1/2'>
+            <img src ={altHero} class ='shadow-none' alt = "" />
+          </div>
+         </div>
+        <div class="mx-auto">
+          {/* <h1 class="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
+            Find the best items at every restaurant.
+          </h1> */}
+          {/* <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque,
             quidem repudiandae et dignissimos, similique voluptatem, maiores
-            dolorem eveniet aperiam deserunt qui illum veniam tempora dolorum
+            dolorem eveniet aperiam deserunt qui illum veniam tempora dolorum`
             eos reiciendis odit quos quisquam quas corrupti fuga laudantium.
             Quas.
-          </p>
+          </p> */}
         </div>
         </div>
 
-        <div class="mx-auto md:flex md:justify-center md:space-x-10">
+        <div class='bg-blue-600 mt-32 w-full h-32 bluebar absolute -z-50'>
+
+        </div>
+
+        {/* <div class="md:mt-8 mx-auto md:flex md:justify-center md:space-x-10"> */}
+        <div class = 'relative flex flex-col items-center justify-evenly mt-20 md:mt-20 md:flex-row'>
           <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
-            <NavLink to="#">
-              <img class="rounded-t-lg p_food" src={food} alt="" />
+            <NavLink to="#" class = 'flex justify-center'>
+              <img class="rounded-t-lg p_food h-48 md:h-64 w-full" src={hero} alt="" />
             </NavLink>
             <div class="p-5">
               <NavLink to="#">
@@ -96,8 +109,8 @@ const Home = () => {
             </div>
           </div>
           <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
-            <NavLink to="#">
-              <img class="rounded-t-lg p_food" src={food1} alt="" />
+            <NavLink to="#" class='flex justify-center'>
+              <img class="rounded-t-lg p_food h-48 md:h-64 w-full" src={food1} alt="" />
             </NavLink>
             <div class="p-5">
               <NavLink to="#">
@@ -131,8 +144,8 @@ const Home = () => {
             </div>
           </div>
           <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
-            <NavLink to="#">
-              <img class="rounded-t-lg p_food" src={food2} alt="" />
+            <NavLink to="flex justify-center">
+              <img class="rounded-t-lg p_food h-48 md:h-64 w-full" src={food2} alt="" />
             </NavLink>
             <div class="p-5">
               <NavLink to="#">
@@ -166,6 +179,24 @@ const Home = () => {
             </div>
           </div>
         </div>
+{/* 
+        <div class=" max-w-6xl mx-auto mt-16  md:px-5 md:py-2 md:mb-32 sm:px-6 lg:px-8 bg-teal-500">
+            <div class="mt-8 overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-6 mr-2 dark:bg-gray-800 mt-5 sm:rounded-lg">
+                        <h1 class="text-right text-3xl sm:text-5xl text-gray-800 dark:text-white tracking-tight">
+                            What's good for breakfast?
+                        </h1>
+                        <div class = 'text-right'>
+                          <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                              Fill in the form to start a conversation
+                          </p>
+                        </div>
+                    </div>
+                      <img src = {food2} class= 'food_sub' alt = ''></img>
+                </div>
+            </div>
+        </div> */}
     </>
   );
 };

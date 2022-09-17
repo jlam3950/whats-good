@@ -9,7 +9,8 @@ import { NavLink } from 'react-router-dom';
 const RestaurantCard = (props) => {
   console.log(props.props)
   return (
-    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side" id={props.props.id}>
+    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+
     <div class="flex flex-row">
        <div class="flex justify-center py-1 w-2/5">
        <img
