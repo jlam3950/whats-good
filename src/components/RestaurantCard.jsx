@@ -7,8 +7,10 @@ import { NavLink } from 'react-router-dom';
 // Needs to redirect to /Restaurant/{props.props.id}
 
 const RestaurantCard = (props) => {
+  console.log(props.props)
   return (
-    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-5/6 md:card-side">
+    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+
     <div class="flex flex-row">
        <div class="flex justify-center py-1 w-2/5">
        <img
@@ -27,13 +29,14 @@ const RestaurantCard = (props) => {
            Lorem ipsum color dolor it."{" "}
          </p>
          <div class ='flex justify-end'> 
+
          <NavLink to = { `/restaurant/${props.props.id}`}>
             <button
              onClick=""
              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
            >
              Reviews
-           </button></NavLink></div>
+           </button></NavLink></div>  
        </div>
       </div>
     </div>
