@@ -23,8 +23,6 @@ mongoose.connect(
     console.log("mongoose connected");
   }
 );
-// app.use(express.urlencoded())
-// app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
@@ -85,22 +83,17 @@ const axios = require('axios');
 app.post("/getLocation",(req,res)=>{   
   const lat = req.body.lat;
   const long = req.body.long;
-  // console.log(req.body)
     const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${lat}&longitude=${long}`
     const config = {headers: { "Authorization":`Bearer ${key}` }};
   console.log("Server Side lat: "+ lat + "long: " +long);
   axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
-    // res.send({"something":"anything"})
 })
 
 app.post("/getLocationWithAddress",(req,res)=>{   
   const address = req.body.address
-  console.log(address)
     const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${address}`
     const config = {headers: { "Authorization":`Bearer ${key}` }};
-  console.log("Address:" , address);
   axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
-    // res.send({"something":"anything"})
 })
 
 app.get("/user", (req, res) => {

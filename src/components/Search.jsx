@@ -91,8 +91,8 @@ const Search = () => {
   });
 
   //googleMapAPI
-  let googleKey = "AIzaSyBzfsfjgO2en4xtfCh6yXABdo4gDMtDmR0"
-  //let googleKey = process.env.REACT_APP_GOOGLE_KEY; 
+ 
+  let googleKey = process.env.REACT_APP_GOOGLE_KEY; 
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleKey,
