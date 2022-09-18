@@ -15,12 +15,9 @@ const Search = () => {
   const inputAddress = useRef()
 
   const handleAddress = () =>{
-    console.log("address Clicked")
     const typedAddress = inputAddress.current.value;
-    //console.log(typedAddress)
     if (typedAddress === "") return;
     const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
-    console.log("Called ", calledAddress)
     fetch("/getLocationWithAddress", {
       method: "POST",
       body: JSON.stringify({ address: calledAddress }),

@@ -1,13 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-//On click of 'What's Good?', information should be set to middleware.
-// needs {ID, Restaurant Name, Address, Coordinates, price}
-// middleware will check database for any menu item reviews and send data to Restaurant Page
-// Needs to redirect to /Restaurant/{props.props.id}
-
 const RestaurantCard = (props) => {
-  console.log(props.props)
+
   return (
     <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
 
@@ -31,11 +26,12 @@ const RestaurantCard = (props) => {
          <div class ='flex justify-end'> 
 
          <NavLink to = { `/restaurant/${props.props.id}`}>
-            <button
+         <button
              onClick=""
+             id={props.props.id}
              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
            >
-             Reviews
+           Reviews
            </button></NavLink></div>  
        </div>
       </div>

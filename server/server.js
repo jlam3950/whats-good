@@ -7,10 +7,11 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const User = require("./models/user");
+const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5500;
-require('dotenv').config();
+require("dotenv").config();
 const connection_string = process.env.MONGO_KEY;
 
 mongoose.connect(
@@ -49,11 +50,11 @@ app.post("/login", (req, res, next) => {
     if (!user) res.send("No matching credentials");
     else {
       req.logIn(user, (err) => {
-      if (err) throw err;
-      res.send("Successfully Authenticated");
-      console.log(req.user);
-    });
-  }
+        if (err) throw err;
+        res.send("Successfully Authenticated");
+        console.log(req.user);
+      });
+    }
   })(req, res, next);
 });
 
@@ -74,37 +75,73 @@ app.post("/register", (req, res) => {
   });
 });
 
-
-
 const key = process.env.API_KEY;
 
-const axios = require('axios');
+const axios = require("axios");
 
-app.post("/getLocation",(req,res)=>{   
+app.post("/getLocation", (req, res) => {
   const lat = req.body.lat;
   const long = req.body.long;
-    const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${lat}&longitude=${long}`
-    const config = {headers: { "Authorization":`Bearer ${key}` }};
-  console.log("Server Side lat: "+ lat + "long: " +long);
-  axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
-})
+  const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${lat}&longitude=${long}`;
+  const config = { headers: { Authorization: `Bearer ${key}` } };
+  console.log("Server Side lat: " + lat + "long: " + long);
+  axios
+    .get(url, config)
+    .then((response) => res.send(response.data.businesses))
+    .catch((err) => console.log(err));
+});
 
-app.post("/getLocationWithAddress",(req,res)=>{   
-  const address = req.body.address
-    const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${address}`
-    const config = {headers: { "Authorization":`Bearer ${key}` }};
-  axios.get(url, config).then((response)=>res.send(response.data.businesses)).catch((err)=>console.log(err))
-})
+app.post("/getLocationWithAddress", (req, res) => {
+  const address = req.body.address;
+  const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&location=${address}`;
+  const config = { headers: { Authorization: `Bearer ${key}` } };
+  axios
+    .get(url, config)
+    .then((response) => res.send(response.data.businesses))
+    .catch((err) => console.log(err));
+});
 
 app.get("/user", (req, res) => {
   res.send(req.user);
 });
 
-app.post("/user", (req,res) => {
-  req.logout(function(err) {
-    if (err) throw (err);
-})
-})
+app.post("/user", (req, res) => {
+  req.logout(function (err) {
+    if (err) throw err;
+  });
+});
+
+// Checks DB if restaurant exists by ID, if so return restaurant data.
+app.get("/checkDB", (req, res) => {
+  Restaurant.find({ ID: req.body.id }, async (err, doc) => {
+    if (err) throw err;
+    else {
+      res.json(doc);
+    }
+  });
+});
+
+//Test path
+app.get('/check',(req,res)=>
+Restaurant.find({}).then((data)=>{
+  console.log("Data ",data)
+  res.json(data);
+}).catch((error)=>{
+  console.log('error ',error);
+}))
+
+
+// Sets up new restaurant with data received in req.body formatted the same way as in the schema. See  server > models > restaurant.js for schema
+app.post("/newRestaurant", (req, res) => {
+  const newRestaurant = new Restaurant(req.body);
+  newRestaurant.save((error) => {
+    if (error) {
+      console.log("Something wrong");
+    } else {
+      console.log("Data saved");
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`app is running on ${PORT}`);
