@@ -13,6 +13,14 @@
   
 }
 
+/* search */
+
+@media screen and (min-width:1200px){
+  .searchBar{
+    width:30rem;
+  }
+}
+
 .findthe{
   font-family: sans-serif;
 }
