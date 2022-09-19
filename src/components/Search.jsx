@@ -20,7 +20,6 @@ const Search = () => {
     const typedAddress = (inputAddress.current.value);
     if (typedAddress === "") return;
     const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
-    console.log("Called ", calledAddress)
     fetch("/getLocationWithAddress", {
       method: "POST",
       body: JSON.stringify({ address: calledAddress }),
