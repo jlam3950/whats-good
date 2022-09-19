@@ -3,19 +3,21 @@ import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
 import RestaurantCard from "./RestaurantCard";
 import { GoogleMap, useLoadScript, InfoWindow, Marker } from "@react-google-maps/api"
-// import { FaPhone }from 'react-icons/fa'
-
+import axios from "axios";
 
 const Search = () => {
+
 
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
   const [restList, setRestList] = useState([]);
+  const [userAddress, setUserAddress] = useState('');
   const dispatch = useDispatch();
-  const inputAddress = useRef()
+  const inputAddress = useRef();
 
   const handleAddress = () =>{
-    const typedAddress = inputAddress.current.value;
+    console.log("address Clicked")
+    const typedAddress = (inputAddress.current.value);
     if (typedAddress === "") return;
     const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
     fetch("/getLocationWithAddress", {
@@ -29,8 +31,12 @@ const Search = () => {
       .then((response) => {
         setRestList(response);
         saveRestaurantList(response);
+        setUserAddress(typedAddress)
       });
+
   } 
+  
+
   
   const saveRestaurantList = (list) => {
     dispatch(updateRestaurantList(list));
@@ -102,6 +108,25 @@ const Search = () => {
     };
   }
 
+  const GeoCode = () => {
+    const location = userAddress;
+    axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+      params: {
+        address: location,
+        key: googleKey, 
+      }
+    })
+    .then(function(response){
+      setLat(response.data.results[0].geometry.location.lat);
+      setLong(response.data.results[0].geometry.location.lng);
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+  }
+
+  GeoCode()
+
   function Map(){
     const [activeMarker, setActiveMarker] = useState('');
     const handleActiveMarker = (marker) => {
@@ -138,18 +163,24 @@ const Search = () => {
         </GoogleMap>
     )
   }
+  let searchResults;
+  console.log(searchResults);
 
   return (
     <>
       <div class="container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0">
         <div class="flex flex-col mx-auto md:flex-row">
-          <div className="flex items-center">
+          <div className="flex justify-center items-center">
             <div className="flex space-x-1">
               <input
                 type="text"
                 ref={inputAddress}
-                className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 searchBar"
                 placeholder="Enter Zip Code or Address, City, and State"
+                // onChange = {(e) => {
+                //   setUserAddress(e.target.value);
+                //   // searchResults = e.target.value;
+                // }}
                
               />
               <button onClick={handleAddress} className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg">
