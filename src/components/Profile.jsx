@@ -4,43 +4,44 @@ import { SelectUsername } from "../redux/loginSlice";
 import avatar from "../images/avatar.jpg";
 // import { NavLink } from "react-router-dom";
 
-    
 const Profile = () => {
-const username = useSelector(SelectUsername);
+  const username = useSelector(SelectUsername);
 
   return (
-    <div>
-      <div class="relative max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+    <div class="min-h-screen">
+      <h1 class="text-3xl sm:text-5xl text-center text-gray-800 dark:text-white font-extrabold tracking-tight mt-5 -mb-8">
+        Profile
+      </h1>
+      <div class="relative max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-gray-100 w-full shadow-lg rounded-xl mt-16">
         <div class="px-6">
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
               <div class="relative flex justify-center">
-                 {/* <img
+                <img
                   src={avatar}
-                  class="shadow-xl rounded-full align-middle border-none -m-16 -ml-20 lg:-ml-16 max-w-[150px] avatar"
-                  alt = ''
-                />        */}
+                  class="shadow-xl rounded-full align-middle border-none -m-16 -ml-20 lg:-ml-16 avatar"
+                  alt=""
+                />
               </div>
-              
             </div>
-            <div class="w-full text-center mt-20">
+            <div class="w-full text-center mt-16">
               <div class="flex justify-center lg:pt-4 pt-8 pb-0">
                 <div class="p-3 text-center">
                   <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    3,360
+                    1
                   </span>
                   <span class="text-sm text-slate-400">Reviews</span>
                 </div>
                 <div class="p-3 text-center">
                   <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    2,454
+                    3
                   </span>
                   <span class="text-sm text-slate-400">Followers</span>
                 </div>
 
                 <div class="p-3 text-center">
                   <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                    564
+                    5
                   </span>
                   <span class="text-sm text-slate-400">Following</span>
                 </div>
@@ -60,13 +61,16 @@ const username = useSelector(SelectUsername);
             <div class="flex flex-wrap justify-center">
               <div class="w-full px-4">
                 <p class="font-light leading-relaxed text-slate-600 mb-4">
-                  Foodie, traveler, and programmer. I enjoy sharing my reviews on What's Good.
+                  Foodie, traveler, and programmer. I enjoy sharing my reviews
+                  on What's Good.
                 </p>
                 <a
                   href="www.google.com"
                   class="font-normal text-slate-700 hover:text-slate-400"
                 >
-                  Follow Account
+                  <button class="bg-green-500 hover:bg-green-700 px-5 py-2 text-white rounded">
+                    Follow Account
+                  </button>
                 </a>
               </div>
             </div>

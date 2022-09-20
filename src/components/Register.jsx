@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/loginSlice";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ const Register = () => {
   const [data, setData] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const PWconfirmation = useRef();
 
   const saveUser = (login) =>{
     console.log(login);
@@ -19,6 +20,9 @@ const Register = () => {
   const registerUser = (e) => {
     e.preventDefault();
     console.log(userReg, pwReg);
+    if(pwReg !== PWconfirmation.current.value){
+      alert('Sorry, passwords do not match')
+    }
     Axios({
       method: "post",
       data: {
@@ -46,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className=" h-screen">
       <div class="flex justify-center">
         <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
           <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
@@ -83,8 +87,6 @@ const Register = () => {
               </label>
               <input
                 type="text"
-                name="email"
-                id="email"
                 placeholder="password"
                 onChange={savePw}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
@@ -95,6 +97,20 @@ const Register = () => {
                 Forget Password
               </div>
             </div>
+            <div>
+              <label for="email" class="block text-gray-800 font-bold">
+                Confirm Password:
+              </label>
+              <input
+                type="text"
+                placeholder="password"
+                ref = {PWconfirmation}
+                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+              />
+            </div>
+
+        
+                
             <button
               onClick={registerUser}
               class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded"

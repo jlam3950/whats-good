@@ -1,5 +1,6 @@
 import './App.css';
 import Home from "./components/Home";
+import About from "./components/About";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -15,12 +16,12 @@ import { Routes, Route } from "react-router-dom";
 function App() {
 
   return (
-    <div className="App">
- 
+    <div className="App bg-gradient-to-r from-gray-500">
       <header className="App-header">
       <Navbar />
         <Routes>
               <Route path = "/" element={<Home />}></Route>
+              <Route path = "/about" element={<About />}></Route>
               <Route path = "/contact" element={<Contact />}></Route>
               <Route path = "/login" element={<Login />}></Route>
               <Route path = "/register" element={<Register />}></Route>
@@ -31,7 +32,7 @@ function App() {
               <Route path = "/profile" element={<Profile />}></Route>
               <Route path = "/logout" element={<Logout />}></Route>
         </Routes>
-      <Footer />
+      <Footer class/>
       </header>
     </div>
   );
