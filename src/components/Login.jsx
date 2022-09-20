@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/loginSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
 
 const Login = () => {
   const [userLogin, setUserLogin] = useState("");
@@ -10,6 +11,10 @@ const Login = () => {
   const [data, setData] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const google = () => {
+    window.open("http://localhost:5500/google", "_self")
+  }
 
   const saveUser = (login) => {
     dispatch(updateUser(login));
@@ -45,12 +50,26 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className=" h-screen">
       <div class="flex justify-center">
-        <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
+        <div class="py-6 px-8 mt-40 bg-white rounded shadow-xl">
           <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign In</h1>
-          <form action="">
+          <form action="" class = '-mt-4'>
             <div class="mb-6">
+            <div class = 'flex justify-evenly'>
+              <div class = 'flex items-center justify-center border w-16 h-16 text-white rounded py-4 px-4 shadow-xl bg-red-600 hover:bg-red-700 mb-5 cursor-pointer' onClick = {google}>
+                <FaGoogle class ='text-3xl'/>  
+              </div>
+              <div class = 'flex items-center justify-center border w-16 h-16 text-white rounded py-2 px-2 shadow-xl bg-blue-600 hover:bg-blue-700 mb-5 cursor-pointer' onClick = {google}>
+                <FaFacebook class ='text-3xl' />
+              </div>
+              <div class = 'flex items-center justify-center border w-16 h-16 text-white rounded py-2 px-2 shadow-xl bg-gray-700 hover:bg-gray-800 mb-5 cursor-pointer' onClick = {google}>
+                <FaGithub class ='text-3xl' />
+              </div>
+            </div>
+            <div class ='text-center m-2'>
+              <span class =''><hr></hr></span>
+            </div>
               <label for="name" class="block text-gray-800 font-bold">
                 Username:
               </label>
