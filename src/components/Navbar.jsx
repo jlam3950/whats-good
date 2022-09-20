@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { SelectUsername } from "../redux/loginSlice";
 import { NavLink } from "react-router-dom";
 import logo from '../images/logo_img.jpg'
-// import { FaUserCircle } from "react-icons/fa";
 
 
 const Navbar = () => {
@@ -22,14 +21,14 @@ const Navbar = () => {
               </h1>
             </NavLink>
             <div class="hidden md:flex justify-around space-x-4">
-              <NavLink class="hover:text-indigo-600 text-gray-700" to="/">
+              <NavLink class="hover:underline text-gray-700" to="/">
                 Home
               </NavLink>
-              <NavLink class="hover:text-indigo-600 text-gray-700" to="/about">
+              <NavLink class="hover:underline text-gray-700" to="/about">
                 About
               </NavLink>
               <NavLink
-                class="hover:text-indigo-600 text-gray-700"
+                class="hover:underline text-gray-700"
                 to="/contact"
               >
                 Contact

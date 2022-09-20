@@ -6,12 +6,12 @@ import food1 from "../images/p_food_1.jpg";
 import food2 from "../images/p_food_3.jpg";
 import altHero from "../images/alt_hero.jpg";
 import altHero_ from "../images/hero-shrimp.jpg";
+import sushi from '../images/sushi.jpg'
 
 const Home = () => {
   return (
     <>
-      <div class="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10">
-        {/* removed container, px-5 ^^ */}
+      <div class="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10 min-h-screen">
         <div class="flex flex-col mx-auto md:flex-row">
           <div className="flex items-center">
             <div className="flex space-x-1">
@@ -20,7 +20,7 @@ const Home = () => {
                 className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Search..."
               /> */}
-              <button className="bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 border-blue-700 rounded">
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 border-blue-700 rounded md:text-xl">
                 <NavLink to="/search">Check What's Good Around Me</NavLink>
               </button>
             </div>
@@ -29,30 +29,36 @@ const Home = () => {
             What's good around me?
           </button> */}
         </div>
-        <div class="flex flex-col-reverse justify-center items-center md:py-10 md:flex-row md:justify-evenly">
+        <div class="flex flex-col-reverse justify-center items-center md:py-0 md:flex-row md:justify-evenly">
           {/* <img src={hero} class="hero_img object-cover" alt=""></img> */}
           {/* Splash Image ^ */}
-          <div class="flex items-center mt-10 md:mt-0 md:mb-0 lg:mb-20 text-center tracking-tight font-extrabold text-5xl md:p-20 md:ml-8 md:text-5xl md:w-1/2">
+          <div class="flex flex-col items-center mt-10 md:mt-4 md:mb-0 lg:mb-20 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
+          {/* deleted md:p-20 */}
+            What's Good?
+            <div class = 'text-4xl text-white drop-shadow-2xl findthe md:text-5xl'>
             Find the best items at every restaurant.
+            </div>
           </div>
-          <div class="mt-5 md:w-1/2">
+          <div class="mt-5 -mb-20 md:w-1/2 mr-5">
+            {/* <img src={sushi} class="" alt="" /> */}
             <img src={altHero} class="" alt="" />
           </div>
         </div>
+      </div>
         
-        <div class="mx-auto">
-          {/* <h1 class="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
+        {/* <div class="mx-auto bg-blue-600">
+          <h1 class="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
             Find the best items at every restaurant.
-          </h1> */}
-          {/* <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
+          </h1>
+          <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque,
             quidem repudiandae et dignissimos, similique voluptatem, maiores
             dolorem eveniet aperiam deserunt qui illum veniam tempora dolorum`
             eos reiciendis odit quos quisquam quas corrupti fuga laudantium.
             Quas.
-          </p> */}
-        </div>
-      </div>
+          </p>
+        </div> */}
+
       {/* <div class = 'display flex justify-end -z-10'>
       <div class="bg-red-600 -mt-32 mr-2 w-1/6 h-32 absolute -z-20"></div>
       </div> */}
