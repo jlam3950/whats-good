@@ -1,0 +1,37 @@
+import React from 'react'
+import { NavLink } from 'react-router-dom';
+
+const ReviewCard = (props) => {
+
+  return (
+    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+
+    <div class="flex flex-row">
+       {/* <div class="flex justify-center py-1 w-2/5">
+       <img
+         src={props.props.image_url}
+           class="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"        
+           alt="restaurant"
+         />
+       </div> */}
+       <div class="card-body w-3/5 text-xs text-left sm:text-sm lg:text-lg">
+         <h2 class="card-title pt-2 font-bold">Item Name: {props.props.FoodName}</h2>
+         <hr></hr>
+         <h3>Stars: {props.props.Rating}</h3>
+         <div class ='flex justify-end'> 
+
+         <NavLink to = { `/FoodItem/${props.props.FoodID}`}>
+         <button
+             onClick=""
+             id={props.props.FoodID}
+             class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
+           >
+           Reviews
+           </button></NavLink></div>  
+       </div>
+      </div>
+    </div>
+   )
+}
+
+export default ReviewCard;

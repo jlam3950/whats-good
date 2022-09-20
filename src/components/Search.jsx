@@ -163,8 +163,6 @@ const Search = () => {
         </GoogleMap>
     )
   }
-  let searchResults;
-  console.log(searchResults);
 
   return (
     <>
