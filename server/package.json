@@ -23,6 +23,7 @@
     "mongoose": "^6.5.4",
     "node-fetch": "^3.2.10",
     "passport": "^0.6.0",
+    "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
     "react-dotenv": "^0.1.3"
   }
