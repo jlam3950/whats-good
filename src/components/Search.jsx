@@ -24,11 +24,9 @@ const Search = () => {
     console.log("address Clicked");
     const typedAddress = inputAddress.current.value;
     if (typedAddress === "") return;
-    const calledAddress = typedAddress
-      .replaceAll(" ", "+")
-      .replaceAll("/[.,#!$%^&*;:{}=-_`~()]/", "");
-    console.log(typedAddress);
-    console.log("Called ", calledAddress);
+
+    const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
+    
     fetch("/getLocationWithAddress", {
       method: "POST",
       body: JSON.stringify({ address: calledAddress }),
