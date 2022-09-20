@@ -133,8 +133,7 @@ app.get("/check", (req, res) =>
     })
 );
 
-// Sets up new restaurant with data received in req.body formatted the same way as in the schema. See  server > models > restaurant.js for schema
-//This one likely works.
+// Adds New Restaurant
 app.post("/newRestaurant", (req, res) => {
   //console.log(req.body)
   const newRestaurant = new Restaurant(req.body);
@@ -150,7 +149,7 @@ app.post("/newRestaurant", (req, res) => {
 });
 
 
-//ADD NEW ITEM
+//Add New Food Item
 app.post("/newFoodItem", (req, res) => {
   // console.log(req.body)
   const { ID, foodData } = req.body;
@@ -166,7 +165,7 @@ app.post("/newFoodItem", (req, res) => {
   );
 });
 
-//NEW REVIEW
+//Add New Review
 app.post("/newReview", (req, res) => {
   console.log(req.body)
   const { ID, FoodID, reviewData } = req.body;
@@ -191,6 +190,8 @@ app.post("/newReview", (req, res) => {
     Description: reviewData.Description,
     Date: Date.now(),}
   }})
+
+  // NEED TO UPDATE AVERAGE USER RATING FOR FOOD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,
 });
 
 app.listen(PORT, () => {

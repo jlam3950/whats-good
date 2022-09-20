@@ -16,7 +16,7 @@ const RestaurantDetails = () => {
   const [flag, setFlag] = useState(true);
   const [noReviewsFlag, setNoReviewsFlag] = useState("");
   const [sortedMenuData, setSortedMenuData] = useState([]);
-  const [showAddFood, setShowAddFood] = useState(false);
+  const [showAddFood, setShowAddFood] = useState(true);
 
   //Fetches data from database. If none, ask to if they'd like to be the first to review an item. Else, pull the data.
   const checkDataBase = async () => {
@@ -36,7 +36,7 @@ const RestaurantDetails = () => {
           }
           setDBData(response);
           const unsorted = response[0].MenuItems;
-          console.log(response[0].MenuItems);
+          //console.log(response[0].MenuItems);
           let sorted = unsorted.slice(0);
           sorted.sort((a, b) => {
             return a.Rating - b.Rating;
@@ -63,6 +63,7 @@ const RestaurantDetails = () => {
       },
     }).then((res) => console.log("new rest Response", res));
   };
+
   const toggleAddNewItem = () => {
     setShowAddFood(!showAddFood);
   };
@@ -88,66 +89,45 @@ const RestaurantDetails = () => {
       },
     }).then((res) => console.log("new food Response", res));
     newItemName.current.value = "";
+    setSortedMenuData([...sortedMenuData, payload])
   };
 
-  // This doesn't work yet. It needs to be fixed in the server.js. It's not targetting the correct spot on where to
-  // add the new review. It should target the Restaurat "ID" then "FoodID" (within "MenuItems") and append to "Reviews"
-  const newReview = () => {
-    const payload = {
-      ID: id,
-      FoodID: "123",
-      reviewData: {
-        Username: "sillyUsername",
-        Rating: 3,
-        Description: "This tasting not so great so I gave it a three",
-      },
-    };
-    fetch("/newReview", {
-      method: "post",
-      body: JSON.stringify(payload),
-      headers: {
-        "content-Type": "application/json",
-      },
-    }).then((res) => console.log("new Review Response", res));
-  };
+  
 
   useEffect(() => {
     setRestData(allRestData.find((singleRestData) => singleRestData.id === id));
     checkDataBase();
   }, [allRestData, id]);
 
+  // Test Button to test the functions
   const checkFunction = () => {
     //TestCheck();
-
     //newRestaurant()
     //newMenuItem()
     //newReview()
-    checkDataBase();
+    // checkDataBase();
     //console.log(restData);
   };
 
   return (
     <div class="restaurant_info">
-      <h1>{restData.name}</h1>
+      <h1>{restData.name}</h1>{console.log(restData)}
 
       {/* {restData.location.display_address.map((addressItem, index) => {        {/*This code is causing problems. Works for some restaurants
         return <h2 key={index}>{addressItem}</h2>;
       })} */}
       <h2>{restData.display_phone}</h2>
       <h2>Top Rated Items!</h2>
-      {sortedMenuData.slice(0, 2).map((menuItem,index) => {
+      {sortedMenuData.slice(0, 2).map((menuItem) => {
         return (
-           <ReviewCard id={index} props={menuItem} />
+           <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
         );
       })}
-      <h2 hidden={sortedMenuData.length > 3}>More food items!</h2>
-      {sortedMenuData.length > 3 &&
-        sortedMenuData.slice(0, 2).map((menuItem) => {
+      <h2 hidden={sortedMenuData.length < 3}>More food items!</h2>
+      {sortedMenuData.length < 3 &&
+        sortedMenuData.slice(2).map((menuItem,index) => {
           return (
-            <> {console.group(sortedMenuData.length)}
-              <h3>Item Name: {menuItem.FoodName}</h3>
-              <h3>Stars: {menuItem.Rating}</h3>
-            </>
+            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
           );
         })}
       {/* Render if (noReviewFlags === true) 
