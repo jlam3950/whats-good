@@ -115,11 +115,8 @@ app.post("/register", (req, res) => {
       await newUser.save();
       res.send("User Created");
     }
+  })
 });
-
-const key = process.env.API_KEY;
-
-const axios = require("axios");
 
 app.post("/getLocation", (req, res) => {
   const lat = req.body.lat;

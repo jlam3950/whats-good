@@ -9,14 +9,24 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-      // colors: {
-      //   transparent: 'transparent',
-      //   current: 'currentColor',
-      //   'cc': '#264653',
-      //   'pg': '#2A9D8F',
-      //   'yel': '#E9C46A',
-      //   'sb': '#F4A261',
-      //   'bs': '#E76F51',
-      // }
-  }
+    extend: {
+        keyframes: {
+            'fade-in-down': {
+                '0%': {
+                    opacity: '0',
+                    transform: 'translateY(-10px)'
+                },
+                '100%': {
+                    opacity: '1',
+                    transform: 'translateY(0)'
+                },
+            }
+        },
+        animation: {
+            'fade-in-down': 'fade-in-down 0.5s ease-out'
+        }
+    },
+  },
+  variants: {},
+  plugins: [],
 }

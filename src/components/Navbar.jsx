@@ -15,7 +15,7 @@ const Navbar = () => {
         <div class="flex justify-between h-16 px-10 items-center">
           <div class="flex items-center space-x-2 lg:ml-4 ">
             <NavLink to="/">
-              <h1 class="text-xl -m-4 md:mr-2 lg:text-3xl font-bold cursor-pointer">
+              <h1 class="text-xl -m-4 md:mr-2 lg:text-3xl font-bold cursor-pointer ">
                   <img src = {logo} class = 'h-8 mb-1' alt =''></img>
 
               </h1>

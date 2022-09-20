@@ -52,7 +52,7 @@ const Register = () => {
   return (
     <div className=" h-screen">
       <div class="flex justify-center">
-        <div class="py-6 px-8 h-80 mt-40 bg-white rounded shadow-xl">
+        <div class="py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
           <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
           <form action="">
             {/* <div class = 'mb-5'>
@@ -77,7 +77,7 @@ const Register = () => {
                 id="name"
                 placeholder="username"
                 onChange={saveReg}
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
             </div>
 
@@ -86,10 +86,10 @@ const Register = () => {
                 Password:
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="password"
                 onChange={savePw}
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                class="w-full border -mb-2 border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
              <div
                 class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
@@ -102,7 +102,7 @@ const Register = () => {
                 Confirm Password:
               </label>
               <input
-                type="text"
+                type="password"
                 placeholder="password"
                 ref = {PWconfirmation}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"

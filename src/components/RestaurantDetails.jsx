@@ -110,26 +110,39 @@ const RestaurantDetails = () => {
   };
 
   return (
-    <div class="restaurant_info">
-      <h1>{restData.name}</h1>{console.log(restData)}
+    <div class="restaurant_info min-h-screen">
+      <div class = 'flex flex-col items-center justify-center md:mb-10'>
+        <h1 class = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
+        <h2 class = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
+      </div>
+
+      {console.log(restData)}
 
       {/* {restData.location.display_address.map((addressItem, index) => {        {/*This code is causing problems. Works for some restaurants
         return <h2 key={index}>{addressItem}</h2>;
       })} */}
-      <h2>{restData.display_phone}</h2>
-      <h2>Top Rated Items!</h2>
-      {sortedMenuData.slice(0, 2).map((menuItem) => {
-        return (
-           <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
-        );
-      })}
-      <h2 hidden={sortedMenuData.length < 3}>More food items!</h2>
-      {sortedMenuData.length < 3 &&
-        sortedMenuData.slice(2).map((menuItem,index) => {
-          return (
-            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
-          );
-        })}
+      <div class = 'flex justify-center text-xl font-bold mb-5'>
+        <h2>Most Popular Items</h2>
+      </div>
+
+      <div class = 'flex flex-col sm:flex-row md:justify-center md:space-x-10'>
+       
+          {sortedMenuData.slice(0, 2).map((menuItem) => {
+            return (
+              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
+            );
+          })}
+      
+        {sortedMenuData.length < 3 &&
+          sortedMenuData.slice(2).map((menuItem,index) => {
+            return (
+              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
+            );
+          })}
+      </div>
+
+      <div className= 'flex flex-col items-center mt-5'> 
+        <h2  class = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
       {/* Render if (noReviewFlags === true) 
       "Be the first to leave a review" 
       "Add menu item"
@@ -146,8 +159,10 @@ const RestaurantDetails = () => {
       item 5 .... map
       */}
       <div>
-        <button hidden={!showAddFood} onClick={toggleAddNewItem}>
-          Add new Item
+        <button 
+          class = 'bg-green-500 text-white text-xs py-2 px-3 m-2 rounded' 
+          hidden={!showAddFood} onClick={toggleAddNewItem}>
+            Add new Item
         </button>
         <input
           ref={newItemName}
@@ -159,8 +174,11 @@ const RestaurantDetails = () => {
         </button>
       </div>
 
-      <button onClick={checkFunction}>Test Button to check Functions</button>
-      {/* Test button to check functions */}
+      <button 
+        class = 'bg-red-500 text-white text-xs py-2 px-3 m-2 rounded'
+        onClick={checkFunction}>Test Button to check Functions</button>
+        {/* Test button to check functions */}
+        </div>
     </div>
   );
 };
