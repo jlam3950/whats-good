@@ -170,9 +170,10 @@ app.post("/newFoodItem", (req, res) => {
 app.post("/newReview", (req, res) => {
   console.log(req.body)
   const { ID, FoodID, reviewData } = req.body;
+  //Adds review to Restaurant db
   Restaurant.updateOne({ID:ID}, {$push: { "MenuItems.$[elem].Reviews": { 
       Username: reviewData.Username,
-      Rating: reviewData.Rating,
+      UserRating: reviewData.UserRating,
       Description: reviewData.Description,
       Date: Date.now(),
   }}},
@@ -183,6 +184,13 @@ app.post("/newReview", (req, res) => {
 .then(
     res.json({msg: "soemthing happened"})
   );
+
+  //Adds review to user db
+  User.updateOne({username: reviewData.username},{$push: {Reviews: {
+    UserRating: reviewData.UserRating,
+    Description: reviewData.Description,
+    Date: Date.now(),}
+  }})
 });
 
 app.listen(PORT, () => {
