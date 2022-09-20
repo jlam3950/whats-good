@@ -2,25 +2,33 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
 import RestaurantCard from "./RestaurantCard";
-import { GoogleMap, useLoadScript, InfoWindow, Marker } from "@react-google-maps/api"
+import {
+  GoogleMap,
+  useLoadScript,
+  InfoWindow,
+  Marker,
+} from "@react-google-maps/api";
+import ryu from "../images/ryu.gif";
 import axios from "axios";
+let googleKey = process.env.REACT_APP_GOOGLE_KEY;
 
 const Search = () => {
-
-
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
   const [restList, setRestList] = useState([]);
-  const [userAddress, setUserAddress] = useState('');
+  const [userAddress, setUserAddress] = useState("");
   const dispatch = useDispatch();
   const inputAddress = useRef();
 
-  const handleAddress = () =>{
-    console.log("address Clicked")
-    const typedAddress = (inputAddress.current.value);
+  const handleAddress = () => {
+    console.log("address Clicked");
+    const typedAddress = inputAddress.current.value;
     if (typedAddress === "") return;
-    const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
-    console.log("Called ", calledAddress)
+    const calledAddress = typedAddress
+      .replaceAll(" ", "+")
+      .replaceAll("/[.,#!$%^&*;:{}=-_`~()]/", "");
+    console.log(typedAddress);
+    console.log("Called ", calledAddress);
     fetch("/getLocationWithAddress", {
       method: "POST",
       body: JSON.stringify({ address: calledAddress }),
@@ -32,13 +40,10 @@ const Search = () => {
       .then((response) => {
         setRestList(response);
         saveRestaurantList(response);
-        setUserAddress(typedAddress)
+        setUserAddress(typedAddress);
       });
+  };
 
-  } 
-  
-
-  
   const saveRestaurantList = (list) => {
     dispatch(updateRestaurantList(list));
   };
@@ -46,126 +51,131 @@ const Search = () => {
   const getLocation = async (e) => {
     try {
       e.preventDefault();
-      console.log("clicked")
+      console.log("clicked");
       fetchAPI();
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(()=>{
-    const keyDownHandler = event => {
-      if (event.key==="Enter"){
-        event.preventDefault()
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
         handleAddress();
       }
-    }
-    document.addEventListener('keydown',keyDownHandler);
-    return () => {
-      document.removeEventListener('keydown',keyDownHandler);
     };
-  },[])
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
 
-  const fetchAPI = () =>{
-    
-    if(lat==="" && long===""){
-      alert('geolocation data loading, click search once map has loaded');
+  const fetchAPI = () => {
+    if (lat === "" && long === "") {
+      alert("geolocation data loading, click search once map has loaded");
     }
 
-    if(lat !== ""){
-    console.log("fetching")
-    fetch("/getLocation", {
-      method: "POST",
-      body: JSON.stringify({ lat: lat, long: long }),
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        setRestList(response);
-        saveRestaurantList(response);
-      });
-  }}
+    if (lat !== "") {
+      console.log("fetching");
+      fetch("/getLocation", {
+        method: "POST",
+        body: JSON.stringify({ lat: lat, long: long }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          setRestList(response);
+          saveRestaurantList(response);
+        });
+    }
+  };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
     });
-  });
+  }, []);
 
   //googleMapAPI
- 
-  let googleKey = process.env.REACT_APP_GOOGLE_KEY; 
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: googleKey,
   });
-  
+
   const MapLoad = () => {
     if (!isLoaded) return <div>Loading...</div>;
-    else if (isLoaded){
-      return <Map />
-    };
-  }
+    else if (isLoaded) {
+      return <Map />;
+    }
+  };
 
   const GeoCode = () => {
     const location = userAddress;
-    axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-      params: {
-        address: location,
-        key: googleKey, 
-      }
-    })
-    .then(function(response){
-      setLat(response.data.results[0].geometry.location.lat);
-      setLong(response.data.results[0].geometry.location.lng);
-    })
-    .catch(function(error){
-      console.log(error);
-    });
-  }
+    axios
+      .get("https://maps.googleapis.com/maps/api/geocode/json", {
+        params: {
+          address: location,
+          key: googleKey,
+        },
+      })
+      .then((response) => {
+        setLat(response.data.results[0].geometry.location.lat);
+        setLong(response.data.results[0].geometry.location.lng);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  GeoCode()
+  GeoCode();
 
-  function Map(){
-    const [activeMarker, setActiveMarker] = useState('');
+  function Map() {
+    const [activeMarker, setActiveMarker] = useState("");
     const handleActiveMarker = (marker) => {
-      if (marker === activeMarker){
-        return; 
+      if (marker === activeMarker) {
+        return;
       }
       setActiveMarker(marker);
-    }
+    };
 
     return (
       <GoogleMap
         zoom={14}
-        center={{lat: lat, lng: long}}
+        center={{ lat: lat, lng: long }}
         onClick={() => setActiveMarker(null)}
-        mapContainerClassName = "map-container"
-        >
-          {restList.map((restaurants, index) => {
-          return <Marker 
-          key={index}
-          animation={2}
-          onClick={() => handleActiveMarker(index)}
-          position= {{lat:restaurants.coordinates.latitude, lng:restaurants.coordinates.longitude}}>
-          {activeMarker === index ? (
-            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-              <div>
-              {restaurants.name}<br></br>
-              {restaurants.phone}<br></br>
-              {`Rating: ${restaurants.rating}`}
-              </div>
-            </InfoWindow>
-          ) : null}
-        </Marker>
-    })}   
-        </GoogleMap>
-    )
+        mapContainerClassName="map-container"
+      >
+        {restList.map((restaurants, index) => {
+          return (
+            <Marker
+              key={index}
+              animation={2}
+              onClick={() => handleActiveMarker(index)}
+              position={{
+                lat: restaurants.coordinates.latitude,
+                lng: restaurants.coordinates.longitude,
+              }}
+            >
+              {activeMarker === index ? (
+                <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                  <div>
+                    {restaurants.name}
+                    <br></br>
+                    {restaurants.phone}
+                    <br></br>
+                    {`Rating: ${restaurants.rating}`}
+                  </div>
+                </InfoWindow>
+              ) : null}
+            </Marker>
+          );
+        })}
+      </GoogleMap>
+    );
   }
-  let searchResults;
-  console.log(searchResults);
 
   return (
     <>
@@ -182,9 +192,11 @@ const Search = () => {
                 //   setUserAddress(e.target.value);
                 //   // searchResults = e.target.value;
                 // }}
-               
               />
-              <button onClick={handleAddress} className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg">
+              <button
+                onClick={handleAddress}
+                className="px-4 text-white bg-green-500 hover:bg-green-700 borderborder-blue-700 rounded-lg"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5"
@@ -211,14 +223,21 @@ const Search = () => {
         </div>
       </div>
       <div class="container mx-auto md:mt-2">
-        <div class="flex flex-col md:flex-row space-x-2">
-          <div class="container h-1/12 rounded sm:max-w-xl md:ml-0 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center">
+        <div class="flex flex-col md:flex-row justify-center">
+          <div class="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-5 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
             {restList.map((restData) => {
               return <RestaurantCard id={restData.ID} props={restData} />;
             })}
           </div>
-          <div class="container h-1/2 rounded md:w-1/2 mr-2 md:h-screen">
-            {lat !== '' ? <MapLoad /> : 'Geolocation data is loading...' }
+          <div class="container h-1/2 items-center rounded md:mt-8 md:w-1/2 px-4 md:h-screen">
+            {lat !== "" ? (
+              <MapLoad />
+            ) : (
+              <div class = 'flex flex-col items-center justify-center'>
+                Geolocation is loading...
+                <img class="items-center text-center font-bold" src={ryu} alt=""></img>
+              </div>
+            )}
           </div>
         </div>
       </div>
