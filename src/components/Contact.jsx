@@ -7,7 +7,7 @@ const Contact = () => {
             <div class="mt-8 overflow-hidden">
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6 mr-2 mb-8 dark:bg-gray-800 sm:rounded-lg">
-                        <h1 class="text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+                        <h1 class="text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight animate-fade-in-down">
                             Get in touch
                         </h1>
                         <p class="text-normal text-lg sm:text-xl font-medium  dark:text-gray-400 mt-2">

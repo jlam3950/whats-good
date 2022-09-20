@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <div className=" h-screen">
       <div class="flex justify-center">
-        <div class="py-6 px-8 mt-40 bg-white rounded shadow-xl">
+        <div class="py-6 px-8 mt-20 bg-white rounded shadow-xl">
           <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign In</h1>
           <form action="" class = '-mt-4'>
             <div class="mb-6">
@@ -79,21 +79,21 @@ const Login = () => {
                 id="name"
                 placeholder="username"
                 onChange={(e) => setUserLogin(e.target.value)}
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
             </div>
 
             <div>
-              <label for="email" class="block text-gray-800 font-bold">
+              <label for="password" class="block text-gray-800 font-bold">
                 Password:
               </label>
               <input
-                type="text"
+                type="password"
                 name="email"
                 id="email"
                 placeholder="password"
                 onChange={(e) => setPwLogin(e.target.value)}
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
               <div
                 class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"

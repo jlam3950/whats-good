@@ -11,31 +11,20 @@ import sushi from '../images/sushi.jpg'
 const Home = () => {
   return (
     <>
-      <div class="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10 min-h-screen">
+      <div class="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10 min-h-screen relative">
         <div class="flex flex-col mx-auto md:flex-row">
           <div className="flex items-center">
             <div className="flex space-x-1">
-              {/* <input
-                type="text"
-                className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                placeholder="Search..."
-              /> */}
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 border-blue-700 rounded md:text-xl">
                 <NavLink to="/search">Check What's Good Around Me</NavLink>
               </button>
             </div>
           </div>
-          {/* <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border-blue-700 rounded">
-            What's good around me?
-          </button> */}
         </div>
         <div class="flex flex-col-reverse justify-center items-center md:py-0 md:flex-row md:justify-evenly">
-          {/* <img src={hero} class="hero_img object-cover" alt=""></img> */}
-          {/* Splash Image ^ */}
-          <div class="flex flex-col items-center mt-10 md:mt-4 md:mb-0 lg:mb-20 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
-          {/* deleted md:p-20 */}
+          <div class="flex flex-col items-center  animate-fade-in-down mt-10 md:mt-4 md:mb-0 lg:mb-24 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
             What's Good?
-            <div class = 'text-4xl text-white drop-shadow-2xl findthe md:text-5xl'>
+            <div class = 'text-4xl max-w-lg text-white drop-shadow-2xl findthe md:text-5xl'>
             Find the best items at every restaurant.
             </div>
           </div>
