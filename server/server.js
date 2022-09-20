@@ -153,8 +153,8 @@ app.post("/user", (req, res) => {
   });
 });
 
-// Checks DB if restaurant exists by ID, if so return restaurant data.
-app.get("/checkDB", (req, res) => {
+// Checks DB if restaurant exists by ID, if so return restaurant data. Not sure if this works. It was based on the User.findOne()
+app.post("/checkDB", (req, res) => {
   Restaurant.find({ ID: req.body.id }, async (err, doc) => {
     if (err) throw err;
     else {
@@ -163,26 +163,77 @@ app.get("/checkDB", (req, res) => {
   });
 });
 
-//Test path
-app.get('/check',(req,res)=>
-Restaurant.find({}).then((data)=>{
-  console.log("Data ",data)
-  res.json(data);
-}).catch((error)=>{
-  console.log('error ',error);
-}))
+//Test path, checks to see if we have any restaurant data
+app.get("/check", (req, res) =>
+  Restaurant.find({})
+    .then((data) => {
+      console.log("Data ", data);
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log("error ", error);
+    })
+);
 
-
-// Sets up new restaurant with data received in req.body formatted the same way as in the schema. See  server > models > restaurant.js for schema
+// Adds New Restaurant
 app.post("/newRestaurant", (req, res) => {
+  //console.log(req.body)
   const newRestaurant = new Restaurant(req.body);
   newRestaurant.save((error) => {
     if (error) {
-      console.log("Something wrong");
+      res.status(500).json({msg: "Internal Server Error??"})
     } else {
-      console.log("Data saved");
+      res.json({
+        msg: "Data saved",
+      });
     }
   });
+});
+
+
+//Add New Food Item
+app.post("/newFoodItem", (req, res) => {
+  // console.log(req.body)
+  const { ID, foodData } = req.body;
+  Restaurant.updateOne({ ID: ID}, {$push: {
+    MenuItems: {
+      FoodID: foodData.FoodID,
+      FoodName: foodData.FoodName,
+      Rating: 0,
+      Reviews:[],
+    }
+  }}, {upsert:true}).then(
+    res.json({msg: "soemthing happened"})
+  );
+});
+
+//Add New Review
+app.post("/newReview", (req, res) => {
+  console.log(req.body)
+  const { ID, FoodID, reviewData } = req.body;
+  //Adds review to Restaurant db
+  Restaurant.updateOne({ID:ID}, {$push: { "MenuItems.$[elem].Reviews": { 
+      Username: reviewData.Username,
+      UserRating: reviewData.UserRating,
+      Description: reviewData.Description,
+      Date: Date.now(),
+  }}},
+  {
+    arrayFilters: [{"elem.FoodID": FoodID}], multi:false
+  }
+  )
+.then(
+    res.json({msg: "soemthing happened"})
+  );
+
+  //Adds review to user db
+  User.updateOne({username: reviewData.username},{$push: {Reviews: {
+    UserRating: reviewData.UserRating,
+    Description: reviewData.Description,
+    Date: Date.now(),}
+  }})
+
+  // NEED TO UPDATE AVERAGE USER RATING FOR FOOD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,
 });
 
 app.listen(PORT, () => {

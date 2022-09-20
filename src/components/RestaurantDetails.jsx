@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import ReviewCard from "./ReviewCard";
 
 const RestaurantDetails = () => {
+  const newItemName = useRef();
   let allRestData = useSelector((state) => state.restaurantList.restList);
 
   const { id } = useParams();
-  const [restData, setRestData] = useState("");
+  const [restData, setRestData] = useState(
+    allRestData.find((singleRestData) => singleRestData.id === id)
+  );
   const [dbData, setDBData] = useState("");
   const [flag, setFlag] = useState(true);
-  const [noReviewsFlag, setNoReviewsFlag] = useState(true)
+  const [noReviewsFlag, setNoReviewsFlag] = useState("");
+  const [sortedMenuData, setSortedMenuData] = useState([]);
+  const [showAddFood, setShowAddFood] = useState(true);
 
-  // //Fetch data from database. If none, ask to if they'd like to be the first to review an item. Else, pull the data.
+  //Fetches data from database. If none, ask to if they'd like to be the first to review an item. Else, pull the data.
   const checkDataBase = async () => {
     if (flag) {
       await fetch("/checkDB", {
-        method: "get",
+        method: "post",
         body: JSON.stringify({ id }),
         headers: {
           "Content-Type": "application/json",
@@ -23,45 +30,106 @@ const RestaurantDetails = () => {
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
+          if (response == [] || response == null) {
+            newRestaurant();
+            setNoReviewsFlag(true);
+          }
           setDBData(response);
+          const unsorted = response[0].MenuItems;
+          //console.log(response[0].MenuItems);
+          let sorted = unsorted.slice(0);
+          sorted.sort((a, b) => {
+            return a.Rating - b.Rating;
+          });
+          setSortedMenuData(sorted);
           //if response equals empty or says there's no reviews (depending how we set it up) setNoReviewsFlag(true) else setNoReviewsFlag(false)
         });
-        setFlag(false)
-
     }
   };
-  //TEST Fetch
-  const TestCheck = async () => {
-      await fetch("/check", {
-        method: "get",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          console.log(response);
-        });
+
+  const newRestaurant = () => {
+    const payload = {
+      restaurantName: restData.name,
+      ID: id,
+      AvgRating: 0,
+      MenuItems: {},
+      Address: restData.Address,
+    };
+    fetch("/newRestaurant", {
+      method: "post",
+      body: JSON.stringify(payload),
+      headers: {
+        "content-Type": "application/json",
+      },
+    }).then((res) => console.log("new rest Response", res));
   };
+
+  const toggleAddNewItem = () => {
+    setShowAddFood(!showAddFood);
+  };
+
+  const newMenuItem = () => {
+    const newFoodName = newItemName.current.value;
+    toggleAddNewItem();
+    if (newFoodName === "") return;
+    const payload = {
+      ID: id,
+      foodData: {
+        FoodID: uuidv4(),
+        FoodName: newFoodName,
+        Rating: 0,
+        Reviews: [],
+      },
+    };
+    fetch("/newFoodItem", {
+      method: "post",
+      body: JSON.stringify(payload),
+      headers: {
+        "content-Type": "application/json",
+      },
+    }).then((res) => console.log("new food Response", res));
+    newItemName.current.value = "";
+    setSortedMenuData([...sortedMenuData, payload])
+  };
+
+  
 
   useEffect(() => {
     setRestData(allRestData.find((singleRestData) => singleRestData.id === id));
+    checkDataBase();
   }, [allRestData, id]);
 
+  // Test Button to test the functions
   const checkFunction = () => {
-    TestCheck();
+    //TestCheck();
+    //newRestaurant()
+    //newMenuItem()
+    //newReview()
+    // checkDataBase();
     //console.log(restData);
   };
 
   return (
     <div class="restaurant_info">
-      <h1>{restData.name}</h1>
-      {/* {restData.location.display_address.map((addressItem, index) => {        //This code is causing problems
+      <h1>{restData.name}</h1>{console.log(restData)}
+
+      {/* {restData.location.display_address.map((addressItem, index) => {        {/*This code is causing problems. Works for some restaurants
         return <h2 key={index}>{addressItem}</h2>;
       })} */}
       <h2>{restData.display_phone}</h2>
-      {/* <button onClick={checkFunction}>Button</button> Test button to check functions */}
+      <h2>Top Rated Items!</h2>
+      {sortedMenuData.slice(0, 2).map((menuItem) => {
+        return (
+           <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
+        );
+      })}
+      <h2 hidden={sortedMenuData.length < 3}>More food items!</h2>
+      {sortedMenuData.length < 3 &&
+        sortedMenuData.slice(2).map((menuItem,index) => {
+          return (
+            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
+          );
+        })}
       {/* Render if (noReviewFlags === true) 
       "Be the first to leave a review" 
       "Add menu item"
@@ -77,9 +145,24 @@ const RestaurantDetails = () => {
       item 4
       item 5 .... map
       */}
+      <div>
+        <button hidden={!showAddFood} onClick={toggleAddNewItem}>
+          Add new Item
+        </button>
+        <input
+          ref={newItemName}
+          hidden={showAddFood}
+          placeholder="Enter Food Name"
+        ></input>
+        <button hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
+          Add Food to List
+        </button>
+      </div>
+
+      <button onClick={checkFunction}>Test Button to check Functions</button>
+      {/* Test button to check functions */}
     </div>
   );
 };
 
 export default RestaurantDetails;
-
