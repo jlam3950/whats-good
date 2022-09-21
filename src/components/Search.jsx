@@ -231,10 +231,6 @@ const Search = () => {
 
               <div class="flex flex-col items-center h-1/2 mt-20 justify-center">
                 <PacmanLoader color="#f8ffd0" size={30} />{" "}
-              <div class = 'flex flex-col items-center justify-center'>
-                Geolocation is loading...
-                <img className="items-center text-center font-bold" src={ryu} alt=""></img>
-
               </div>
             )}
           </div>
