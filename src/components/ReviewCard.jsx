@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { SelectUsername } from "../redux/loginSlice";
+import { NavLink } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
 import { Dialog, Transition } from "@headlessui/react";
@@ -63,7 +64,7 @@ const ReviewCard = ({ props, restID }) => {
   };
 
   return (
-    <div className="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 p-2 min-h-48 md:card-side ">
+    <div className="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 p-2 min-h-64 md:card-side transform transition duration-500 hover:scale-105">
       <div className="flex flex-col">
         {/* <div className="flex justify-center py-1 w-2/5">
        <img
@@ -80,15 +81,15 @@ const ReviewCard = ({ props, restID }) => {
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
-          <h3>{starsArray.length==0&&"No reviews yet!"}{starsArray.length!=0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length)}{starsArray.length!=0&&"/5 Stars"}</h3>
+          <h3 className = {starsArray.length===0 ? 'h-12 lg:h-16 flex flex-col justify-center' : ''}>{starsArray.length===0&&"No reviews yet..."}{starsArray.length!==0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length)}{starsArray.length!==0&&"/5 Stars"}</h3>
           <div className="flex flex-col">
             <button
               onClick={() => setOpen(true)}
               id={props.FoodID}
-              hidden={starsArray.length==0}
-              className="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
+              hidden={starsArray.length===0}
+              className="bg-blue-500 hover:bg-blue-600 text-white m-1  px-10 border text-sm border-blue-700 rounded"
             >
-              Read Reviews!
+              User Reviews
             </button>
             {/* modal */}
 
@@ -170,14 +171,14 @@ const ReviewCard = ({ props, restID }) => {
             {/* modal */}
           </div>
         </div>
-        <button onClick={toggleForm} disabled={username == null}>
-          {username == null && "Log in to leave a review"}
-          {username != null && "Leave a Review!"}
-        </button>
+        <NavLink onClick={toggleForm} disabled={username == null} className = {username != null ? 'bg-green-500 hover:bg-green-600 text-white m-1 px-10 border border-blue-700 rounded text-sm text-center' : 'bg-red-500 hover:bg-red-600 text-white m-1 px-10 border border-blue-700 rounded text-sm'} to = {username === null ? '/login' : ''}>
+          {username == null && "Log in to review"}
+          {username != null && "Leave a Review"}
+        </NavLink>
         <div hidden={username===null}>
 
         <div hidden={showForm}>
-          <div className="flex justify-center p-2">
+          <div className="flex justify-center p-2 m-1">
             <ReactStars
               count={5}
               onChange={ratingChanged}
@@ -187,7 +188,7 @@ const ReviewCard = ({ props, restID }) => {
           </div>
           <input ref={userReview} placeholder="Write a review..."></input>
           <button
-            className="bg-green-500 text-white text-xs py-2 px-3 rounded"
+            className="bg-green-500 hover:bg-green-700 text-white text-xs py-2 px-3 mx-2 rounded"
             onClick={newReview}
             disabled={userRated === 0}
           >

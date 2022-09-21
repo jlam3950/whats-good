@@ -11,32 +11,32 @@ import sushi from '../images/sushi.jpg'
 const Home = () => {
   return (
     <>
-      <div class="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10 min-h-screen relative">
-        <div class="flex flex-col mx-auto md:flex-row">
+      <div className="flex flex-col md:items-center mx-auto mt-5 md:space-y-0 z-10 min-h-screen relative">
+        <div className="flex flex-col mx-auto md:flex-row">
           <div className="flex items-center">
             <div className="flex space-x-1">
-              <button className="bg-green-500 hover:bg-green-700 text-white font-bold m-2 py-2 px-4 border-blue-700 rounded md:text-xl">
+              <button className="bg-green-500 hover:bg-green-700 shadow-xl text-white font-bold m-2 py-2 px-4 border-blue-700 rounded md:text-xl">
                 <NavLink to="/search">Check What's Good Around Me</NavLink>
               </button>
             </div>
           </div>
         </div>
-        <div class="flex flex-col-reverse justify-center items-center md:py-0 md:flex-row md:justify-evenly">
-          <div class="flex flex-col items-center  animate-fade-in-down mt-10 md:mt-4 md:mb-0 lg:mb-24 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
+        <div className="flex flex-col-reverse justify-center items-center md:py-0 md:flex-row md:justify-evenly">
+          <div className="flex flex-col items-center  animate-fade-in-down mt-10 md:mt-4 md:mb-0 lg:mb-24 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
             What's Good?
             <div class = 'text-4xl max-w-lg text-white drop-shadow-2xl findthe md:text-5xl'>
             Find the best items at every restaurant.
             </div>
           </div>
-          <div class="mt-5 -mb-20 md:w-1/2 mr-5">
-            {/* <img src={sushi} class="" alt="" /> */}
-            <img src={altHero} class="" alt="" />
+          <div className="mt-5 -mb-20 md:w-1/2 mr-5">
+            {/* <img src={sushi} className="" alt="" /> */}
+            <img src={altHero} className="" alt="" />
           </div>
         </div>
       </div>
         
-        {/* <div class="mx-auto bg-blue-600">
-          <h1 class="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
+        {/* <div className="mx-auto bg-blue-600">
+          <h1 className="text-2xl text-center px-5 font-extrabold tracking-tight py-6  findthe md:text-3xl lg:text-4xl md:text-center">
             Find the best items at every restaurant.
           </h1>
           <p className="text-center px-5 text-darkGrey md:text-center md:mb-5">
@@ -49,42 +49,42 @@ const Home = () => {
         </div> */}
 
       {/* <div class = 'display flex justify-end -z-10'>
-      <div class="bg-red-600 -mt-32 mr-2 w-1/6 h-32 absolute -z-20"></div>
+      <div className="bg-red-600 -mt-32 mr-2 w-1/6 h-32 absolute -z-20"></div>
       </div> */}
 
       {/* blue bar */}
-      {/* <div class="bg-blue-600 mt-32 w-full h-32 bluebar absolute -z-50"></div> */}
+      {/* <div className="bg-blue-600 mt-32 w-full h-32 bluebar absolute -z-50"></div> */}
 
-      {/* <div class="md:mt-8 mx-auto md:flex md:justify-center md:space-x-10"> */}
+      {/* <div className="md:mt-8 mx-auto md:flex md:justify-center md:space-x-10"> */}
 
       {/* Home Page Cards */}
-      {/* <div class="relative flex flex-col items-center justify-evenly mt-20 md:mt-20 md:flex-row">
-        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
-          <NavLink to="#" class="flex justify-center">
+      {/* <div className="relative flex flex-col items-center justify-evenly mt-20 md:mt-20 md:flex-row">
+        <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
+          <NavLink to="#" className="flex justify-center">
             <img
-              class="rounded-t-lg p_food h-48 md:h-64 w-full"
+              className="rounded-t-lg p_food h-48 md:h-64 w-full"
               src={hero}
               alt=""
             />
           </NavLink>
-          <div class="p-5">
+          <div className="p-5">
             <NavLink to="#">
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 The 50 Best Restaurants to Eat
               </h5>
             </NavLink>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
               Here are the biggest enterprise technology acquisitions of 2021 so
               far, in reverse chronological order.
             </p>
             <NavLink
               to="#"
-              class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Read more
               <svg
                 aria-hidden="true"
-                class="ml-2 -mr-1 w-4 h-4"
+                className="ml-2 -mr-1 w-4 h-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,32 +98,32 @@ const Home = () => {
             </NavLink>
           </div>
         </div>
-        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
-          <NavLink to="#" class="flex justify-center">
+        <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
+          <NavLink to="#" className="flex justify-center">
             <img
-              class="rounded-t-lg p_food h-48 md:h-64 w-full"
+              className="rounded-t-lg p_food h-48 md:h-64 w-full"
               src={food1}
               alt=""
             />
           </NavLink>
-          <div class="p-5">
+          <div className="p-5">
             <NavLink to="#">
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 The 50 Best Restaurants to Eat
               </h5>
             </NavLink>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
               Here are the biggest enterprise technology acquisitions of 2021 so
               far, in reverse chronological order.
             </p>
             <NavLink
               to="#"
-              class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Read more
               <svg
                 aria-hidden="true"
-                class="ml-2 -mr-1 w-4 h-4"
+                className="ml-2 -mr-1 w-4 h-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -137,32 +137,32 @@ const Home = () => {
             </NavLink>
           </div>
         </div>
-        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
+        <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-2">
           <NavLink to="flex justify-center">
             <img
-              class="rounded-t-lg p_food h-48 md:h-64 w-full"
+              className="rounded-t-lg p_food h-48 md:h-64 w-full"
               src={food2}
               alt=""
             />
           </NavLink>
-          <div class="p-5">
+          <div className="p-5">
             <NavLink to="#">
-              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 The 50 Best Restaurants to Eat
               </h5>
             </NavLink>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
               Here are the biggest enterprise technology acquisitions of 2021 so
               far, in reverse chronological order.
             </p>
             <NavLink
               to="#"
-              class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Read more
               <svg
                 aria-hidden="true"
-                class="ml-2 -mr-1 w-4 h-4"
+                className="ml-2 -mr-1 w-4 h-4"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -178,20 +178,20 @@ const Home = () => {
         </div>
       </div> */}
       {/* 
-        <div class=" max-w-6xl mx-auto mt-16  md:px-5 md:py-2 md:mb-32 sm:px-6 lg:px-8 bg-teal-500">
-            <div class="mt-8 overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-6 mr-2 dark:bg-gray-800 mt-5 sm:rounded-lg">
-                        <h1 class="text-right text-3xl sm:text-5xl text-gray-800 dark:text-white tracking-tight">
+        <div className=" max-w-6xl mx-auto mt-16  md:px-5 md:py-2 md:mb-32 sm:px-6 lg:px-8 bg-teal-500">
+            <div className="mt-8 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                    <div className="p-6 mr-2 dark:bg-gray-800 mt-5 sm:rounded-lg">
+                        <h1 className="text-right text-3xl sm:text-5xl text-gray-800 dark:text-white tracking-tight">
                             What's good for breakfast?
                         </h1>
                         <div class = 'text-right'>
-                          <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
+                          <p className="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
                               Fill in the form to start a conversation
                           </p>
                         </div>
                     </div>
-                      <img src = {food2} class= 'food_sub' alt = ''></img>
+                      <img src = {food2} className= 'food_sub' alt = ''></img>
                 </div>
             </div>
         </div> */}

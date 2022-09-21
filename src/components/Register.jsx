@@ -58,12 +58,12 @@ const Register = () => {
 
   return (
     <div className=" h-screen">
-      <div class="flex justify-center">
-        <div class="py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
-          <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
+      <div className="flex justify-center">
+        <div className="py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
+          <h1 className="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
           <form action="">
-            <div class="mb-6">
-              <label for="name" class="block text-gray-800 font-bold">
+            <div className="mb-6">
+              <label for="name" className="block text-gray-800 font-bold">
                 Username:
               </label>
               <input
@@ -72,12 +72,12 @@ const Register = () => {
                 id="name"
                 placeholder="username"
                 onChange={saveReg}
-                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                className="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
             </div>
 
             <div>
-              <label for="email" class="block text-gray-800 font-bold">
+              <label for="email" className="block text-gray-800 font-bold">
                 Password:
               </label>
               <input
@@ -85,23 +85,23 @@ const Register = () => {
                 placeholder="password"
                 onChange={savePw}
                 required
-                class="w-full border -mb-2 border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                className="w-full border -mb-2 border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
              <div
-                class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
+                className="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
               >
                 Forget Password
               </div>
             </div>
             <div>
-              <label for="email" class="block text-gray-800 font-bold">
+              <label for="email" className="block text-gray-800 font-bold">
                 Confirm Password:
               </label>
               <input
                 type="password"
                 placeholder="password"
                 ref = {PWconfirmation}
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
                 required
               />
             </div>
@@ -110,11 +110,11 @@ const Register = () => {
                 
             <button
               onClick={registerUser}
-              class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded"
+              className="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded"
             >
               Register
             </button>
-            <div class="text-center pt-3"> {data} </div>
+            <div className="text-center pt-3"> {data} </div>
           </form>
         </div>
       </div>

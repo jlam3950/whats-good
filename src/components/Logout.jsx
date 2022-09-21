@@ -46,7 +46,7 @@ const Logout = () => {
       <button class = 'cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded' onClick = {logOff}> Log Off</button>
     </div>
       <NavLink to="/" class = 'w-40'>
-              <button class="cursor-pointer py-2 px-4 block mt-3 bg-green-500 text-white font-bold w-full text-center rounded">
+              <button className="cursor-pointer py-2 px-4 block mt-3 bg-green-500 text-white font-bold w-full text-center rounded">
                Back to Home Page
               </button>
       </NavLink>

@@ -51,11 +51,11 @@ const Login = () => {
 
   return (
     <div className=" h-screen">
-      <div class="flex justify-center">
-        <div class="py-6 px-8 mt-20 bg-white rounded shadow-xl">
-          <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign In</h1>
+      <div className="flex justify-center">
+        <div className="py-6 px-8 mt-20 bg-white rounded shadow-xl">
+          <h1 className="flex justify-center mb-8 font-bold text-3xl">Sign In</h1>
           <form action="" class = '-mt-4'>
-            <div class="mb-6">
+            <div className="mb-6">
             <div class = 'flex justify-evenly'>
               <div class = 'flex items-center justify-center border w-16 h-16 text-white rounded py-4 px-4 shadow-xl bg-red-600 hover:bg-red-700 mb-5 cursor-pointer' onClick = {google}>
                 <FaGoogle class ='text-3xl'/>  
@@ -70,7 +70,7 @@ const Login = () => {
             <div class ='text-center m-2'>
               <span class =''><hr></hr></span>
             </div>
-              <label for="name" class="block text-gray-800 font-bold">
+              <label for="name" className="block text-gray-800 font-bold">
                 Username:
               </label>
               <input
@@ -79,12 +79,12 @@ const Login = () => {
                 id="name"
                 placeholder="username"
                 onChange={(e) => setUserLogin(e.target.value)}
-                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                className="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
             </div>
 
             <div>
-              <label for="password" class="block text-gray-800 font-bold">
+              <label for="password" className="block text-gray-800 font-bold">
                 Password:
               </label>
               <input
@@ -93,26 +93,26 @@ const Login = () => {
                 id="email"
                 placeholder="password"
                 onChange={(e) => setPwLogin(e.target.value)}
-                class="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                className="w-full -mb-2 border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
               <div
-                class="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
+                className="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block invisible hover:text-indigo-600"
               >
                 Forget Password
               </div>
             </div>
             <button
               onClick={loginUser}
-              class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded"
+              className="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded"
             >
               Login
             </button>
             <NavLink to="/register">
-              <button class="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded">
+              <button className="cursor-pointer py-2 px-4 block mt-3 bg-red-500 text-white font-bold w-full text-center rounded">
                 New User?
               </button>
             </NavLink>
-            <div class="text-center pt-3"> {data} </div>
+            <div className="text-center pt-3"> {data} </div>
           </form>
         </div>
       </div>

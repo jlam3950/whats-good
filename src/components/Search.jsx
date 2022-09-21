@@ -142,7 +142,8 @@ const Search = () => {
 
     return (
       <GoogleMap
-        zoom={14}
+        zoom={12}
+        // zoom was set at 15. 
         center={{ lat: lat, lng: long }}
         onClick={() => setActiveMarker(null)}
         mapContainerClassName="map-container"
@@ -219,7 +220,7 @@ const Search = () => {
       </div>
       <div className="container mx-auto md:mt-2">
         <div className="flex flex-col md:flex-row justify-center">
-          <div className="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-5 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
+          <div className="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-6 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
             {restList.map((restData) => {
               return <RestaurantCard id={restData.ID} props={restData} />;
             })}
@@ -229,7 +230,7 @@ const Search = () => {
               <MapLoad />
             ) : (
 
-              <div class="flex flex-col items-start h-1/2 mt-20 justify-start">
+              <div className="flex flex-col items-start h-1/2 mt-20 justify-start">
                 <PacmanLoader color="#f8ffd0" size={30} />{" "}
               </div>
             )}

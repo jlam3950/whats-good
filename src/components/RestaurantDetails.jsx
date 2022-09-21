@@ -93,7 +93,7 @@ const RestaurantDetails = () => {
     newItemName.current.value = "";
     console.log(sortedMenuData);
     setSortedMenuData([...sortedMenuData, payload.foodData]);
-    setNoMenuItemsFlag(false)
+    setNoMenuItemsFlag(false);
   };
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const RestaurantDetails = () => {
 
       <div className="flex flex-col justify-center items-center text-xl font-bold mb-5">
         {noMenuItemsFlag === false ? (
-          <h2>Most Popular Items</h2>
+          <h2 className = 'text-xl sm:text-2xl m-2 tracking-tight'>Most Popular</h2>
         ) : (
           "No reviews yet..."
         )}
@@ -141,22 +141,31 @@ const RestaurantDetails = () => {
       </div>
       <div className="flex flex-col items-center mt-5">
         <h2
-          className="text-xl font-bold mb-5"
+          className="text-2xl tracking-tight font-bold mb-5"
           hidden={sortedMenuData.length <= 3}
         >
-          More food items!
+          Other Items
         </h2>
-        {sortedMenuData.slice(3).map((menuItem) => {
-          return (
-            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
-          );
-        })}
+        <div className = 'grid gap-2 grid-cols-1 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6'>
+          {sortedMenuData.slice(3).map((menuItem) => {
+            return (     
+               <div class = 'col'>
+                <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
+                </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div className= 'flex flex-col items-center mt-5'> 
-        <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
+      <div className="flex flex-col items-center mt-5">
+        {/* <h2
+          className="text-xl font-bold mb-5"
+          hidden={sortedMenuData.length < 3}
+        >
+          More food items!
+        </h2> */}
 
-      {/* Render if (noReviewFlags === true) 
+        {/* Render if (noReviewFlags === true) 
       "Be the first to leave a review" 
       "Add menu item"
       "Add your review" (description, rating, menuitem?)
@@ -171,22 +180,26 @@ const RestaurantDetails = () => {
       item 4
       item 5 .... map
       */}
-      <div class = 'flex flex-col'>
-        <button 
-          className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded hover:pointer' 
-          hidden={!showAddFood} onClick={toggleAddNewItem}>
+        <div className="flex flex-col">
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white text-xl py-2 px-3 m-6 rounded hover:pointer"
+            hidden={!showAddFood}
+            onClick={toggleAddNewItem}
+          >
             Add new Item
-        </button>
-        <input
-          ref={newItemName}
-          hidden={showAddFood}
-          placeholder="Enter Food Name"
-        ></input>
-        <button className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded' hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
-          Add Food to List
-        </button>
-      </div>
-
+          </button>
+          <input
+            ref={newItemName}
+            hidden={showAddFood}
+            placeholder="Enter Food Name"
+          ></input>
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white text-xl py-2 px-3 m-2 rounded"
+            hidden={showAddFood}
+            onClick={toggleAddNewItem && newMenuItem}
+          >
+            Add Food to List
+          </button>
         </div>
       </div>
     </div>

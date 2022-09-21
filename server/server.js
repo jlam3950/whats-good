@@ -184,7 +184,6 @@ app.post("/newRestaurant", (req, res) => {
   });
 });
 
-
 //Add New Food Item
 app.post("/newFoodItem", (req, res) => {
   const { ID, foodData } = req.body;
@@ -233,3 +232,4 @@ app.post("/newReview", (req, res) => {
 app.listen(PORT, () => {
   console.log(`app is running on ${PORT}`);
 });
+
