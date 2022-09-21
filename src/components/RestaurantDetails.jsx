@@ -18,8 +18,6 @@ const RestaurantDetails = () => {
   const [sortedMenuData, setSortedMenuData] = useState([]);
   const [showAddFood, setShowAddFood] = useState(true);
 
-  console.log(noMenuItemsFlag)
-
   //Fetches data from database. If none, ask to if they'd like to be the first to review an item. Else, pull the data.
   const checkDataBase = async () => {
     if (flag) {
@@ -31,9 +29,15 @@ const RestaurantDetails = () => {
         },
       })
         .then((res) => res.json())
-        .then((response) => {          
-          if (response === null) {newRestaurant()} //sets up new restaurant if not in database. That's the primary function of the whole function is suppose to do.
-          if (response[0].MenuItems.length===0){setNoMenuItemsFlag(true)} //if there is a restaurant preexisting but there's not reviews... set flag to true
+        .then((response) => {
+          // console.log(response);
+          if (response.length === 0) {
+            newRestaurant();
+            setNoMenuItemsFlag(true);
+          } //sets up new restaurant if not in database. That's the primary function of the whole function is suppose to do.
+          if (response[0].MenuItems.length === 0) {
+            setNoMenuItemsFlag(true);
+          } //if there is a restaurant preexisting but there's not reviews... set flag to true
           setDBData(response);
           const unsorted = response[0].MenuItems;
           let sorted = unsorted.slice(0);
@@ -87,51 +91,66 @@ const RestaurantDetails = () => {
       },
     }).then((res) => console.log("new food Response", res));
     newItemName.current.value = "";
-    console.log(sortedMenuData)
-    setSortedMenuData([...sortedMenuData,  payload.foodData])
+    console.log(sortedMenuData);
+    setSortedMenuData([...sortedMenuData, payload.foodData]);
+    setNoMenuItemsFlag(false)
   };
 
-    useEffect(() => {
+  useEffect(() => {
     setRestData(allRestData.find((singleRestData) => singleRestData.id === id));
     checkDataBase();
   }, [allRestData, id]);
 
   return (
     <div className="restaurant_info min-h-screen">
-      <div className = 'flex flex-col items-center justify-center md:mb-10'>
-        <h1 className = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
-        <h2 className = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
+      <div className="flex flex-col items-center justify-center md:mb-10">
+        <h1 className="text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5">
+          {restData.name}
+        </h1>
+        <h2 className="text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+          {restData.display_phone}
+        </h2>
+        {restData.location.display_address.map((addressItem, index) => {
+          return (
+            <h2
+              key={index}
+              className="text-md sm:text-lg text-gray-800 dark:text-white font-extrabold tracking-tight"
+            >
+              {addressItem}
+            </h2>
+          );
+        })}
       </div>
 
+      <div className="flex flex-col justify-center items-center text-xl font-bold mb-5">
+        {noMenuItemsFlag === false ? (
+          <h2>Most Popular Items</h2>
+        ) : (
+          "No reviews yet..."
+        )}
 
-      {/* {restData.location.display_address.map((addressItem, index) => {        {/*This code is causing problems. Works for some restaurants
-        return <h2 key={index}>{addressItem}</h2>;
-      })} */}
-      <div className = 'flex flex-col justify-center items-center text-xl font-bold mb-5'>
-        { noMenuItemsFlag === false ?  <h2>Most Popular Items</h2> : 'No reviews yet...' }
-      </div>
-     
-      <div className = 'flex flex-col sm:flex-row md:justify-center md:space-x-10'>
-       
-      { noMenuItemsFlag === false ? "" : 'Be the first to add a review.' }
-        
-          {sortedMenuData.slice(0, 2).map((menuItem) => {
+        <div className="flex flex-col sm:flex-row md:justify-center md:space-x-10">
+          {noMenuItemsFlag === false ? "" : "Be the first to add a review!"}
+
+          {sortedMenuData.slice(0, 3).map((menuItem) => {
             return (
               <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
             );
           })}
-        
+        </div>
       </div>
-
-      <div className= 'flex flex-col items-center mt-5'> 
-        <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
-        {
-          sortedMenuData.slice(2).map((menuItem) => {
-            return (
-              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
-            );
-          })}
-   
+      <div className="flex flex-col items-center mt-5">
+        <h2
+          className="text-xl font-bold mb-5"
+          hidden={sortedMenuData.length <= 3}
+        >
+          More food items!
+        </h2>
+        {sortedMenuData.slice(3).map((menuItem) => {
+          return (
+            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
+          );
+        })}
       </div>
 
       <div className= 'flex flex-col items-center mt-5'> 
@@ -169,6 +188,7 @@ const RestaurantDetails = () => {
       </div>
 
         </div>
+      </div>
     </div>
   );
 };

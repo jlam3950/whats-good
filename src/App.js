@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Profile from "./components/Profile"; 
 import Logout from "./components/Logout"; 
-import Restaurant from './components/Restaurant';
 import RestaurantDetails from './components/RestaurantDetails';
 import { Routes, Route } from "react-router-dom";
 
@@ -26,7 +25,6 @@ function App() {
               <Route path = "/login" element={<Login />}></Route>
               <Route path = "/register" element={<Register />}></Route>
               <Route path = "/search" element={<Search />}></Route>
-              <Route path = "/restaurant" element={<Restaurant />}></Route>
               <Route path = "/restaurant/:id" element={<RestaurantDetails />}></Route>
               <Route path = "/foodItem/:id" element={<RestaurantDetails />}></Route>
               <Route path = "/profile" element={<Profile />}></Route>

@@ -123,7 +123,6 @@ app.post("/getLocation", (req, res) => {
   const long = req.body.long;
   const url = `https://api.yelp.com/v3/businesses/search?term=restaurants&latitude=${lat}&longitude=${long}`;
   const config = { headers: { Authorization: `Bearer ${key}` } };
-  console.log("Server Side lat: " + lat + "long: " + long);
   axios
     .get(url, config)
     .then((response) => res.send(response.data.businesses))
@@ -164,7 +163,6 @@ app.post("/checkDB", (req, res) => {
 app.get("/check", (req, res) =>
   Restaurant.find({})
     .then((data) => {
-      console.log("Data ", data);
       res.json(data);
     })
     .catch((error) => {
@@ -174,7 +172,6 @@ app.get("/check", (req, res) =>
 
 // Adds New Restaurant
 app.post("/newRestaurant", (req, res) => {
-  //console.log(req.body)
   const newRestaurant = new Restaurant(req.body);
   newRestaurant.save((error) => {
     if (error) {
@@ -190,7 +187,6 @@ app.post("/newRestaurant", (req, res) => {
 
 //Add New Food Item
 app.post("/newFoodItem", (req, res) => {
-  // console.log(req.body)
   const { ID, foodData } = req.body;
   Restaurant.updateOne({ ID: ID}, {$push: {
     MenuItems: {
@@ -206,6 +202,7 @@ app.post("/newFoodItem", (req, res) => {
 
 //Add New Review
 app.post("/newReview", (req, res) => {
+  console.log("HELLO")
   console.log(req.body)
   const { ID, FoodID, reviewData } = req.body;
   //Adds review to Restaurant db
