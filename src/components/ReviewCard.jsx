@@ -9,7 +9,8 @@ import { Dialog, Transition } from "@headlessui/react";
 const ReviewCard = ({ props, restID }) => {
   const [showReviews, setShowReviews] = useState(true);
   const [showForm, setShowForm] = useState(true);
-  const [userRated, setUserRated] = useState();
+  const [userRated, setUserRated] = useState(0);
+  const [foodReviews, setFoodReviews] = useState(props.Reviews)
   const userReview = useRef(null);
   const username = useSelector(SelectUsername);
   const [open, setOpen] = useState(false);
@@ -23,8 +24,8 @@ const ReviewCard = ({ props, restID }) => {
   };
 
   // NEW REVIEW
-  const newReview = (e) => {
-    e.preventDefault();
+  const newReview = () => {
+    console.log("HelloFront")
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
@@ -35,6 +36,7 @@ const ReviewCard = ({ props, restID }) => {
           Username: username,
           UserRating: userRated,
           Description: userReview.current.value,
+          Date: new Date()
         },
       };
       console.log(payload);
@@ -45,6 +47,9 @@ const ReviewCard = ({ props, restID }) => {
           "content-Type": "application/json",
         },
       }).then((res) => console.log("new Review Response", res));
+      userReview.current.value="";
+    setUserRated(0)
+    setFoodReviews([...foodReviews, payload.reviewData])
     }
   };
 
@@ -60,7 +65,7 @@ const ReviewCard = ({ props, restID }) => {
        </div> */}
         <div className="text-xs text-center sm:text-sm lg:text-lg">
           <h2 className="card-title pt-2 font-bold text-center">
-            Item Name: {props.FoodName}
+            {props.FoodName}!
           </h2>
           <hr></hr>
           <div className="flex flex-col items-center">
@@ -118,7 +123,7 @@ const ReviewCard = ({ props, restID }) => {
                                 Reviews
                               </Dialog.Title>
                               <div className="mt-2">
-                                {props.Reviews.map((review) => {
+                                {foodReviews.map((review) => {
                                   return (
                                     <>
                                       <div className="flex flex-col p-5">
@@ -154,7 +159,7 @@ const ReviewCard = ({ props, restID }) => {
             {/* modal */}
           </div>
         </div>
-        <button onClick={toggleForm}>Leave a Review!</button>
+        <button onClick={toggleForm} disabled={(username==null)}>{(username==null)&&"Log in to leave a Review"}{(username!=null)&&"Leave a Review!"}</button>
         <div hidden={showForm}>
           <div className="flex justify-center p-2">
             <ReactStars
@@ -167,7 +172,8 @@ const ReviewCard = ({ props, restID }) => {
           <input ref={userReview} placeholder="Write a review..."></input>
           <button
             className="bg-green-500 text-white text-xs py-2 px-3 rounded"
-            onClick={newReview && toggleForm}
+            onClick={newReview&&toggleForm}
+            disabled={userRated==0}
           >
             Submit
           </button>

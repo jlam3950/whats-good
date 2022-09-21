@@ -102,10 +102,11 @@ const RestaurantDetails = () => {
       <div className = 'flex flex-col items-center justify-center md:mb-10'>
         <h1 className = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
         <h2 className = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
-      </div>
-      {restData.location.display_address.map((addressItem, index) => {        
-        return <h2 key={index} className = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{addressItem}</h2>;
+        {restData.location.display_address.map((addressItem, index) => {        
+        return <h2 key={index} className = 'text-md sm:text-lg text-gray-800 dark:text-white font-extrabold tracking-tight'>{addressItem}</h2>;
       })}
+      </div>
+      
       <div className = 'flex justify-center text-xl font-bold mb-5'>
         <h2>Most Popular Items</h2>
       </div>
