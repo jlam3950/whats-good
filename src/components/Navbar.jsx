@@ -21,8 +21,8 @@ const Navbar = () => {
               </h1>
             </NavLink>
             <div class="hidden md:flex justify-around space-x-4">
-              <NavLink class="hover:underline text-gray-700" to="/">
-                Home
+              <NavLink class="hover:underline text-gray-700" to="/search">
+                Search
               </NavLink>
               <NavLink class="hover:underline text-gray-700" to="/about">
                 About
