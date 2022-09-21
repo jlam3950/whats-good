@@ -153,26 +153,40 @@ const RestaurantDetails = () => {
         })}
       </div>
 
-      <div className="flex flex-col items-center mt-5">
-        <div>
-          <button
-            className="bg-green-500 text-white text-xs py-2 px-3 m-2 rounded"
-            hidden={!showAddFood}
-            onClick={toggleAddNewItem}
-          >
+      <div className= 'flex flex-col items-center mt-5'> 
+        <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
+
+      {/* Render if (noReviewFlags === true) 
+      "Be the first to leave a review" 
+      "Add menu item"
+      "Add your review" (description, rating, menuitem?)
+
+      Render if there is reviews (noReviewFlags===false)
+      Top rated food items (3 items depending number of reviews) ( we can limit this to 3 stars and above)
+      item 1
+      item 2
+      item 3
+
+      More items
+      item 4
+      item 5 .... map
+      */}
+      <div class = 'flex flex-col'>
+        <button 
+          className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded hover:pointer' 
+          hidden={!showAddFood} onClick={toggleAddNewItem}>
             Add new Item
-          </button>
-          <input
-            ref={newItemName}
-            hidden={showAddFood}
-            placeholder="Enter Food Name"
-          ></input>
-          <button
-            hidden={showAddFood}
-            onClick={toggleAddNewItem && newMenuItem}
-          >
-            Add Food to List
-          </button>
+        </button>
+        <input
+          ref={newItemName}
+          hidden={showAddFood}
+          placeholder="Enter Food Name"
+        ></input>
+        <button className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded' hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
+          Add Food to List
+        </button>
+      </div>
+
         </div>
       </div>
     </div>

@@ -71,7 +71,7 @@ const Search = () => {
 
   const fetchAPI = () => {
     if (lat === "" && long === "") {
-      alert("geolocation data loading, click search once map has loaded");
+      alert("location data loading, click search once map has loaded");
     }
 
     if (lat !== "") {
@@ -125,7 +125,7 @@ const Search = () => {
         setLong(response?.data?.results[0].geometry.location.lng);
       })
       .catch((error) => {
-        //console.log(error);
+        console.log(error);
       });
   };
 
@@ -213,7 +213,7 @@ const Search = () => {
             onClick={getLocation}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded"
           >
-            { lat === '' ? "Location data loading": "What's good around me?" }
+            { lat === '' ? "Location data loading...": "What's good around me?" }
           </button>
         </div>
       </div>
@@ -229,7 +229,7 @@ const Search = () => {
               <MapLoad />
             ) : (
 
-              <div class="flex flex-col items-center h-1/2 mt-20 justify-center">
+              <div class="flex flex-col items-start h-1/2 mt-20 justify-start">
                 <PacmanLoader color="#f8ffd0" size={30} />{" "}
               </div>
             )}
