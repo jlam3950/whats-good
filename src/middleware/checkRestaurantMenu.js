@@ -1,1 +1,0 @@
-// check Search.jsx for instructions to populate this middleware.
