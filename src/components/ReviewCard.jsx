@@ -72,7 +72,7 @@ const ReviewCard = ({ props, restID }) => {
               id={props.FoodID}
               class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
             >
-              Read Reviews!
+              { props.reviews ? 'Read Reviews!' : 'No Reviews'} 
             </button>
             {/* modal */}
           
@@ -114,7 +114,7 @@ const ReviewCard = ({ props, restID }) => {
                               <>
                               <div class = 'flex flex-col p-5'>
                                 <div> {review.Username}</div>
-                                <div> {review.Date.slice(0,10)}</div>
+                                <div> {review.Date.slice(0,)}</div>
                                 <div> {review.UserRating}/5 Stars</div>
                                 <div> {review.Description}</div>
                               </div>
@@ -145,7 +145,7 @@ const ReviewCard = ({ props, restID }) => {
             {/* modal */}
           </div>
         </div>
-        <button onClick={toggleForm}>Leave a Review!</button>
+        <button onClick={toggleForm} class = 'bg-gray-600 text-white m-2 text-lg px-10 border border-blue-700 rounded'>Leave a Review!</button>
         <form onSubmit={newReview && toggleForm} hidden={showForm}>
           <div class = 'flex justify-center p-2'>
             <ReactStars

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateRestaurantList } from "../redux/nearbyRestaurantsSlice";
+import { PacmanLoader } from "react-spinners";
 import RestaurantCard from "./RestaurantCard";
 import {
   GoogleMap,
@@ -8,7 +9,6 @@ import {
   InfoWindow,
   Marker,
 } from "@react-google-maps/api";
-import ryu from "../images/ryu.gif";
 import axios from "axios";
 let googleKey = process.env.REACT_APP_GOOGLE_KEY;
 
@@ -25,8 +25,10 @@ const Search = () => {
     const typedAddress = inputAddress.current.value;
     if (typedAddress === "") return;
 
-    const calledAddress = typedAddress.replaceAll(" ","+").replaceAll("/[.,#!$%^&*;:{}=-_`~()]/","");
-    
+    const calledAddress = typedAddress
+      .replaceAll(" ", "+")
+      .replaceAll("/[.,#!$%^&*;:{}=-_`~()]/", "");
+
     fetch("/getLocationWithAddress", {
       method: "POST",
       body: JSON.stringify({ address: calledAddress }),
@@ -186,10 +188,6 @@ const Search = () => {
                 ref={inputAddress}
                 className="block w-full px-5 py-1 text-purple-700 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 searchBar"
                 placeholder="Enter Zip Code or Address, City, and State"
-                // onChange = {(e) => {
-                //   setUserAddress(e.target.value);
-                //   // searchResults = e.target.value;
-                // }}
               />
               <button
                 onClick={handleAddress}
@@ -216,7 +214,7 @@ const Search = () => {
             onClick={getLocation}
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded"
           >
-            What's good around me?
+            { lat === '' ? "Location data loading": "What's good around me?" }
           </button>
         </div>
       </div>
@@ -231,9 +229,8 @@ const Search = () => {
             {lat !== "" ? (
               <MapLoad />
             ) : (
-              <div class = 'flex flex-col items-center justify-center'>
-                Geolocation is loading...
-                <img class="items-center text-center font-bold" src={ryu} alt=""></img>
+              <div class="flex flex-col items-center h-1/2 mt-20 justify-center">
+                <PacmanLoader color="#f8ffd0" size={30} />{" "}
               </div>
             )}
           </div>
