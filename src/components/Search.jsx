@@ -21,7 +21,6 @@ const Search = () => {
   const inputAddress = useRef();
 
   const handleAddress = () => {
-    console.log("address Clicked");
     const typedAddress = inputAddress.current.value;
     if (typedAddress === "") return;
 
@@ -92,8 +91,8 @@ const Search = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      setLat(position.coords.latitude);
-      setLong(position.coords.longitude);
+      setLat(position?.coords?.latitude);
+      setLong(position?.coords?.longitude);
     });
   }, []);
 
@@ -120,11 +119,11 @@ const Search = () => {
         },
       })
       .then((response) => {
-        setLat(response.data.results[0].geometry.location.lat);
-        setLong(response.data.results[0].geometry.location.lng);
+        setLat(response?.data?.results[0].geometry.location.lat);
+        setLong(response?.data?.results[0].geometry.location.lng);
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   };
 
@@ -177,8 +176,8 @@ const Search = () => {
 
   return (
     <>
-      <div class="container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0">
-        <div class="flex flex-col mx-auto md:flex-row">
+      <div className="container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0">
+        <div className="flex flex-col mx-auto md:flex-row">
           <div className="flex justify-center items-center">
             <div className="flex space-x-1">
               <input
@@ -214,26 +213,26 @@ const Search = () => {
           </div>
           <button
             onClick={getLocation}
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-1 px-4 border border-blue-700 rounded"
           >
             What's good around me?
           </button>
         </div>
       </div>
-      <div class="container mx-auto md:mt-2">
-        <div class="flex flex-col md:flex-row justify-center">
-          <div class="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-5 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
+      <div className="container mx-auto md:mt-2">
+        <div className="flex flex-col md:flex-row justify-center">
+          <div className="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-5 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
             {restList.map((restData) => {
               return <RestaurantCard id={restData.ID} props={restData} />;
             })}
           </div>
-          <div class="container h-1/2 items-center rounded md:mt-8 md:w-1/2 px-4 md:h-screen">
+          <div className="container h-1/2 items-center rounded md:mt-8 md:w-1/2 px-4 md:h-screen">
             {lat !== "" ? (
               <MapLoad />
             ) : (
               <div class = 'flex flex-col items-center justify-center'>
                 Geolocation is loading...
-                <img class="items-center text-center font-bold" src={ryu} alt=""></img>
+                <img className="items-center text-center font-bold" src={ryu} alt=""></img>
               </div>
             )}
           </div>
