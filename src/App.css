@@ -54,6 +54,10 @@
   max-height: 15vh;
 }
 
+.restaurant_card{
+  min-height: 95%;
+}
+
 /* .bluebar{
   height:35rem;
 } */

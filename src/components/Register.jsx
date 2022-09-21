@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../redux/loginSlice";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const Register = () => {
@@ -22,7 +22,14 @@ const Register = () => {
     console.log(userReg, pwReg);
     if(pwReg !== PWconfirmation.current.value){
       alert('Sorry, passwords do not match')
+      return; 
     }
+
+    if(userReg === '' || pwReg === '' || userReg.length < 4 || pwReg.length < 8){
+      alert('Please input a username, and password (8 characters minimum)');
+      return;
+    }
+
     Axios({
       method: "post",
       data: {
@@ -55,18 +62,6 @@ const Register = () => {
         <div class="py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
           <h1 class="flex justify-center mb-8 font-bold text-3xl">Sign Up!</h1>
           <form action="">
-            {/* <div class = 'mb-5'>
-            <label for="email" class="block text-gray-800 font-bold">
-                E-mail:
-              </label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                placeholder="email address"
-                class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
-              />
-            </div> */}
             <div class="mb-6">
               <label for="name" class="block text-gray-800 font-bold">
                 Username:
@@ -89,6 +84,7 @@ const Register = () => {
                 type="password"
                 placeholder="password"
                 onChange={savePw}
+                required
                 class="w-full border -mb-2 border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
               />
              <div
@@ -106,6 +102,7 @@ const Register = () => {
                 placeholder="password"
                 ref = {PWconfirmation}
                 class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+                required
               />
             </div>
 
