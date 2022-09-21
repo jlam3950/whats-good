@@ -4,7 +4,6 @@ import { SelectUsername } from "../redux/loginSlice";
 import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
 import { Dialog, Transition } from "@headlessui/react";
-// import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 const ReviewCard = ({ props, restID }) => {
   const [showReviews, setShowReviews] = useState(true);
@@ -75,6 +74,9 @@ const ReviewCard = ({ props, restID }) => {
             >
               { props.reviews ? 'Read Reviews!' : 'No Reviews'} 
             </button>
+           </div>
+          </div>
+        </div>
             {/* modal */}
 
             <Transition.Root show={open} as={Fragment}>
@@ -95,7 +97,7 @@ const ReviewCard = ({ props, restID }) => {
                 >
                   <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
-
+       
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
@@ -123,44 +125,10 @@ const ReviewCard = ({ props, restID }) => {
                                 <div> {review.Date.slice(0,)}</div>
                                 <div> {review.UserRating}/5 Stars</div>
                                 <div> {review.Description}</div>
-
-                <div className="fixed inset-0 z-10 overflow-y-auto">
-                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="ease-out duration-300"
-                      enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                      enterTo="opacity-100 translate-y-0 sm:scale-100"
-                      leave="ease-in duration-200"
-                      leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                      leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    >
-                      <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                          <div className="sm:flex sm:items-start">
-                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                              <Dialog.Title
-                                as="h3"
-                                className="text-lg font-medium leading-6 text-gray-900 text-center"
-                              >
-                                Reviews
-                              </Dialog.Title>
-                              <div className="mt-2">
-                                {props.Reviews.map((review) => {
-                                  return (
-                                    <>
-                                      <div className="flex flex-col p-5">
-                                        <div> {review.Username}</div>
-                                        <div> {review.Date.slice(0, 10)}</div>
-                                        <div> {review.UserRating}/5 Stars</div>
-                                        <div> {review.Description}</div>
-                                      </div>
-                                    </>
-                                  );
-                                })}
                               </div>
-                            </div>
-                          </div>
+                              </>
+                            )
+                          })}
                         </div>
                         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                           <button
@@ -172,6 +140,9 @@ const ReviewCard = ({ props, restID }) => {
                             Cancel
                           </button>
                         </div>
+                        </div>
+                        </div>
+                        </div>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
@@ -179,12 +150,9 @@ const ReviewCard = ({ props, restID }) => {
               </Dialog>
             </Transition.Root>
 
-            {/* modal */}
-          </div>
-        </div>
-
+        
         <button onClick={toggleForm} class = 'bg-gray-600 text-white m-2 text-lg px-10 border border-blue-700 rounded'>Leave a Review!</button>
-        <form onSubmit={newReview && toggleForm} hidden={showForm}>
+        <form onSubmit={newReview && toggleForm} hidden={showForm} />
           <div class = 'flex justify-center p-2'>
         <button onClick={toggleForm}>Leave a Review!</button>
         <div hidden={showForm}>
