@@ -14,7 +14,7 @@ const RestaurantDetails = () => {
   );
   const [dbData, setDBData] = useState("");
   const [flag, setFlag] = useState(true);
-  const [noReviewsFlag, setNoReviewsFlag] = useState("");
+  const [noMenuItemsFlag, setNoMenuItemsFlag] = useState(false);
   const [sortedMenuData, setSortedMenuData] = useState([]);
   const [showAddFood, setShowAddFood] = useState(true);
 
@@ -30,10 +30,14 @@ const RestaurantDetails = () => {
       })
         .then((res) => res.json())
         .then((response) => {
-          if (response == [] || response == null) {
+          // console.log(response);
+          if (response.length === 0) {
             newRestaurant();
-            setNoReviewsFlag(true);
-          }
+            setNoMenuItemsFlag(true);
+          } //sets up new restaurant if not in database. That's the primary function of the whole function is suppose to do.
+          if (response[0].MenuItems.length === 0) {
+            setNoMenuItemsFlag(true);
+          } //if there is a restaurant preexisting but there's not reviews... set flag to true
           setDBData(response);
           const unsorted = response[0].MenuItems;
           let sorted = unsorted.slice(0);
@@ -41,7 +45,6 @@ const RestaurantDetails = () => {
             return a.Rating - b.Rating;
           });
           setSortedMenuData(sorted);
-          //if response equals empty or says there's no reviews (depending how we set it up) setNoReviewsFlag(true) else setNoReviewsFlag(false)
         });
     }
   };
@@ -51,7 +54,7 @@ const RestaurantDetails = () => {
       restaurantName: restData.name,
       ID: id,
       AvgRating: 0,
-      MenuItems: {},
+      MenuItems: [],
       Address: restData.Address,
     };
     fetch("/newRestaurant", {
@@ -88,79 +91,90 @@ const RestaurantDetails = () => {
       },
     }).then((res) => console.log("new food Response", res));
     newItemName.current.value = "";
-    console.log(sortedMenuData)
-    setSortedMenuData([...sortedMenuData,  payload.foodData])
+    console.log(sortedMenuData);
+    setSortedMenuData([...sortedMenuData, payload.foodData]);
+    setNoMenuItemsFlag(false)
   };
 
-    useEffect(() => {
+  useEffect(() => {
     setRestData(allRestData.find((singleRestData) => singleRestData.id === id));
     checkDataBase();
   }, [allRestData, id]);
 
   return (
     <div className="restaurant_info min-h-screen">
-      <div className = 'flex flex-col items-center justify-center md:mb-10'>
-        <h1 className = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
-        <h2 className = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
-        {restData.location.display_address.map((addressItem, index) => {        
-        return <h2 key={index} className = 'text-md sm:text-lg text-gray-800 dark:text-white font-extrabold tracking-tight'>{addressItem}</h2>;
-      })}
-      </div>
-      
-      <div className = 'flex justify-center text-xl font-bold mb-5'>
-        <h2>Most Popular Items</h2>
+      <div className="flex flex-col items-center justify-center md:mb-10">
+        <h1 className="text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5">
+          {restData.name}
+        </h1>
+        <h2 className="text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight">
+          {restData.display_phone}
+        </h2>
+        {restData.location.display_address.map((addressItem, index) => {
+          return (
+            <h2
+              key={index}
+              className="text-md sm:text-lg text-gray-800 dark:text-white font-extrabold tracking-tight"
+            >
+              {addressItem}
+            </h2>
+          );
+        })}
       </div>
 
-      <div className = 'flex flex-col sm:flex-row md:justify-center md:space-x-10'>
-       
-          {sortedMenuData.slice(0, 2).map((menuItem) => {
+      <div className="flex flex-col justify-center items-center text-xl font-bold mb-5">
+        {noMenuItemsFlag === false ? (
+          <h2>Most Popular Items</h2>
+        ) : (
+          "No reviews yet..."
+        )}
+
+        <div className="flex flex-col sm:flex-row md:justify-center md:space-x-10">
+          {noMenuItemsFlag === false ? "" : "Be the first to add a review!"}
+
+          {sortedMenuData.slice(0, 3).map((menuItem) => {
             return (
               <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
             );
           })}
-        
-      </div>
-
-      <div className= 'flex flex-col items-center mt-5'> 
-        <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
-        {
-          sortedMenuData.slice(2).map((menuItem) => {
-            return (
-              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
-            );
-          })}
-      {/* Render if (noReviewFlags === true) 
-      "Be the first to leave a review" 
-      "Add menu item"
-      "Add your review" (description, rating, menuitem?)
-
-      Render if there is reviews (noReviewFlags===false)
-      Top rated food items (3 items depending number of reviews) ( we can limit this to 3 stars and above)
-      item 1
-      item 2
-      item 3
-
-      More items
-      item 4
-      item 5 .... map
-      */}
-      <div>
-        <button 
-          className = 'bg-green-500 text-white text-xs py-2 px-3 m-2 rounded' 
-          hidden={!showAddFood} onClick={toggleAddNewItem}>
-            Add new Item
-        </button>
-        <input
-          ref={newItemName}
-          hidden={showAddFood}
-          placeholder="Enter Food Name"
-        ></input>
-        <button hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
-          Add Food to List
-        </button>
-      </div>
-
         </div>
+      </div>
+      <div className="flex flex-col items-center mt-5">
+        <h2
+          className="text-xl font-bold mb-5"
+          hidden={sortedMenuData.length <= 3}
+        >
+          More food items!
+        </h2>
+        {sortedMenuData.slice(3).map((menuItem) => {
+          return (
+            <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col items-center mt-5">
+        <div>
+          <button
+            className="bg-green-500 text-white text-xs py-2 px-3 m-2 rounded"
+            hidden={!showAddFood}
+            onClick={toggleAddNewItem}
+          >
+            Add new Item
+          </button>
+          <input
+            ref={newItemName}
+            hidden={showAddFood}
+            placeholder="Enter Food Name"
+          ></input>
+          <button
+            hidden={showAddFood}
+            onClick={toggleAddNewItem && newMenuItem}
+          >
+            Add Food to List
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

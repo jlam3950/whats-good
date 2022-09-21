@@ -10,11 +10,12 @@ const ReviewCard = ({ props, restID }) => {
   const [showReviews, setShowReviews] = useState(true);
   const [showForm, setShowForm] = useState(true);
   const [userRated, setUserRated] = useState(0);
-  const [foodReviews, setFoodReviews] = useState(props.Reviews)
+  const [foodReviews, setFoodReviews] = useState(props.Reviews);
   const userReview = useRef(null);
   const username = useSelector(SelectUsername);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [starsArray, setStarsArray] = useState(foodReviews.map(review=>{return review.UserRating}));
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -25,7 +26,7 @@ const ReviewCard = ({ props, restID }) => {
 
   // NEW REVIEW
   const newReview = () => {
-    console.log("HelloFront")
+    console.log("HelloFront");
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
@@ -36,20 +37,29 @@ const ReviewCard = ({ props, restID }) => {
           Username: username,
           UserRating: userRated,
           Description: userReview.current.value,
-          Date: new Date()
         },
       };
-      console.log(payload);
+      //console.log(payload);
       fetch("/newReview", {
         method: "post",
         body: JSON.stringify(payload),
         headers: {
           "content-Type": "application/json",
         },
-      }).then((res) => console.log("new Review Response", res));
-      userReview.current.value="";
-    setUserRated(0)
-    setFoodReviews([...foodReviews, payload.reviewData])
+      }); //.then((res) => console.log("new Review Response", res));
+      setFoodReviews([
+        ...foodReviews,
+        {
+          Username: username,
+          UserRating: userRated,
+          Description: userReview.current.value,
+          Date: "Just now",
+        },
+      ]);
+      setStarsArray([...starsArray, userRated]);
+      toggleForm();
+      userReview.current.value = "";
+      setUserRated(0);
     }
   };
 
@@ -71,11 +81,12 @@ const ReviewCard = ({ props, restID }) => {
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
-          <h3>Stars: {props.Rating}</h3>
+          <h3>{starsArray.length==0&&"No reviews yet!"}{starsArray.length!=0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length)}{starsArray.length!=0&&"/5 Stars"}</h3>
           <div className="flex flex-col">
             <button
               onClick={() => setOpen(true)}
               id={props.FoodID}
+              hidden={starsArray.length==0}
               className="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
             >
               Read Reviews!
@@ -159,7 +170,10 @@ const ReviewCard = ({ props, restID }) => {
             {/* modal */}
           </div>
         </div>
-        <button onClick={toggleForm} disabled={(username==null)}>{(username==null)&&"Log in to leave a Review"}{(username!=null)&&"Leave a Review!"}</button>
+        <button onClick={toggleForm} disabled={username == null}>
+          {username == null && "Log in to leave a review"}
+          {username != null && "Leave a Review!"}
+        </button>
         <div hidden={showForm}>
           <div className="flex justify-center p-2">
             <ReactStars
@@ -172,8 +186,8 @@ const ReviewCard = ({ props, restID }) => {
           <input ref={userReview} placeholder="Write a review..."></input>
           <button
             className="bg-green-500 text-white text-xs py-2 px-3 rounded"
-            onClick={newReview&&toggleForm}
-            disabled={userRated==0}
+            onClick={newReview}
+            disabled={userRated == 0}
           >
             Submit
           </button>
