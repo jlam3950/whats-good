@@ -8,11 +8,13 @@ import { Dialog, Transition } from "@headlessui/react";
 const ReviewCard = ({ props, restID }) => {
   const [showReviews, setShowReviews] = useState(true);
   const [showForm, setShowForm] = useState(true);
-  const [userRated, setUserRated] = useState();
+  const [userRated, setUserRated] = useState(0);
+  const [foodReviews, setFoodReviews] = useState(props.Reviews);
   const userReview = useRef(null);
   const username = useSelector(SelectUsername);
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [starsArray, setStarsArray] = useState(foodReviews.map(review=>{return review.UserRating}));
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -22,8 +24,8 @@ const ReviewCard = ({ props, restID }) => {
   };
 
   // NEW REVIEW
-  const newReview = (e) => {
-    e.preventDefault();
+  const newReview = () => {
+    console.log("HelloFront");
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
@@ -36,14 +38,27 @@ const ReviewCard = ({ props, restID }) => {
           Description: userReview.current.value,
         },
       };
-      console.log(payload);
+      //console.log(payload);
       fetch("/newReview", {
         method: "post",
         body: JSON.stringify(payload),
         headers: {
           "content-Type": "application/json",
         },
-      }).then((res) => console.log("new Review Response", res));
+      }); //.then((res) => console.log("new Review Response", res));
+      setFoodReviews([
+        ...foodReviews,
+        {
+          Username: username,
+          UserRating: userRated,
+          Description: userReview.current.value,
+          Date: "Just now",
+        },
+      ]);
+      setStarsArray([...starsArray, userRated]);
+      toggleForm();
+      userReview.current.value = "";
+      setUserRated(0);
     }
   };
 
@@ -59,24 +74,22 @@ const ReviewCard = ({ props, restID }) => {
        </div> */}
         <div className="text-xs text-center sm:text-sm lg:text-lg">
           <h2 className="card-title pt-2 font-bold text-center">
-            Item Name: {props.FoodName}
+            {props.FoodName}!
           </h2>
           <hr></hr>
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
-          <h3>Stars: {props.Rating}</h3>
+          <h3>{starsArray.length==0&&"No reviews yet!"}{starsArray.length!=0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length)}{starsArray.length!=0&&"/5 Stars"}</h3>
           <div className="flex flex-col">
             <button
               onClick={() => setOpen(true)}
               id={props.FoodID}
+              hidden={starsArray.length==0}
               className="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
             >
-              { props.reviews ? 'Read Reviews!' : 'No Reviews'} 
+              Read Reviews!
             </button>
-           </div>
-          </div>
-        </div>
             {/* modal */}
 
             <Transition.Root show={open} as={Fragment}>
@@ -97,38 +110,44 @@ const ReviewCard = ({ props, restID }) => {
                 >
                   <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
-       
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900 text-center">
-                        Reviews
-                      </Dialog.Title>
-                      <div className="mt-2">
-                          {props.Reviews.map((review) => {
-                            return (
-                              <>
-                              <div class = 'flex flex-col p-5'>
-                                <div> {review.Username}</div>
-                                <div> {review.Date.slice(0,)}</div>
-                                <div> {review.UserRating}/5 Stars</div>
-                                <div> {review.Description}</div>
+
+                <div className="fixed inset-0 z-10 overflow-y-auto">
+                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                      enterTo="opacity-100 translate-y-0 sm:scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                      leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    >
+                      <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <Dialog.Title
+                                as="h3"
+                                className="text-lg font-medium leading-6 text-gray-900 text-center"
+                              >
+                                Reviews
+                              </Dialog.Title>
+                              <div className="mt-2">
+                                {foodReviews.map((review) => {
+                                  return (
+                                    <>
+                                      <div className="flex flex-col p-5">
+                                        <div> {review.Username}</div>
+                                        <div> {review.Date.slice(0, 10)}</div>
+                                        <div> {review.UserRating}/5 Stars</div>
+                                        <div> {review.Description}</div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
                               </div>
-                              </>
-                            )
-                          })}
+                            </div>
+                          </div>
                         </div>
                         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                           <button
@@ -140,9 +159,6 @@ const ReviewCard = ({ props, restID }) => {
                             Cancel
                           </button>
                         </div>
-                        </div>
-                        </div>
-                        </div>
                       </Dialog.Panel>
                     </Transition.Child>
                   </div>
@@ -150,11 +166,14 @@ const ReviewCard = ({ props, restID }) => {
               </Dialog>
             </Transition.Root>
 
-        
-        <button onClick={toggleForm} class = 'bg-gray-600 text-white m-2 text-lg px-10 border border-blue-700 rounded'>Leave a Review!</button>
-        <form onSubmit={newReview && toggleForm} hidden={showForm} />
-          <div class = 'flex justify-center p-2'>
-        <button onClick={toggleForm}>Leave a Review!</button>
+            {/* modal */}
+          </div>
+        </div>
+        <button onClick={toggleForm} disabled={username == null}>
+          {username == null && "Log in to leave a review"}
+          {username != null && "Leave a Review!"}
+        </button>
+        <div hidden={username===null}>
         <div hidden={showForm}>
           <div className="flex justify-center p-2">
             <ReactStars
@@ -167,10 +186,12 @@ const ReviewCard = ({ props, restID }) => {
           <input ref={userReview} placeholder="Write a review..."></input>
           <button
             className="bg-green-500 text-white text-xs py-2 px-3 rounded"
-            onClick={newReview && toggleForm}
+            onClick={newReview}
+            disabled={userRated === 0}
           >
             Submit
           </button>
+        </div>
         </div>
       </div>
     </div>

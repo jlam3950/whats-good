@@ -152,9 +152,9 @@ const RestaurantDetails = () => {
       item 4
       item 5 .... map
       */}
-      <div>
+      <div class = 'flex flex-col'>
         <button 
-          className = 'bg-green-500 text-white text-xs py-2 px-3 m-2 rounded' 
+          className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded hover:pointer' 
           hidden={!showAddFood} onClick={toggleAddNewItem}>
             Add new Item
         </button>
@@ -163,7 +163,7 @@ const RestaurantDetails = () => {
           hidden={showAddFood}
           placeholder="Enter Food Name"
         ></input>
-        <button hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
+        <button className = 'bg-green-500 text-white text-xl py-2 px-3 m-2 rounded' hidden={showAddFood} onClick={toggleAddNewItem && newMenuItem}>
           Add Food to List
         </button>
       </div>
