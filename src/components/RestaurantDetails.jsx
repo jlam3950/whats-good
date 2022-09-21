@@ -87,34 +87,22 @@ const RestaurantDetails = () => {
       },
     }).then((res) => console.log("new food Response", res));
     newItemName.current.value = "";
-    setSortedMenuData([...sortedMenuData, payload])
+    console.log(sortedMenuData)
+    setSortedMenuData([...sortedMenuData,  payload.foodData])
   };
 
-  
-
-  useEffect(() => {
+    useEffect(() => {
     setRestData(allRestData.find((singleRestData) => singleRestData.id === id));
     checkDataBase();
   }, [allRestData, id]);
 
-  // Test Button to test the functions
-  const checkFunction = () => {
-    //TestCheck();
-    //newRestaurant()
-    //newMenuItem()
-    //newReview()
-    // checkDataBase();
-    //console.log(restData);
-  };
-
   return (
-    <div class="restaurant_info min-h-screen">
-      <div class = 'flex flex-col items-center justify-center md:mb-10'>
-        <h1 class = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
-        <h2 class = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
+    <div className="restaurant_info min-h-screen">
+      <div className = 'flex flex-col items-center justify-center md:mb-10'>
+        <h1 className = 'text-3xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mt-5'>{restData.name}</h1>
+        <h2 className = 'text-xl sm:text-2xl text-gray-800 dark:text-white font-extrabold tracking-tight'>{restData.display_phone}</h2>
       </div>
 
-      {/* {console.log(restData)} */}
 
       {/* {restData.location.display_address.map((addressItem, index) => {        {/*This code is causing problems. Works for some restaurants
         return <h2 key={index}>{addressItem}</h2>;
@@ -132,18 +120,23 @@ const RestaurantDetails = () => {
               <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id} />
             );
           })}
-      
-        {sortedMenuData.length < 3 &&
-          sortedMenuData.slice(2).map((menuItem,index) => {
-            return (
-              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
-            );
-          })}
-      
+        
       </div>
 
       <div className= 'flex flex-col items-center mt-5'> 
         <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
+        {
+          sortedMenuData.slice(2).map((menuItem) => {
+            return (
+              <ReviewCard key={menuItem.FoodID} props={menuItem} restID={id}/>
+            );
+          })}
+   
+      </div>
+
+      <div className= 'flex flex-col items-center mt-5'> 
+        <h2  className = 'text-xl font-bold mb-5' hidden={sortedMenuData.length < 3}>More food items!</h2>
+
       {/* Render if (noReviewFlags === true) 
       "Be the first to leave a review" 
       "Add menu item"
@@ -161,7 +154,7 @@ const RestaurantDetails = () => {
       */}
       <div>
         <button 
-          class = 'bg-green-500 text-white text-xs py-2 px-3 m-2 rounded' 
+          className = 'bg-green-500 text-white text-xs py-2 px-3 m-2 rounded' 
           hidden={!showAddFood} onClick={toggleAddNewItem}>
             Add new Item
         </button>
@@ -175,10 +168,6 @@ const RestaurantDetails = () => {
         </button>
       </div>
 
-      <button 
-        class = 'bg-red-500 text-white text-xs py-2 px-3 m-2 rounded'
-        onClick={checkFunction}>Test Button to check Functions</button>
-        {/* Test button to check functions */}
         </div>
     </div>
   );

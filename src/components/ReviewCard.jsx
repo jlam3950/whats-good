@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { SelectUsername } from "../redux/loginSlice";
 import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Transition } from "@headlessui/react";
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 const ReviewCard = ({ props, restID }) => {
@@ -12,83 +12,89 @@ const ReviewCard = ({ props, restID }) => {
   const [userRated, setUserRated] = useState();
   const userReview = useRef(null);
   const username = useSelector(SelectUsername);
-  const [open, setOpen] = useState(false)
-  const cancelButtonRef = useRef(null)
+  const [open, setOpen] = useState(false);
+  const cancelButtonRef = useRef(null);
 
-  const toggleReviews = () => {
-    setShowReviews(!showReviews);
-  };
   const toggleForm = () => {
     setShowForm(!showForm);
   };
   const ratingChanged = (newRating) => {
     setUserRated(newRating);
   };
-  console.log(username)
+
   // NEW REVIEW
-  const newReview = () => {
-    if (username === null){
-        alert("You must be logged in to leave a review!")
+  const newReview = (e) => {
+    e.preventDefault();
+    if (username === null) {
+      alert("You must be logged in to leave a review!");
     } else {
-    const payload = {
-      ID: restID,
-      FoodID: props.FoodID,
-      reviewData: {
-        Username: username,
-        UserRating: userRated,
-        Description: userReview.current.value,
-      },
-    };
-    fetch("/newReview", {
-      method: "post",
-      body: JSON.stringify(payload),
-      headers: {
-        "content-Type": "application/json",
-      },
-    }).then((res) => console.log("new Review Response", res));
-   } };
+      const payload = {
+        ID: restID,
+        FoodID: props.FoodID,
+        reviewData: {
+          Username: username,
+          UserRating: userRated,
+          Description: userReview.current.value,
+        },
+      };
+      console.log(payload);
+      fetch("/newReview", {
+        method: "post",
+        body: JSON.stringify(payload),
+        headers: {
+          "content-Type": "application/json",
+        },
+      }).then((res) => console.log("new Review Response", res));
+    }
+  };
 
   return (
-    <div class="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 p-2 min-h-48 md:card-side ">
-      <div class="flex flex-col">
-        {/* <div class="flex justify-center py-1 w-2/5">
+    <div className="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 p-2 min-h-48 md:card-side ">
+      <div className="flex flex-col">
+        {/* <div className="flex justify-center py-1 w-2/5">
        <img
          src={props.props.image_url}
-           class="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"        
+           className="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"        
            alt="restaurant"
          />
        </div> */}
-        <div class="text-xs text-center sm:text-sm lg:text-lg">
-          <h2 class="card-title pt-2 font-bold text-center">Item Name: {props.FoodName}</h2>
+        <div className="text-xs text-center sm:text-sm lg:text-lg">
+          <h2 className="card-title pt-2 font-bold text-center">
+            Item Name: {props.FoodName}
+          </h2>
           <hr></hr>
-          <div class = 'flex flex-col items-center'>
-            <img class = 'h-32' src = {shrimp} alt = ''></img>
+          <div className="flex flex-col items-center">
+            <img className="h-32" src={shrimp} alt=""></img>
           </div>
           <h3>Stars: {props.Rating}</h3>
-          <div class="flex flex-col">
+          <div className="flex flex-col">
             <button
-              // onClick={toggleReviews}
               onClick={() => setOpen(true)}
               id={props.FoodID}
-              class="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
+              className="bg-blue-500 text-white m-2  px-10 border border-blue-700 rounded"
             >
               { props.reviews ? 'Read Reviews!' : 'No Reviews'} 
             </button>
             {/* modal */}
-          
+
             <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
+              <Dialog
+                as="div"
+                className="relative z-10"
+                initialFocus={cancelButtonRef}
+                onClose={setOpen}
+              >
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -117,37 +123,72 @@ const ReviewCard = ({ props, restID }) => {
                                 <div> {review.Date.slice(0,)}</div>
                                 <div> {review.UserRating}/5 Stars</div>
                                 <div> {review.Description}</div>
+
+                <div className="fixed inset-0 z-10 overflow-y-auto">
+                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                      enterTo="opacity-100 translate-y-0 sm:scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                      leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    >
+                      <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <Dialog.Title
+                                as="h3"
+                                className="text-lg font-medium leading-6 text-gray-900 text-center"
+                              >
+                                Reviews
+                              </Dialog.Title>
+                              <div className="mt-2">
+                                {props.Reviews.map((review) => {
+                                  return (
+                                    <>
+                                      <div className="flex flex-col p-5">
+                                        <div> {review.Username}</div>
+                                        <div> {review.Date.slice(0, 10)}</div>
+                                        <div> {review.UserRating}/5 Stars</div>
+                                        <div> {review.Description}</div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
                               </div>
-                              </>
-                            );
-                          })}
+                            </div>
+                          </div>
                         </div>
-                    </div>
+                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                          <button
+                            type="button"
+                            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            onClick={() => setOpen(false)}
+                            ref={cancelButtonRef}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setOpen(false)}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
-    </Transition.Root>
+              </Dialog>
+            </Transition.Root>
 
             {/* modal */}
           </div>
         </div>
+
         <button onClick={toggleForm} class = 'bg-gray-600 text-white m-2 text-lg px-10 border border-blue-700 rounded'>Leave a Review!</button>
         <form onSubmit={newReview && toggleForm} hidden={showForm}>
           <div class = 'flex justify-center p-2'>
+        <button onClick={toggleForm}>Leave a Review!</button>
+        <div hidden={showForm}>
+          <div className="flex justify-center p-2">
             <ReactStars
               count={5}
               onChange={ratingChanged}
@@ -156,8 +197,13 @@ const ReviewCard = ({ props, restID }) => {
             />
           </div>
           <input ref={userReview} placeholder="Write a review..."></input>
-          <button class = 'bg-green-500 text-white text-xs py-2 px-3 rounded'>Submit</button>
-        </form>
+          <button
+            className="bg-green-500 text-white text-xs py-2 px-3 rounded"
+            onClick={newReview && toggleForm}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
