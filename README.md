@@ -3,7 +3,7 @@
 <img src= 'src/images/readme_img/whatsgood.jpg' alt="WhatsGoodLogo" min-width="320">
 
 <div className = 'border'>
-<img src= 'src/images/readme_img/whatsgoodsearch.jpg' alt="WhatsGoodLogo" min-width="320" max-height='400'>
+<img src= 'src/images/readme_img/whatsgood_search.jpg' alt="WhatsGoodLogo" min-width="320" max-height='400'>
 </div>
 
 
