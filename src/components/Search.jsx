@@ -17,10 +17,12 @@ const Search = () => {
   const [long, setLong] = useState("");
   const [restList, setRestList] = useState([]);
   const [userAddress, setUserAddress] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
   const dispatch = useDispatch();
   const inputAddress = useRef();
 
   const handleAddress = () => {
+    setHasSearched(true);
     const typedAddress = inputAddress.current.value;
     if (typedAddress === "") return;
 
@@ -48,6 +50,7 @@ const Search = () => {
   };
 
   const getLocation = async (e) => {
+    setHasSearched(true);
     try {
       e.preventDefault();
       console.log("clicked");
@@ -176,10 +179,11 @@ const Search = () => {
       </GoogleMap>
     );
   }
-
+console.log(hasSearched)
   return (
     <>
-      <div className="container flex flex-col md:items-center px-4 mx-auto mt-5 md:space-y-0">
+    <div className = 'h-screen'>
+      <div className= "container flex flex-col md:items-center px-4 mx-auto mt-2 md:space-y-0">
         <div className="flex flex-col mx-auto md:flex-row">
           <div className="flex justify-center items-center">
             <div className="flex space-x-1">
@@ -220,22 +224,23 @@ const Search = () => {
       </div>
       <div className="container mx-auto md:mt-2">
         <div className="flex flex-col md:flex-row justify-center">
-          <div className="container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-6 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container">
+          <div className={ !hasSearched ? "hidden": "container overflow-y-auto h-1/12 rounded sm:max-w-xl md:ml-0 md:mt-4 md:w-2/4 md:h-screen md:flex md:flex-col md:items-center card_container"} >
             {restList.map((restData) => {
               return <RestaurantCard id={restData.ID} props={restData} />;
             })}
           </div>
-          <div className="container h-1/2 items-center rounded md:mt-8 md:w-1/2 px-4 md:h-screen">
+          <div className={ !hasSearched ? "container map_load_container w-3/4 items-center rounded md:mt-6 px-4 md:h-screen" : "container h-1/2 items-center rounded md:mt-6 md:w-1/2 px-4 md:h-screen"}>
             {lat !== "" ? (
               <MapLoad />
             ) : (
 
-              <div className="flex flex-col items-start h-1/2 mt-20 justify-start">
+              <div className="container flex flex-col justify-center items-center rounded h-1/2 mt-10">
                 <PacmanLoader color="#f8ffd0" size={30} />{" "}
               </div>
             )}
           </div>
         </div>
+      </div>
       </div>
     </>
   );
