@@ -7,7 +7,7 @@ const RestaurantCard = (props) => {
     <div className="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
 
     <div className="flex flex-row">
-       <div className="flex justify-center py-1 w-2/5">
+       <div className="flex justify-center py-1 w-2/5 ">
        <img
          src={props.props.image_url}
            className="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"        
