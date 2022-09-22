@@ -1,10 +1,8 @@
-// import { setCookies } from "cookies-next";
-require("dotenv").config();
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const passportLocal = require("passport-local").Strategy;
-//const passportGoogle = require("passport-google-oidc").Strategy;
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
@@ -14,19 +12,12 @@ const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5500;
-
-require("dotenv").config();
-
 const connection_string = process.env.MONGO_KEY;
 const key = process.env.API_KEY;
 const axios = require("axios");
 const { FaEquals } = require("react-icons/fa");
 const { Autocomplete } = require("@react-google-maps/api");
 const router = require("express").Router();
-
-const isLoggedIn = (req, res, next) => {
-  req.user ? next() : res.sendStatus(401);
-};
 
 mongoose.connect(
   connection_string,
@@ -73,31 +64,19 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-app.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
+app.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email'],
+}))
 
-app.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/login/success",
-    failureRedirect: "/login/failed",
-  })
-);
+app.get("/google/callback",
+  passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
+  function(req, res) {
+    console.log('success!')
+    res.redirect("http://localhost:3000");
+  });
 
-app.get("/login/success", isLoggedIn, (req, res) => {
+app.get("/login/success", (req, res) => {
   res.status(200);
-  res.redirect("http://localhost:3000/");
-  // if (req.user)
-  //   res.status(200).json({
-  //     success: true,
-  //     message: "user authenticated",
-  //     user: req.user,
-  //   });
-  // }
 });
 
 app.get("/login/failed", (req, res) => {

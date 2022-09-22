@@ -1,8 +1,8 @@
+require("dotenv").config();
 const User = require("./models/user");
 const bcrypt = require("bcryptjs");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const localStrategy = require("passport-local").Strategy;
-// const GoogleStrategy = require("passport-google-oidc").Strategy;
-require("dotenv").config();
 
 module.exports = function (passport) {
   passport.use(
@@ -22,19 +22,18 @@ module.exports = function (passport) {
     })
   );
 
-  // passport.use(
-  //   new GoogleStrategy(
-  //     {
-  //       clientID: process.env.GOOGLE_CLIENT_ID,
-  //       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //       callbackURL: "http://localhost:5500/google/callback",
-  //       passReqToCallback: true
-  //     }, 
-  //     function(request, accessToken, refreshToken, profile, done) {
-  //       // User.findOrCreate({ googleId: profile.id}, function (err, user){
-  //         return done(null, profile);
-  //         // return done(err,profile);
-  //       }));
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:5500/google/callback",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOne({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
   
     passport.serializeUser((user, cb) => {
       cb(null, user.id);
@@ -48,13 +47,4 @@ module.exports = function (passport) {
         cb(err, userInformation);
       });
     });
-    
-    // passport.serializeUser((user, done) => {
-    //   done(null, user);
-    // });
-
-    // passport.deserializeUser((user, done) => {
-    //   // cb(null, user.id);
-    //   done(null, user);
-    // });
 };
