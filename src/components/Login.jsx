@@ -11,6 +11,7 @@ const Login = () => {
   const [data, setData] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const history = useNavigate();
 
   const google = () => {
     window.open("http://localhost:5500/google", "_self")
@@ -40,7 +41,8 @@ const Login = () => {
           setData(res.data);
           setTimeout(() => {
             saveUser(userLogin);
-            navigate("/");
+            // navigate("/");
+            history(-1);
           }, 2000);
           break;
         default: 

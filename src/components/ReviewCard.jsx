@@ -6,10 +6,10 @@ import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
 import { Dialog, Transition } from "@headlessui/react";
 import ImageUploading from "react-images-uploading";
-import RestaurantCard from "./RestaurantCard";
+import S3 from 'react-aws-s3';
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ReviewCard = ({ props, restID }) => {
-  const [showReviews, setShowReviews] = useState(true);
   const [showForm, setShowForm] = useState(true);
   const [userRated, setUserRated] = useState(0);
   const [foodReviews, setFoodReviews] = useState(props.Reviews);
@@ -18,6 +18,8 @@ const ReviewCard = ({ props, restID }) => {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  // const [showReviews, setShowReviews] = useState(true);
   const [starsArray, setStarsArray] = useState(
     foodReviews.map((review) => {
       return review.UserRating;
@@ -25,12 +27,33 @@ const ReviewCard = ({ props, restID }) => {
   );
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
+  const config = {
+    bucketName: process.env.REACT_APP_BUCKET_NAME,
+    region: process.env.REACT_APP_REGION,
+    accessKeyId: process.env.REACT_APP_ACCESS,
+    secretAccessKey: process.env.REACT_APP_SECRET,
+}
 
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
+const handleFileInput = (e) => {
+  setSelectedFile(e.target.files[0]);
+}
+
+const uploadFile = async (file) => {
+  const ReactS3Client = new S3(config);
+  ReactS3Client
+  .uploadFile(file, file.name)
+  .then(data => console.log(data.location))
+  .catch(err => console.error(err))
+}
+  const onChange = (e, imageList, addUpdateIndex) => {
+    let files = e.target.files;
+    setImages({ 'selectedFiles': files });
   };
+
+
+  // const upload = (e) => {
+  //   console.log(e.target);
+  // }
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -39,19 +62,18 @@ const ReviewCard = ({ props, restID }) => {
     setUserRated(newRating);
   };
 
-  // NEW REVIEW
   const newReview = () => {
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
       let newRating;
-      console.log(starsArray)
+      // console.log(starsArray)
       if (starsArray.length===0){
         newRating=userRated;
       } else{
         newRating = ([...starsArray, userRated].reduce((a,b)=>a+b,0)/(starsArray.length+1)).toFixed(1);
       }    
-      console.log(newRating);
+      // console.log(newRating);
       const payload = {
         ID: restID,
         FoodID: props.FoodID,
@@ -62,14 +84,13 @@ const ReviewCard = ({ props, restID }) => {
         },
         newAverageRating: Number(newRating),
       };
-      //console.log(payload);
       fetch("/newReview", {
         method: "post",
         body: JSON.stringify(payload),
         headers: {
           "content-Type": "application/json",
         },
-      }); //.then((res) => console.log("new Review Response", res));
+      }); 
       setFoodReviews([
         ...foodReviews,
         {
@@ -80,9 +101,10 @@ const ReviewCard = ({ props, restID }) => {
         },
       ]);
       setStarsArray([...starsArray, userRated]);
-      toggleForm();
+      // toggleForm();
       userReview.current.value = "";
       setUserRated(0);
+      setOpen2(false)
     }
   };
 
@@ -161,7 +183,6 @@ const ReviewCard = ({ props, restID }) => {
                       <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                           <div className="sm:items-start md:text-left">
-                            {/* <div className="sm:flex sm:items-start md:text-left"> */}
                             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                               <Dialog.Title
                                 as="h3"
@@ -186,9 +207,6 @@ const ReviewCard = ({ props, restID }) => {
                                             {review.Username}, gave it{" "}
                                             {review.UserRating}/5 Stars
                                           </h2>
-                                          {/* <p className="text-xs">
-                                          Review: {review.UserRating}/5 Stars
-                                        </p> */}
                                           <p className="text-xs">
                                             "{review.Description}"
                                           </p>
@@ -197,13 +215,6 @@ const ReviewCard = ({ props, restID }) => {
                                           </p>
                                         </div>
                                       </div>
-
-                                      {/* <div className="flex flex-col p-5">
-                                        <div> {review.Username}</div>
-                                        <div> {review.Date.slice(0, 10)}</div>
-                                        <div> {review.UserRating}/5 Stars</div>
-                                        <div> {review.Description}</div>
-                                      </div> */}
                                     </>
                                   );
                                 })}
@@ -245,7 +256,7 @@ const ReviewCard = ({ props, restID }) => {
           {username != null && "Leave a Review"}
         </NavLink>
 
-        {/* modal */}
+        {/* modal2 */}
 
         <Transition.Root show={open2} as={Fragment}>
           <Dialog
@@ -287,15 +298,11 @@ const ReviewCard = ({ props, restID }) => {
                             className="text-lg font-medium leading-6 text-gray-900 text-center"
                           >
                             {/* Leave A Review Title */}
-                            Your Review of ***
+                            Write Your Review
                           </Dialog.Title>
                           <div className="mt-2 flex flex-col">
-                            {foodReviews.map((review,index) => {
-                              return (
                                 <>
-                                  {/* <div hidden={username === null}>
-          <div hidden={showForm} className=""> */}
-                                  <div key = {index}>
+                                  <div>
                                     <div>
                                       <div className="flex justify-center p-2 m-1">
                                         <ReactStars
@@ -324,7 +331,6 @@ const ReviewCard = ({ props, restID }) => {
                                               isDragging,
                                               dragProps,
                                             }) => (
-                                              // write your building UI
                                               <div className="upload__image-wrapper flex flex-col items-center">
                                                 <button
                                                   style={
@@ -400,8 +406,6 @@ const ReviewCard = ({ props, restID }) => {
                                     </div>
                                   </div>
                                 </>
-                              );
-                            })}
                           </div>
                         </div>
                       </div>
@@ -423,7 +427,7 @@ const ReviewCard = ({ props, restID }) => {
           </Dialog>
         </Transition.Root>
 
-        {/* modal */}
+        {/* modal2 */}
       </div>
     </div>
   );
