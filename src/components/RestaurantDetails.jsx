@@ -30,7 +30,6 @@ const RestaurantDetails = () => {
       })
         .then((res) => res.json())
         .then((response) => {
-          // console.log(response);
           if (response.length === 0) {
             newRestaurant();
             setNoMenuItemsFlag(true);
@@ -43,7 +42,6 @@ const RestaurantDetails = () => {
           let sorted = unsorted.sort((a, b) => {
             return b.Rating - a.Rating;
           });
-          console.log(sorted)
           setSortedMenuData(sorted);
         });
     }

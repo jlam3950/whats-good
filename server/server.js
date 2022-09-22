@@ -210,8 +210,6 @@ app.post("/newFoodItem", (req, res) => {
 
 //Add New Review
 app.post("/newReview", (req, res) => {
-  console.log("HELLO");
-  console.log(req.body);
   const { ID, FoodID, reviewData, newAverageRating } = req.body;
   //Adds review to Restaurant db
   Restaurant.updateOne(
@@ -246,8 +244,6 @@ app.post("/newReview", (req, res) => {
       },
     }
   );
-
-
 });
 
 app.listen(PORT, () => {
