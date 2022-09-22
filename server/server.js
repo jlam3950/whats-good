@@ -1,10 +1,10 @@
 // import { setCookies } from "cookies-next";
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
-const passportGoogle = require("passport-google-oidc").Strategy;
+//const passportGoogle = require("passport-google-oidc").Strategy;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
@@ -19,14 +19,14 @@ require("dotenv").config();
 
 const connection_string = process.env.MONGO_KEY;
 const key = process.env.API_KEY;
-const axios = require('axios');
-const { FaEquals } = require('react-icons/fa');
-const { Autocomplete } = require('@react-google-maps/api');
+const axios = require("axios");
+const { FaEquals } = require("react-icons/fa");
+const { Autocomplete } = require("@react-google-maps/api");
 const router = require("express").Router();
 
-const isLoggedIn = (req,res, next) => {
+const isLoggedIn = (req, res, next) => {
   req.user ? next() : res.sendStatus(401);
-}
+};
 
 mongoose.connect(
   connection_string,
@@ -73,20 +73,25 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-app.get('/google', passport.authenticate('google', {
-  scope: ['profile','email'],
-}))
+app.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
 
-app.get('/google/callback',
-  passport.authenticate('google', { 
-    successRedirect: '/login/success',
-    failureRedirect: '/login/failed'}), 
+app.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/login/success",
+    failureRedirect: "/login/failed",
+  })
 );
 
 app.get("/login/success", isLoggedIn, (req, res) => {
   res.status(200);
-  res.redirect('http://localhost:3000/');
-  // if (req.user) 
+  res.redirect("http://localhost:3000/");
+  // if (req.user)
   //   res.status(200).json({
   //     success: true,
   //     message: "user authenticated",
@@ -95,11 +100,11 @@ app.get("/login/success", isLoggedIn, (req, res) => {
   // }
 });
 
-app.get('/login/failed', (req,res) => {
+app.get("/login/failed", (req, res) => {
   res.status(401).json({
-    message: 'failure',
-  }) 
-})
+    message: "failure",
+  });
+});
 
 app.post("/register", (req, res) => {
   User.findOne({ username: req.body.username }, async (err, doc) => {
@@ -115,7 +120,7 @@ app.post("/register", (req, res) => {
       await newUser.save();
       res.send("User Created");
     }
-  })
+  });
 });
 
 app.post("/getLocation", (req, res) => {
@@ -175,7 +180,7 @@ app.post("/newRestaurant", (req, res) => {
   const newRestaurant = new Restaurant(req.body);
   newRestaurant.save((error) => {
     if (error) {
-      res.status(500).json({msg: "Internal Server Error??"})
+      res.status(500).json({ msg: "Internal Server Error??" });
     } else {
       res.json({
         msg: "Data saved",
@@ -187,49 +192,60 @@ app.post("/newRestaurant", (req, res) => {
 //Add New Food Item
 app.post("/newFoodItem", (req, res) => {
   const { ID, foodData } = req.body;
-  Restaurant.updateOne({ ID: ID}, {$push: {
-    MenuItems: {
-      FoodID: foodData.FoodID,
-      FoodName: foodData.FoodName,
-      Rating: 0,
-      Reviews:[],
-    }
-  }}, {upsert:true}).then(
-    res.json({msg: "soemthing happened"})
-  );
+  Restaurant.updateOne(
+    { ID: ID },
+    {
+      $push: {
+        MenuItems: {
+          FoodID: foodData.FoodID,
+          FoodName: foodData.FoodName,
+          Rating: 0,
+          Reviews: [],
+        },
+      },
+    },
+    { upsert: true }
+  ).then(res.json({ msg: "soemthing happened" }));
 });
 
 //Add New Review
 app.post("/newReview", (req, res) => {
-  console.log("HELLO")
-  console.log(req.body)
-  const { ID, FoodID, reviewData } = req.body;
+  const { ID, FoodID, reviewData, newAverageRating } = req.body;
   //Adds review to Restaurant db
-  Restaurant.updateOne({ID:ID}, {$push: { "MenuItems.$[elem].Reviews": { 
-      Username: reviewData.Username,
-      UserRating: reviewData.UserRating,
-      Description: reviewData.Description,
-      Date: Date.now(),
-  }}},
-  {
-    arrayFilters: [{"elem.FoodID": FoodID}], multi:false
-  }
-  )
-.then(
-    res.json({msg: "soemthing happened"})
-  );
+  Restaurant.updateOne(
+    { ID: ID },
+    {
+      $push: {
+        "MenuItems.$[elem].Reviews": {
+          Username: reviewData.Username,
+          UserRating: reviewData.UserRating,
+          Description: reviewData.Description,
+          Date: Date.now(),
+        },
+      },
+      $set: { "MenuItems.$[elem].Rating": newAverageRating }
+    },
+    {
+      arrayFilters: [{ "elem.FoodID": FoodID }],
+      multi: false,
+    }
+  ).then(res.json({ msg: "soemthing happened" }));
 
   //Adds review to user db
-  User.updateOne({username: reviewData.username},{$push: {Reviews: {
-    UserRating: reviewData.UserRating,
-    Description: reviewData.Description,
-    Date: Date.now(),}
-  }})
-
-  // NEED TO UPDATE AVERAGE USER RATING FOR FOOD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,
+  User.updateOne(
+    { username: reviewData.username },
+    {
+      $push: {
+        Reviews: {
+          UserRating: reviewData.UserRating,
+          Description: reviewData.Description,
+          Date: Date.now(),
+        },
+      },
+    }
+  );
 });
 
 app.listen(PORT, () => {
   console.log(`app is running on ${PORT}`);
 });
-
