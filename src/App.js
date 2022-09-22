@@ -12,7 +12,6 @@ import Profile from "./components/Profile";
 import Logout from "./components/Logout"; 
 import RestaurantDetails from './components/RestaurantDetails';
 import { Routes, Route } from "react-router-dom";
-import { Component } from 'react';
 
 function App() {
 

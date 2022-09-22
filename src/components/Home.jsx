@@ -1,12 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import hero from "../images/hero_splash.jpg";
-// import food from "../images/p_food.jpg";
-import food1 from "../images/p_food_1.jpg";
-import food2 from "../images/p_food_3.jpg";
+
 import altHero from "../images/alt_hero.jpg";
-import altHero_ from "../images/hero-shrimp.jpg";
-import sushi from '../images/sushi.jpg'
+
 
 const Home = () => {
   return (
@@ -22,7 +18,7 @@ const Home = () => {
           </div>
         </div>
         <div className="flex flex-col-reverse justify-center items-center md:py-0 md:flex-row md:justify-evenly">
-          <div className="flex flex-col items-center  animate-fade-in-down mt-10 md:mt-4 md:mb-0 lg:mb-24 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
+          <div className="flex flex-col items-center mt-10 md:mt-4 md:mb-0 lg:mb-24 text-center tracking-tight font-extrabold text-5xl md:ml-8 md:text-6xl lg:text-6xl xl:text-7xl md:w-1/2">   
             What's Good?
             <div class = 'text-4xl max-w-lg text-white drop-shadow-2xl findthe md:text-5xl'>
             Find the best items at every restaurant.

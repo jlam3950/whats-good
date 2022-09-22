@@ -70,7 +70,7 @@ const Search = () => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [handleAddress]);
+  },);
 
   const fetchAPI = () => {
     if (lat === "" && long === "") {

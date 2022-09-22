@@ -61,8 +61,7 @@ const Profile = () => {
             <div className="flex flex-wrap justify-center">
               <div className="w-full px-4">
                 <p className="font-light leading-relaxed text-slate-600 mb-4">
-                  Foodie, traveler, and programmer. I enjoy sharing my reviews
-                  on What's Good.
+                  Foodie, traveler, and programmer.
                 </p>
                 <a
                   href="www.google.com"
