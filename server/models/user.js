@@ -6,6 +6,10 @@ const user = new mongoose.Schema({
         UserRating: Number,
         Description: String,
         Date: Date,
+        Image:     {
+            data: Buffer,
+            contentType: String
+        },
     }]
 })
 

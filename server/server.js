@@ -12,6 +12,18 @@ const session = require("express-session");
 const User = require("./models/user");
 const Restaurant = require("./models/restaurant");
 const cors = require("cors");
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+const upload = multer({ storage: storage });
 const app = express();
 const PORT = process.env.PORT || 5500;
 
@@ -211,6 +223,7 @@ app.post("/newFoodItem", (req, res) => {
 //Add New Review
 app.post("/newReview", (req, res) => {
   const { ID, FoodID, reviewData, newAverageRating } = req.body;
+  console.log(reviewData.Image)
   //Adds review to Restaurant db
   Restaurant.updateOne(
     { ID: ID },
@@ -221,6 +234,10 @@ app.post("/newReview", (req, res) => {
           UserRating: reviewData.UserRating,
           Description: reviewData.Description,
           Date: Date.now(),
+          Image: {
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + reviewData.Image[0].data_url)),
+            contentType: 'image/png'
+        }
         },
       },
       $set: { "MenuItems.$[elem].Rating": newAverageRating }
@@ -240,6 +257,10 @@ app.post("/newReview", (req, res) => {
           UserRating: reviewData.UserRating,
           Description: reviewData.Description,
           Date: Date.now(),
+          Image: {
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + Image)),
+            contentType: 'image/png'
+        }
         },
       },
     }

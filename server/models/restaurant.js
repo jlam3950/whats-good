@@ -12,7 +12,10 @@ const restaurant = new mongoose.Schema({
             UserRating: Number,
             Description: String,
             Date: Date,
-
+            Images:     {
+                data: Buffer,
+                contentType: String
+            }
         }]
     }],
     Address: String,

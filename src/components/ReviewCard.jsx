@@ -23,13 +23,13 @@ const ReviewCard = ({ props, restID }) => {
       return review.UserRating;
     })
   );
-  const [images, setImages] = React.useState([]);
+  const [image, setImage] = useState();
   const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
-    setImages(imageList);
+    setImage(imageList);
   };
 
   const toggleForm = () => {
@@ -38,6 +38,9 @@ const ReviewCard = ({ props, restID }) => {
   const ratingChanged = (newRating) => {
     setUserRated(newRating);
   };
+console.log(image)
+  // DELETE REVIEW
+  const deleteReview = () => {};
 
   // NEW REVIEW
   const newReview = () => {
@@ -45,12 +48,15 @@ const ReviewCard = ({ props, restID }) => {
       alert("You must be logged in to leave a review!");
     } else {
       let newRating;
-      console.log(starsArray)
-      if (starsArray.length===0){
-        newRating=userRated;
-      } else{
-        newRating = ([...starsArray, userRated].reduce((a,b)=>a+b,0)/(starsArray.length+1)).toFixed(1);
-      }    
+      console.log(starsArray);
+      if (starsArray.length === 0) {
+        newRating = userRated;
+      } else {
+        newRating = (
+          [...starsArray, userRated].reduce((a, b) => a + b, 0) /
+          (starsArray.length + 1)
+        ).toFixed(1);
+      }
       console.log(newRating);
       const payload = {
         ID: restID,
@@ -59,6 +65,7 @@ const ReviewCard = ({ props, restID }) => {
           Username: username,
           UserRating: userRated,
           Description: userReview.current.value,
+          Image: image
         },
         newAverageRating: Number(newRating),
       };
@@ -77,9 +84,11 @@ const ReviewCard = ({ props, restID }) => {
           UserRating: userRated,
           Description: userReview.current.value,
           Date: "Just now",
+          Image: image
         },
       ]);
       setStarsArray([...starsArray, userRated]);
+      //setImage()
       toggleForm();
       userReview.current.value = "";
       setUserRated(0);
@@ -114,7 +123,9 @@ const ReviewCard = ({ props, restID }) => {
           >
             {starsArray.length === 0 && "No reviews yet..."}
             {starsArray.length !== 0 &&
-              (starsArray.reduce((a, b) => a + b, 0) / starsArray.length).toFixed(1)}
+              (
+                starsArray.reduce((a, b) => a + b, 0) / starsArray.length
+              ).toFixed(1)}
             {starsArray.length !== 0 && "/5 Stars"}
           </h3>
           <div className="flex flex-col">
@@ -170,20 +181,23 @@ const ReviewCard = ({ props, restID }) => {
                                 Reviews
                               </Dialog.Title>
                               <div className="mt-2 flex flex-col">
-                                {foodReviews.map((review, index) => {
+                                {foodReviews.map((review, index) => { console.log(review)
                                   return (
                                     <>
-                                      <div key={index} className="border flex flex-row m-1 rounded bg-gray-100 shadow-lg">
+                                      <div
+                                        key={index}
+                                        className="border flex flex-row m-1 rounded bg-gray-100 shadow-lg"
+                                      >
                                         <div className="flex justify-center py-1 w-2/5 ">
                                           <img
-                                            src={shrimp}
+                                            src={review.Image}
                                             className="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"
                                             alt="restaurant"
                                           />
                                         </div>
                                         <div className="card-body mt-1 w-3/5 text-xs text-left sm:text-sm lg:text-lg">
-                                          <h2 className="card-title pt-2 text-sm font-bold">
-                                            {review.Username}, gave it{" "}
+                                          <h2 className="card-title pt-4 text-sm font-bold">
+                                            {review.Username} gave it{" "}
                                             {review.UserRating}/5 Stars
                                           </h2>
                                           {/* <p className="text-xs">
@@ -195,6 +209,17 @@ const ReviewCard = ({ props, restID }) => {
                                           <p className="text-xs">
                                             {review.Date.slice(0, 10)}
                                           </p>
+                                          <button
+                                            type="button"
+                                            hidden="true" //(review.Username==username)}
+                                            disabled={
+                                              username != review.Username
+                                            }
+                                            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                            onClick={deleteReview}
+                                          >
+                                            Delete
+                                          </button>
                                         </div>
                                       </div>
 
@@ -287,15 +312,14 @@ const ReviewCard = ({ props, restID }) => {
                             className="text-lg font-medium leading-6 text-gray-900 text-center"
                           >
                             {/* Leave A Review Title */}
-                            Your Review of ***
+                            Leave a rating!
                           </Dialog.Title>
                           <div className="mt-2 flex flex-col">
-                            {foodReviews.map((review,index) => {
-                              return (
+
                                 <>
                                   {/* <div hidden={username === null}>
           <div hidden={showForm} className=""> */}
-                                  <div key = {index}>
+                                  <div>
                                     <div>
                                       <div className="flex justify-center p-2 m-1">
                                         <ReactStars
@@ -310,7 +334,7 @@ const ReviewCard = ({ props, restID }) => {
                                         <div className="App">
                                           <ImageUploading
                                             multiple
-                                            value={images}
+                                            value={image}
                                             onChange={onChange}
                                             maxNumber={maxNumber}
                                             dataURLKey="data_url"
@@ -333,14 +357,14 @@ const ReviewCard = ({ props, restID }) => {
                                                       : undefined
                                                   }
                                                   onClick={onImageUpload}
-                                                  className='"m-1 px-10 border w-1/2 border-gray-700 rounded text-sm text-center'
+                                                  className='"m-1 px-4 border w-1/2 border-gray-700 rounded text-sm text-center'
                                                   {...dragProps}
                                                 >
-                                                  Click or Drop here
+                                                  Click or drop an image here
                                                 </button>
                                                 &nbsp;
                                                 <button
-                                                  className="-mt-5 mb-2 px-10 border w-1/2 border-gray-700 rounded text-sm text-center"
+                                                  className="-mt-5 mb-2 px-4 border w-1/2 border-gray-700 rounded text-sm text-center"
                                                   onClick={onImageRemoveAll}
                                                 >
                                                   Remove all images
@@ -383,7 +407,7 @@ const ReviewCard = ({ props, restID }) => {
                                         </div>
                                       </div>
                                       {/* image uploader */}
-                                      <div className = 'flex flex-col items-center'>
+                                      <div className="flex flex-col items-center">
                                         <input
                                           ref={userReview}
                                           className="text-lg m-2 border w-full"
@@ -400,8 +424,7 @@ const ReviewCard = ({ props, restID }) => {
                                     </div>
                                   </div>
                                 </>
-                              );
-                            })}
+
                           </div>
                         </div>
                       </div>

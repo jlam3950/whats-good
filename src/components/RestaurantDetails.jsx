@@ -38,6 +38,7 @@ const RestaurantDetails = () => {
             setNoMenuItemsFlag(true);
           } //if there is a restaurant preexisting but there's not reviews... set flag to true
           setDBData(response);
+          console.log(response)
           let unsorted = [...response[0].MenuItems]
           let sorted = unsorted.sort((a, b) => {
             return b.Rating - a.Rating;
