@@ -26,10 +26,17 @@ const ReviewCard = ({ props, restID }) => {
 
   // NEW REVIEW
   const newReview = () => {
-    console.log("HelloFront");
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
+      let newRating;
+      console.log(starsArray)
+      if (starsArray.length===0){
+        newRating=userRated;
+      } else{
+        newRating = ([...starsArray, userRated].reduce((a,b)=>a+b,0)/(starsArray.length+1)).toFixed(1);
+      }    
+      console.log(newRating);
       const payload = {
         ID: restID,
         FoodID: props.FoodID,
@@ -38,6 +45,7 @@ const ReviewCard = ({ props, restID }) => {
           UserRating: userRated,
           Description: userReview.current.value,
         },
+        newAverageRating: Number(newRating),
       };
       //console.log(payload);
       fetch("/newReview", {
