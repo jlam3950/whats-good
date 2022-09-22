@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
 import { Dialog, Transition } from "@headlessui/react";
+import ImageUploading from "react-images-uploading";
+import RestaurantCard from "./RestaurantCard";
 
 const ReviewCard = ({ props, restID }) => {
   const [showReviews, setShowReviews] = useState(true);
@@ -14,8 +16,21 @@ const ReviewCard = ({ props, restID }) => {
   const userReview = useRef(null);
   const username = useSelector(SelectUsername);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const cancelButtonRef = useRef(null);
-  const [starsArray, setStarsArray] = useState(foodReviews.map(review=>{return review.UserRating}));
+  const [starsArray, setStarsArray] = useState(
+    foodReviews.map((review) => {
+      return review.UserRating;
+    })
+  );
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -89,12 +104,24 @@ const ReviewCard = ({ props, restID }) => {
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
-          <h3 className = {starsArray.length===0 ? 'h-12 lg:h-16 flex flex-col justify-center' : ''}>{starsArray.length===0&&"No reviews yet..."}{starsArray.length!==0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length).toFixed(1)}{starsArray.length!==0&&"/5 Stars"}</h3>
+
+          <h3
+            className={
+              starsArray.length === 0
+                ? "h-12 lg:h-16 flex flex-col justify-center"
+                : ""
+            }
+          >
+            {starsArray.length === 0 && "No reviews yet..."}
+            {starsArray.length !== 0 &&
+              (starsArray.reduce((a, b) => a + b, 0) / starsArray.length).toFixed(1)}
+            {starsArray.length !== 0 && "/5 Stars"}
+          </h3>
           <div className="flex flex-col">
             <button
               onClick={() => setOpen(true)}
               id={props.FoodID}
-              hidden={starsArray.length===0}
+              hidden={starsArray.length === 0}
               className="bg-blue-500 hover:bg-blue-600 text-white m-1  px-10 border text-sm border-blue-700 rounded"
             >
               User Reviews
@@ -120,7 +147,6 @@ const ReviewCard = ({ props, restID }) => {
                   <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
 
-
                 <div className="fixed inset-0 z-10 overflow-y-auto">
                   <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <Transition.Child
@@ -134,7 +160,8 @@ const ReviewCard = ({ props, restID }) => {
                     >
                       <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                          <div className="sm:flex sm:items-start">
+                          <div className="sm:items-start md:text-left">
+                            {/* <div className="sm:flex sm:items-start md:text-left"> */}
                             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                               <Dialog.Title
                                 as="h3"
@@ -142,16 +169,41 @@ const ReviewCard = ({ props, restID }) => {
                               >
                                 Reviews
                               </Dialog.Title>
-                              <div className="mt-2">
-                                {foodReviews.map((review) => {
+                              <div className="mt-2 flex flex-col">
+                                {foodReviews.map((review, index) => {
                                   return (
                                     <>
-                                      <div className="flex flex-col p-5">
+                                      <div key={index} className="border flex flex-row m-1 rounded bg-gray-100 shadow-lg">
+                                        <div className="flex justify-center py-1 w-2/5 ">
+                                          <img
+                                            src={shrimp}
+                                            className="restaurant_icon w-4/5 md:w-5/5 md:w-5/6 p-1 pt-2 mb-6 md:mb-0"
+                                            alt="restaurant"
+                                          />
+                                        </div>
+                                        <div className="card-body mt-1 w-3/5 text-xs text-left sm:text-sm lg:text-lg">
+                                          <h2 className="card-title pt-2 text-sm font-bold">
+                                            {review.Username}, gave it{" "}
+                                            {review.UserRating}/5 Stars
+                                          </h2>
+                                          {/* <p className="text-xs">
+                                          Review: {review.UserRating}/5 Stars
+                                        </p> */}
+                                          <p className="text-xs">
+                                            "{review.Description}"
+                                          </p>
+                                          <p className="text-xs">
+                                            {review.Date.slice(0, 10)}
+                                          </p>
+                                        </div>
+                                      </div>
+
+                                      {/* <div className="flex flex-col p-5">
                                         <div> {review.Username}</div>
                                         <div> {review.Date.slice(0, 10)}</div>
                                         <div> {review.UserRating}/5 Stars</div>
                                         <div> {review.Description}</div>
-                                      </div>
+                                      </div> */}
                                     </>
                                   );
                                 })}
@@ -179,31 +231,199 @@ const ReviewCard = ({ props, restID }) => {
             {/* modal */}
           </div>
         </div>
-        <NavLink onClick={toggleForm} disabled={username == null} className = {username != null ? 'bg-green-500 hover:bg-green-600 text-white m-1 px-10 border border-blue-700 rounded text-sm text-center' : 'bg-red-500 hover:bg-red-600 text-white m-1 px-10 border border-blue-700 rounded text-sm'} to = {username === null ? '/login' : ''}>
+        <NavLink
+          onClick={() => setOpen2(true)}
+          disabled={username == null}
+          className={
+            username != null
+              ? "bg-green-500 hover:bg-green-600 text-white m-1 px-10 border border-blue-700 rounded text-sm text-center"
+              : "bg-red-500 hover:bg-red-600 text-white m-1 px-10 border border-blue-700 rounded text-sm"
+          }
+          to={username === null ? "/login" : ""}
+        >
           {username == null && "Log in to review"}
           {username != null && "Leave a Review"}
         </NavLink>
-        <div hidden={username===null}>
 
-        <div hidden={showForm}>
-          <div className="flex justify-center p-2 m-1">
-            <ReactStars
-              count={5}
-              onChange={ratingChanged}
-              size={18}
-              activeColor="#ffd700"
-            />
-          </div>
-          <input ref={userReview} placeholder="Write a review..."></input>
-          <button
-            className="bg-green-500 hover:bg-green-700 text-white text-xs py-2 px-3 mx-2 rounded"
-            onClick={newReview}
-            disabled={userRated === 0}
+        {/* modal */}
+
+        <Transition.Root show={open2} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            initialFocus={cancelButtonRef}
+            onClose={setOpen2}
           >
-            Submit
-          </button>
-        </div>
-        </div>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enterTo="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div className="sm:items-start md:text-left">
+                        {/* <div className="sm:flex sm:items-start md:text-left"> */}
+                        <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-lg font-medium leading-6 text-gray-900 text-center"
+                          >
+                            {/* Leave A Review Title */}
+                            Your Review of ***
+                          </Dialog.Title>
+                          <div className="mt-2 flex flex-col">
+                            {foodReviews.map((review,index) => {
+                              return (
+                                <>
+                                  {/* <div hidden={username === null}>
+          <div hidden={showForm} className=""> */}
+                                  <div key = {index}>
+                                    <div>
+                                      <div className="flex justify-center p-2 m-1">
+                                        <ReactStars
+                                          count={5}
+                                          onChange={ratingChanged}
+                                          size={18}
+                                          activeColor="#ffd700"
+                                        />
+                                      </div>
+                                      {/* image uploader  */}
+                                      <div>
+                                        <div className="App">
+                                          <ImageUploading
+                                            multiple
+                                            value={images}
+                                            onChange={onChange}
+                                            maxNumber={maxNumber}
+                                            dataURLKey="data_url"
+                                          >
+                                            {({
+                                              imageList,
+                                              onImageUpload,
+                                              onImageRemoveAll,
+                                              onImageUpdate,
+                                              onImageRemove,
+                                              isDragging,
+                                              dragProps,
+                                            }) => (
+                                              // write your building UI
+                                              <div className="upload__image-wrapper flex flex-col items-center">
+                                                <button
+                                                  style={
+                                                    isDragging
+                                                      ? { color: "red" }
+                                                      : undefined
+                                                  }
+                                                  onClick={onImageUpload}
+                                                  className='"m-1 px-10 border w-1/2 border-gray-700 rounded text-sm text-center'
+                                                  {...dragProps}
+                                                >
+                                                  Click or Drop here
+                                                </button>
+                                                &nbsp;
+                                                <button
+                                                  className="-mt-5 mb-2 px-10 border w-1/2 border-gray-700 rounded text-sm text-center"
+                                                  onClick={onImageRemoveAll}
+                                                >
+                                                  Remove all images
+                                                </button>
+                                                {imageList.map(
+                                                  (image, index) => (
+                                                    <div
+                                                      key={index}
+                                                      className="image-item"
+                                                    >
+                                                      <img
+                                                        src={image["data_url"]}
+                                                        alt=""
+                                                        width="100"
+                                                      />
+                                                      <div className="image-item__btn-wrapper">
+                                                        <button
+                                                          className="m-1 px-5 border border-gray-700 rounded text-sm text-center"
+                                                          onClick={() =>
+                                                            onImageUpdate(index)
+                                                          }
+                                                        >
+                                                          Update
+                                                        </button>
+                                                        <button
+                                                          className="m-1 px-5 border border-gray-700 rounded text-sm text-center"
+                                                          onClick={() =>
+                                                            onImageRemove(index)
+                                                          }
+                                                        >
+                                                          Remove
+                                                        </button>
+                                                      </div>
+                                                    </div>
+                                                  )
+                                                )}
+                                              </div>
+                                            )}
+                                          </ImageUploading>
+                                        </div>
+                                      </div>
+                                      {/* image uploader */}
+                                      <div className = 'flex flex-col items-center'>
+                                        <input
+                                          ref={userReview}
+                                          className="text-lg m-2 border w-full"
+                                          placeholder="Write a review..."
+                                        ></input>
+                                        <button
+                                          className="bg-green-500 hover:bg-green-700 text-white text-xs py-2 px-3 mx-2 mt-5 -mb-3 rounded w-1/2"
+                                          onClick={newReview}
+                                          disabled={userRated === 0}
+                                        >
+                                          Submit
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 items-center sm:flex sm:flex-col sm:px-6">
+                      <button
+                        type="button"
+                        className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                        onClick={() => setOpen2(false)}
+                        ref={cancelButtonRef}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition.Root>
+
+        {/* modal */}
       </div>
     </div>
   );
