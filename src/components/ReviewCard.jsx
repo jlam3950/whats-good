@@ -81,7 +81,7 @@ const ReviewCard = ({ props, restID }) => {
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
-          <h3 className = {starsArray.length===0 ? 'h-12 lg:h-16 flex flex-col justify-center' : ''}>{starsArray.length===0&&"No reviews yet..."}{starsArray.length!==0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length)}{starsArray.length!==0&&"/5 Stars"}</h3>
+          <h3 className = {starsArray.length===0 ? 'h-12 lg:h-16 flex flex-col justify-center' : ''}>{starsArray.length===0&&"No reviews yet..."}{starsArray.length!==0&&(starsArray.reduce((a,b)=>a+b,0)/starsArray.length).toFixed(1)}{starsArray.length!==0&&"/5 Stars"}</h3>
           <div className="flex flex-col">
             <button
               onClick={() => setOpen(true)}
