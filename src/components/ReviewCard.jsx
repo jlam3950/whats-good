@@ -41,10 +41,17 @@ const ReviewCard = ({ props, restID }) => {
 
   // NEW REVIEW
   const newReview = () => {
-    console.log("HelloFront");
     if (username === null) {
       alert("You must be logged in to leave a review!");
     } else {
+      let newRating;
+      console.log(starsArray)
+      if (starsArray.length===0){
+        newRating=userRated;
+      } else{
+        newRating = ([...starsArray, userRated].reduce((a,b)=>a+b,0)/(starsArray.length+1)).toFixed(1);
+      }    
+      console.log(newRating);
       const payload = {
         ID: restID,
         FoodID: props.FoodID,
@@ -53,6 +60,7 @@ const ReviewCard = ({ props, restID }) => {
           UserRating: userRated,
           Description: userReview.current.value,
         },
+        newAverageRating: Number(newRating),
       };
       //console.log(payload);
       fetch("/newReview", {
@@ -96,6 +104,7 @@ const ReviewCard = ({ props, restID }) => {
           <div className="flex flex-col items-center">
             <img className="h-32" src={shrimp} alt=""></img>
           </div>
+
           <h3
             className={
               starsArray.length === 0
@@ -105,7 +114,7 @@ const ReviewCard = ({ props, restID }) => {
           >
             {starsArray.length === 0 && "No reviews yet..."}
             {starsArray.length !== 0 &&
-              starsArray.reduce((a, b) => a + b, 0) / starsArray.length}
+              (starsArray.reduce((a, b) => a + b, 0) / starsArray.length).toFixed(1)}
             {starsArray.length !== 0 && "/5 Stars"}
           </h3>
           <div className="flex flex-col">
@@ -161,10 +170,10 @@ const ReviewCard = ({ props, restID }) => {
                                 Reviews
                               </Dialog.Title>
                               <div className="mt-2 flex flex-col">
-                                {foodReviews.map((review) => {
+                                {foodReviews.map((review, index) => {
                                   return (
                                     <>
-                                      <div className="border flex flex-row m-1 rounded bg-gray-100 shadow-lg">
+                                      <div key={index} className="border flex flex-row m-1 rounded bg-gray-100 shadow-lg">
                                         <div className="flex justify-center py-1 w-2/5 ">
                                           <img
                                             src={shrimp}
@@ -281,12 +290,12 @@ const ReviewCard = ({ props, restID }) => {
                             Your Review of ***
                           </Dialog.Title>
                           <div className="mt-2 flex flex-col">
-                            {foodReviews.map((review) => {
+                            {foodReviews.map((review,index) => {
                               return (
                                 <>
                                   {/* <div hidden={username === null}>
           <div hidden={showForm} className=""> */}
-                                  <div>
+                                  <div key = {index}>
                                     <div>
                                       <div className="flex justify-center p-2 m-1">
                                         <ReactStars

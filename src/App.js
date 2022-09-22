@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -11,6 +12,7 @@ import Profile from "./components/Profile";
 import Logout from "./components/Logout"; 
 import RestaurantDetails from './components/RestaurantDetails';
 import { Routes, Route } from "react-router-dom";
+import { Component } from 'react';
 
 function App() {
 
