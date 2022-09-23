@@ -160,7 +160,7 @@ app.post("/checkDB", (req, res) => {
   });
 });
 
-//Test path, checks to see if we have any restaurant data
+//Test path, checks to see if we have any restaurant dat
 app.get("/check", (req, res) =>
   Restaurant.find({})
     .then((data) => {
