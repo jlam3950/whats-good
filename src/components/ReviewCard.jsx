@@ -313,7 +313,7 @@ const uploadFile = async (file) => {
                                         />
                                       </div>
                                       {/* image uploader  */}
-                                      <div>
+                                      {/* <div>
                                         <div className="App">
                                           <ImageUploading
                                             multiple
@@ -387,7 +387,7 @@ const uploadFile = async (file) => {
                                             )}
                                           </ImageUploading>
                                         </div>
-                                      </div>
+                                      </div> */}
                                       {/* image uploader */}
                                       <div className = 'flex flex-col items-center'>
                                         <input
