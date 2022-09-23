@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 const passport = require("passport");
-
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
@@ -50,6 +50,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./passport-config")(passport);
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'whats-good', 'build', '/index.html')
+    )
+  );
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'));
+}
+
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
@@ -64,16 +76,21 @@ app.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-app.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-}))
+app.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
 
-app.get("/google/callback",
+app.get(
+  "/google/callback",
   passport.authenticate("google", { failureRedirect: "http://localhost:3000" }),
-  function(req, res) {
-    console.log('success!')
+  function (req, res) {
+    console.log("success!");
     res.redirect("http://localhost:3000");
-  });
+  }
+);
 
 app.get("/login/success", (req, res) => {
   res.status(200);
@@ -202,7 +219,7 @@ app.post("/newReview", (req, res) => {
           Date: Date.now(),
         },
       },
-      $set: { "MenuItems.$[elem].Rating": newAverageRating }
+      $set: { "MenuItems.$[elem].Rating": newAverageRating },
     },
     {
       arrayFilters: [{ "elem.FoodID": FoodID }],

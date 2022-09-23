@@ -20,6 +20,7 @@
     "dotenv": "^16.0.2",
     "express-session": "^1.17.3",
     "flowbite": "^1.5.3",
+    "heroku": "^7.63.4",
     "http-proxy-middleware": "^2.0.6",
     "install": "^0.13.0",
     "mongoose-findorcreate": "^3.0.0",
@@ -51,7 +52,8 @@
     "serverStart": "nodemon server.js --ignore client",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build--prefix frontend"
   },
   "proxy": "http://localhost:5500",
   "eslintConfig": {
