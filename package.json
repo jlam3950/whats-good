@@ -1,5 +1,8 @@
 {
   "name": "whats-good",
+  "engines": {
+    "node": "16.7.1"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -52,8 +55,7 @@
     "serverStart": "nodemon server.js --ignore client",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix whats-good && npm run build--prefix whats-good"
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:5500",
   "eslintConfig": {
@@ -78,5 +80,6 @@
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
     "tailwindcss": "^1.9.6"
-  }
+  },
+  
 }
