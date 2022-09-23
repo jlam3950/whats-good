@@ -171,7 +171,6 @@ app.get("/check", (req, res) =>
     })
 );
 
-// Adds New Restaurant
 app.post("/newRestaurant", (req, res) => {
   const newRestaurant = new Restaurant(req.body);
   newRestaurant.save((error) => {
