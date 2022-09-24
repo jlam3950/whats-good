@@ -50,12 +50,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./passport-config")(passport);
 
+
+//serve front end
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../build')));
+  app.use(express.static(path.join(__dirname, '../src/build')));
 
   app.get('*', (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, '../', 'whats-good', 'build', '/index.html')
+      path.resolve(__dirname, '../', 'src', 'build', '/index.html')
     )
   );
 } else {
