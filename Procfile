@@ -1,1 +1,1 @@
-web: node ./app.jsq
+web: npm start
