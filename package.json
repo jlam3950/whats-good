@@ -55,9 +55,8 @@
     "serverStart": "nodemon server.js --ignore client",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../ && npm run build --prefix ../"
-  },
+    "eject": "react-scripts eject"
+    },
   "proxy": "http://localhost:5500",
   "eslintConfig": {
     "extends": [
