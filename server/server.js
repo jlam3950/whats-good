@@ -12,8 +12,8 @@ const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5500;
-const connection_string = process.env.MONGO_KEY;
-const key = process.env.API_KEY;
+const connection_string = process.env.REACT_APP_MONGO_KEY;
+const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
 const { FaEquals } = require("react-icons/fa");
 const { Autocomplete } = require("@react-google-maps/api");
@@ -57,7 +57,7 @@ app.use(express.static(path.join(__dirname, '../build')));
 
   app.get('*', (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, '../', 'build', './index.html')
+      path.resolve(__dirname, '../', 'build', 'index.html')
     )
   );
 } else {
