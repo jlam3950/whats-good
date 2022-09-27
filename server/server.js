@@ -11,7 +11,7 @@ const User = require("./models/user");
 const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
-const PORT = process.env.PORT || 5500;
+// const PORT = process.env.PORT || 5500;
 const connection_string = process.env.REACT_APP_MONGO_KEY;
 const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
@@ -243,6 +243,7 @@ app.post("/newReview", (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
-  console.log(`app is running on ${PORT}`);
+app.listen(process.env.PORT || 5500, () => {
+  console.log('running');
+  // console.log(`app is running on ${PORT}`);
 });
