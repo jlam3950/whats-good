@@ -14,7 +14,7 @@ const app = express();
 const connection_string = process.env.REACT_APP_MONGO_KEY;
 const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
-// const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 5500;
 // const router = require("express").Router();
 const proxy = require('http-proxy-middleware')
 
@@ -56,7 +56,7 @@ require("./passport-config")(passport);
 if (process.env.NODE_ENV === 'production') {
 app.use(express.static(path.join(__dirname, '../build')));
 
-  app.get('*', (req, res) =>
+  app.get('/', (req, res) =>
     res.sendFile(
       path.resolve(__dirname, '../', 'build', 'index.html')
     )
@@ -244,8 +244,8 @@ app.post("/newReview", (req, res) => {
   );
 });
 
-app.listen(process.env.PORT || 5500, () => {
-  console.log('running');
+app.listen(() => {
+  console.log(`running on ${PORT}`);
   // console.log(`app is running on ${PORT}`);
 });
 
