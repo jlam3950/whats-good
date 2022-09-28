@@ -179,7 +179,6 @@ const Search = () => {
       </GoogleMap>
     );
   }
-console.log(hasSearched)
   return (
     <>
     <div className = 'h-screen'>

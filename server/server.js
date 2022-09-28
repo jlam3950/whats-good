@@ -11,13 +11,13 @@ const User = require("./models/user");
 const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
-// const PORT = process.env.PORT || 5500;
 const connection_string = process.env.REACT_APP_MONGO_KEY;
 const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
-const { FaEquals } = require("react-icons/fa");
-const { Autocomplete } = require("@react-google-maps/api");
-const router = require("express").Router();
+// const PORT = process.env.PORT || 5500;
+// const router = require("express").Router();
+const proxy = require('http-proxy-middleware')
+
 
 mongoose.connect(
   connection_string,
@@ -248,3 +248,8 @@ app.listen(process.env.PORT || 5500, () => {
   console.log('running');
   // console.log(`app is running on ${PORT}`);
 });
+
+module.exports = function(app) {
+  // add other server routes to path array
+  app.use(proxy(['/api' ], { target: 'http://localhost:5500' }));
+}
