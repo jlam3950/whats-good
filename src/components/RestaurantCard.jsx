@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const RestaurantCard = (props) => {
   console.log(props)
   return (
-    <div className="card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-full  md:card-side">
+    <div className="card review_card bg-gray-100 border rounded-md shadow-xl mx-2 md:mx-0 mb-2 mt-2 md:w-4/5  md:card-side">
 
     <div className="flex flex-row">
        <div className="flex justify-center py-1 w-2/5">

@@ -13,6 +13,7 @@ import Logout from "./components/Logout";
 import RestaurantDetails from './components/RestaurantDetails';
 import { Routes, Route } from "react-router-dom";
 
+
 function App() {
 
   return (
