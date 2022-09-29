@@ -6,7 +6,7 @@ import ReactStars from "react-rating-stars-component";
 import shrimp from "../images/hero-shrimp.jpg";
 import { Dialog, Transition } from "@headlessui/react";
 import ImageUploading from "react-images-uploading";
-import S3 from 'react-aws-s3';
+// import S3 from 'react-aws-s3';
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ReviewCard = ({ props, restID }) => {
@@ -25,30 +25,30 @@ const ReviewCard = ({ props, restID }) => {
       return review.UserRating;
     })
   );
-  const [images, setImages] = React.useState([]);
-  const maxNumber = 69;
-  const config = {
-    bucketName: process.env.REACT_APP_BUCKET_NAME,
-    region: process.env.REACT_APP_REGION,
-    accessKeyId: process.env.REACT_APP_ACCESS,
-    secretAccessKey: process.env.REACT_APP_SECRET,
-}
+//   const [images, setImages] = React.useState([]);
+//   const maxNumber = 69;
+//   const config = {
+//     bucketName: process.env.REACT_APP_BUCKET_NAME,
+//     region: process.env.REACT_APP_REGION,
+//     accessKeyId: process.env.REACT_APP_ACCESS,
+//     secretAccessKey: process.env.REACT_APP_SECRET,
+// }
 
-const handleFileInput = (e) => {
-  setSelectedFile(e.target.files[0]);
-}
+// const handleFileInput = (e) => {
+//   setSelectedFile(e.target.files[0]);
+// }
 
-const uploadFile = async (file) => {
-  const ReactS3Client = new S3(config);
-  ReactS3Client
-  .uploadFile(file, file.name)
-  .then(data => console.log(data.location))
-  .catch(err => console.error(err))
-}
-  const onChange = (e, imageList, addUpdateIndex) => {
-    let files = e.target.files;
-    setImages({ 'selectedFiles': files });
-  };
+// const uploadFile = async (file) => {
+//   const ReactS3Client = new S3(config);
+//   ReactS3Client
+//   .uploadFile(file, file.name)
+//   .then(data => console.log(data.location))
+//   .catch(err => console.error(err))
+// }
+//   const onChange = (e, imageList, addUpdateIndex) => {
+//     let files = e.target.files;
+//     setImages({ 'selectedFiles': files });
+//   };
 
 
   // const upload = (e) => {

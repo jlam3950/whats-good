@@ -50,6 +50,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./passport-config")(passport);
 
+// require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+
 
 //serve front end
 if (process.env.NODE_ENV === 'production') {
