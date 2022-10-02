@@ -1,5 +1,6 @@
-# Overview
+<img src = "src/images/logo_img 2.jpg" width = '300px'>
 
+# Overview
 - [About the Project](#about-the-project)
 - [Features](#features)
 - [Videos & Screenshots](#videos-and-screenshots)
@@ -14,7 +15,7 @@ What's Good is an application, built with React & MongoDB, that allows users to 
 - Create reviews of your favorite items 
 
 ## Videos & Screenshots
-<img src="src/images/readme_img/whatsgood_splash.png" width="270px"><img src='src/images/readme_img/whats-good-search.png' width="270px"><img src="src/images/readme_img/whats-good-review.png" width="270px"> 
+<img class = 'readme' src="src/images/readme_img/whatsgood_splash.png" width="270px" margin='2rem'> <img src='src/images/readme_img/whats-good-search.png' width="270px"> <img src="src/images/readme_img/whats-good-review.png" width="270px"> 
 
 ## Built With 
 * React
@@ -24,6 +25,7 @@ What's Good is an application, built with React & MongoDB, that allows users to 
 * Passport.js 
 * Oauth
 * Google Maps API 
+* Yelp API 
 
 ## Acknowledgements
 - [Google Maps Platform](https://developers.google.com/maps)

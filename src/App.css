@@ -66,22 +66,9 @@
   min-height: 95%;
 }
 
-
-
-/* .bluebar{
-  height:35rem;
-} */
-
-/* .p_food{
-  height: 380px;
-  width: 100%;
-} */
-
-/* .food_sub{
-  height: 50vh;
-  width:60vh;
-  margin-top: 1.75rem
-} */
+.readme{
+  margin: 2rem;
+}
 
 .map-container{
   width: 100%;
