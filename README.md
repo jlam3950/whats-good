@@ -1,26 +1,22 @@
 # Overview
 
-<img src= 'src/images/readme_img/whatsgood.jpg' alt="WhatsGoodLogo" min-width="320">
-
-<div className = 'border'>
-<img src= 'src/images/readme_img/whatsgood_search.jpg' alt="WhatsGoodLogo" min-width="320" max-height='400'>
-</div>
-
-
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Videos & Screenshots](#videos-and-screenshots)
+- [Built With](#built-with)
+- [Acknowledgments](#acknowledgments)
+- [Authors](#authors)
+## About The Project
 What's Good is an application, built with React & MongoDB, that allows users to find the best dishes at every restraurant. 
+## Features
+- Secure user login, with passport JS, Google oauth 
+- Search by city, location to pull up restaurants via Google Maps, Yelp API
+- Create reviews of your favorite items 
 
-- Live website: tbd
-- Github: https://github.com/jlam3950/whats-good
-- Team: Jeff L., Seth R. 
+## Videos & Screenshots
+<img src="src/images/readme_img/whatsgood_splash.png" width="270px"><img src='src/images/readme_img/whats-good-search.png' width="270px"><img src="src/images/readme_img/whats-good-review.png" width="270px"> 
 
-<!-- ## Features  -->
-
-<!-- ## Navigating the App 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
-## Technologies Used
-
+## Built With 
 * React
 * MongoDB
 * NodeJS
@@ -29,5 +25,11 @@ What's Good is an application, built with React & MongoDB, that allows users to 
 * Oauth
 * Google Maps API 
 
-<!-- ## Future Plans -->
+## Acknowledgements
+- [Google Maps Platform](https://developers.google.com/maps)
+- [Yelp API](https://www.yelp.com/developers/)
+
+## Authors
+- **Jeff L** - [jlam3950](https://github.com/jlam3950)
+- **Seth R** - [sethreyes](https://github.com/SethReyes)
 
