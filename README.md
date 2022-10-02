@@ -12,7 +12,7 @@ What's Good is an application, built with React & MongoDB, that allows users to 
 ## Features
 - Secure user login, with passport JS, Google oauth 
 - Search by city, location to pull up restaurants via Google Maps, Yelp API
-- Create reviews of your favorite items 
+- Create reviews of your favorite items, which are stored in MongoDB
 
 ## Videos & Screenshots
 <img class = 'readme' src="src/images/readme_img/whatsgood_splash.png" width="270px" margin='2rem'> <img src='src/images/readme_img/whats-good-search.png' width="270px"> <img src="src/images/readme_img/whats-good-review.png" width="270px"> 
