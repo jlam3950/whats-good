@@ -15,8 +15,7 @@ const connection_string = process.env.REACT_APP_MONGO_KEY;
 const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
 const PORT = process.env.PORT || 5500;
-// const router = require("express").Router();
-const proxy = require('http-proxy-middleware')
+// const proxy = require('http-proxy-middleware')
 
 
 mongoose.connect(
@@ -34,8 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: "https://whatsgoodapp.herokuapp.com",
-    // origin: "http://localhost:3000",
+    // origin: "https://whatsgoodapp.herokuapp.com",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -246,11 +245,10 @@ app.post("/newReview", (req, res) => {
 });
 
 app.listen(() => {
-  console.log(`running on ${PORT}`);
-  // console.log(`app is running on ${PORT}`);
+  console.log(`app is running on ${PORT}`);
 });
 
-module.exports = function(app) {
-  // add other server routes to path array
-  app.use(proxy(['/api' ], { target: 'http://localhost:5500' }));
-}
+// module.exports = function(app) {
+//   // add other server routes to path array
+//   app.use(proxy(['/api' ], { target: 'http://localhost:5500' }));
+// }
