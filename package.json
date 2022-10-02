@@ -48,17 +48,18 @@
     "react-spinners": "^0.13.4",
     "redux": "^4.2.0",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.74.0"
+    "webpack": "^5.74.0",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^1.9.6"
   },
   "scripts": {
     "start": "react-scripts start nodemon",
     "serverStart": "nodemon server.js --ignore client",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix src && npm run build --prefix src"
+    "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5500",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -76,11 +77,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.8",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^1.9.6"
   }
-  
 }

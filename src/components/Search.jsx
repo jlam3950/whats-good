@@ -12,7 +12,6 @@ import {
 } from "@react-google-maps/api";
 import axios from "axios";
 let googleKey = process.env.REACT_APP_GOOGLE_KEY;
-console.log(process.env.REACT_APP_GOOGLE_KEY)
 
 const Search = () => {
   const [lat, setLat] = useState("");
@@ -181,7 +180,6 @@ const Search = () => {
       </GoogleMap>
     );
   }
-console.log(hasSearched)
   return (
     <>
     <div className = 'h-screen'>

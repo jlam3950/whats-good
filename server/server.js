@@ -11,13 +11,12 @@ const User = require("./models/user");
 const Restaurant = require("./models/restaurant");
 const cors = require("cors");
 const app = express();
-const PORT = process.env.PORT || 5500;
-const connection_string = process.env.MONGO_KEY;
-const key = process.env.API_KEY;
+const connection_string = process.env.REACT_APP_MONGO_KEY;
+const key = process.env.REACT_APP_API_KEY;
 const axios = require("axios");
-const { FaEquals } = require("react-icons/fa");
-const { Autocomplete } = require("@react-google-maps/api");
-const router = require("express").Router();
+const PORT = process.env.PORT || 5500;
+// const proxy = require('http-proxy-middleware')
+
 
 mongoose.connect(
   connection_string,
@@ -34,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   cors({
+    // origin: "https://whatsgoodapp.herokuapp.com",
     origin: "http://localhost:3000",
     credentials: true,
   })
@@ -55,11 +55,12 @@ require("./passport-config")(passport);
 
 //serve front end
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../src/build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
-  app.get('*', (req, res) =>
+  app.get('/', (req, res) =>
+  // app.get('*', (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, '../', 'src', 'build', '/index.html')
+      path.resolve(__dirname, '../', 'build', 'index.html')
     )
   );
 } else {
@@ -245,6 +246,11 @@ app.post("/newReview", (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
+app.listen(() => {
   console.log(`app is running on ${PORT}`);
 });
+
+// module.exports = function(app) {
+//   // add other server routes to path array
+//   app.use(proxy(['/api' ], { target: 'http://localhost:5500' }));
+// }
